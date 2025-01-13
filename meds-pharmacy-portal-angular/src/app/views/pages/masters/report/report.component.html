@@ -1,0 +1,138 @@
+<div class="parent-body">
+    <!-- Headers -->
+    <div fxLayout='row' class="n-s-h">
+
+        <div class="b-line rob col-md-2 tbox ml-20">
+            <mat-form-field appearance="legacy" class="w-100">
+                <mat-label>Search by OrderNo</mat-label>
+                <input class="l-c rob-b _12px" matInput (keyup)="applyFilter($event.target.value, true)">
+            </mat-form-field>
+        </div>
+        <div *ngIf="loginDetails.RoleId==1 || loginDetails.RoleId==2 || loginDetails.RoleId==5"
+            class="b-line rob col-md-2 tbox ml-35">
+            <mat-form-field class="w-100" appearance="legacy">
+                <mat-select class="arw" [(ngModel)]="filterPharmacyId" value="0"
+                    (ngModelChange)="fetchDataByPharmacy($event)">
+                    <input class="searchfilter l-c rob-b _12px" matInput placeholder="Search"
+                        (keyup)="searchFilterBypharmacy($event.target.value, true)"
+                        (keydown)="$event.stopPropagation()">
+                    <mat-option value="0">
+                        View All Pharmacies
+                    </mat-option>
+                    <mat-option *ngFor="let item of pharmacyList" [value]="item.PharmacyId">
+                        {{item.PharmacyName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6" style="text-align-last: end;">
+            <button class="bck-clr ex-btn rob-b" matTooltip="Export As" (click)=select.open()>
+                <div class="row">
+                    <div class="column">
+                        <label class="lbl-cls">Export As</label>
+                    </div>
+                    <div class="column" style="margin-left: 18px;">
+                        <mat-select #select panelClass="dp-dn">
+                            <mat-option (click)="exportBy(1)">Xlsx</mat-option>
+                            <mat-option (click)="exportBy(2)">Csv</mat-option>
+                        </mat-select>
+                    </div>
+                </div>
+
+            </button>
+
+        </div>
+    </div>
+    <div fxLayout='row'>
+        <perfect-scrollbar style="max-height: calc(70vh - 0px);background-color: #fff;">
+            <div class="rob" style="background-color: #fff;padding: 0px 18px;width: 100%;">
+                <table class="table table-striped ">
+                    <thead class="v2-h-lt rob-b _12px l-c">
+                        <tr>
+                            <!-- <th class="p-l-46">Order No</th>
+                            <th *ngIf="isRole">Pharmacy</th>
+                            <th class="p-l-46">Issue Date</th>
+                            <th class="p-l-46">Duration (HH:MM)</th>
+                            <th class="p-l-46">Total Price</th> -->
+                            <th class="p-l-46">Order No</th>
+                            <th *ngIf="isRole">Pharmacy Name</th>
+                            <th class="p-l-46">Created On</th>
+                            <th class="p-l-46">Completed On</th>
+                            <th class="p-l-46">Processing Time (hh:mm)</th>
+                            <th class="p-l-46">Paid Amount</th>
+                            <th class="p-l-46">Sum of Medicines</th>
+                            <th class="p-l-46">Delivery Fee</th>
+                            <th class="p-l-46">Convenience Fee</th>
+                            <th class="p-l-46">Discount Amount</th>
+                            <th class="p-l-46">Coupon Code</th>
+                        </tr>
+                    </thead>
+                    <tbody class="l-c">
+                        <tr *ngFor="let orderModel of OrderList | slice: lowValue : highValue">
+                            <!-- <td class="p-l-46">
+                                <p>{{orderModel.OrderNo}}</p>
+                            </td>
+                            <td *ngIf="isRole">
+                                {{orderModel.PharmacyName}}
+                            </td>
+                            <td class="p-l-46">
+                                <p>{{orderModel.CreatedOn | date : 'dd/MM/y h:mm aaaaa\'m\'' | uppercase }}</p>
+                            </td>
+                            <td class="p-l-46" style="padding-left: 62px;">
+                                {{orderModel.Duration}}
+                            </td>
+                            <td class="p-l-46">$
+                                {{orderModel.TotalPrice}}
+                            </td> -->
+                            <td class="p-l-46">
+                                <p>{{orderModel.OrderNo}}</p>
+                            </td>
+                            <td *ngIf="isRole">
+                                {{orderModel.PharmacyName}}
+                            </td>
+                            <td class="p-l-46">
+                                <p>{{orderModel.CreatedOn | date : 'dd/MM/y h:mm aaaaa\'m\'' | uppercase }}</p>
+                            </td>
+                            <td class="p-l-46">
+                                <p>{{orderModel.OrderCompletedDate | date : 'dd/MM/y h:mm aaaaa\'m\'' | uppercase }}</p>
+                            </td>
+                            <td class="p-l-46" style="padding-left: 62px;">
+                                {{orderModel.Duration}}
+                            </td>
+                            <td class="p-l-46">$
+                                {{orderModel.TotalPrice}}
+                            </td>
+                            <td class="p-l-46">$
+                                {{orderModel.SubTotal}}
+                            </td>
+                            <td class="p-l-46">
+                                {{orderModel.IsUploadType == 13 || orderModel.IsUploadType == 12?'':'$' +
+                                orderModel.DeliveryCharge}}
+                            </td>
+                            <td class="p-l-46">
+                                {{orderModel.IsUploadType == 13 || orderModel.IsUploadType == 12?'':'$' +
+                                orderModel.ConvenienceFee}}
+                            </td>
+                            <td class="p-l-46">
+                                {{orderModel.IsUploadType == 13 || orderModel.IsUploadType == 12?'':'$' +
+                                orderModel.DiscountSavings}}
+
+                            </td>
+                            <td class="p-l-46">
+                                {{orderModel.DiscountName}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="OrderList.length == 0" class="rob-b r-c">
+                    No record found
+                </div>
+                <mat-paginator class="pag-mat" #paginator [length]="OrderList.length" [pageSize]=10
+                    [pageSizeOptions]="[5, 10, 25, 100]" (page)="getPaginatorData($event)">page
+                </mat-paginator>
+            </div>
+        </perfect-scrollbar>
+    </div>
+
+
+</div>

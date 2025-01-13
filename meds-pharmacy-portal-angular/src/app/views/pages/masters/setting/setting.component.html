@@ -1,0 +1,70 @@
+<div class="top" style="background-color: #eceff4;">
+    <div class="usr-body col-md-8">
+        <div class="usrhed-div">
+            <div class="usr-title2">Settings</div>
+        </div>
+        <div class="form-div">
+            <form name="pharmacyForm" #Form [formGroup]="userForm" novalidate fxLayout="column" class="p-4">
+                <!--Pharmacy Information -->
+                <div class="row m-b-4vh">
+                    <div class="col-md-6">
+                        <p>User Guide<small class="error_span1_cls">*</small></p>
+                        <div class="d-flex">
+                            <label class="l-t frm-label d-btn">
+                                {{ userForm.controls['UserGuide'].value }}</label>
+                            <button class="w-40-p bck-clr rob-b cur-p bk-btn" mat-raised-button color="primary"
+                                (click)="ID1.click()">Please choose file</button>
+                            <input class="img-i-h" type="file" id="fileLoader1" accept="application/pdf" #ID1
+                                name="files" title="Load File" (click)="loadFile(ID1, 1)">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p>Processing Prescription Orders<small class="error_span1_cls">*</small></p>
+                        <div class="d-flex">
+                            <label class="l-t frm-label d-btn">
+                                {{ userForm.controls['ProcessingPrescriptionOrders'].value }}</label>
+                            <button class="w-40-p bck-clr rob-b cur-p bk-btn" mat-raised-button color="primary"
+                                (click)="ID2.click()">Please choose file</button>
+                            <input class="img-i-h" type="file" id="fileLoader2" accept="video/*" #ID2 name="files"
+                                title="Load File" (click)="loadFile(ID2, 2)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Processing OTC Orders<small class="error_span1_cls">*</small></p>
+                        <div class="d-flex">
+                            <label class="l-t frm-label d-btn"> {{ userForm.controls['ProcessingOtcOrders'].value
+                                }}</label>
+                            <button class="w-40-p bck-clr rob-b cur-p bk-btn" mat-raised-button color="primary"
+                                (click)="ID3.click()">Please choose file</button>
+                            <input class="img-i-h" type="file" id="fileLoader3" accept="video/*" #ID3 name="files"
+                                title="Load File" (click)="loadFile(ID3, 3)">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p>Carer Mode<small class="error_span1_cls">*</small></p>
+                        <div class="d-flex">
+                            <label class="l-t frm-label d-btn">{{ userForm.controls['CarerMode'].value }}</label>
+                            <button class="w-40-p bck-clr rob-b cur-p bk-btn" mat-raised-button color="primary"
+                                (click)="ID4.click()">Please choose file</button>
+                            <input class="img-i-h" type="file" id="fileLoader4" accept="video/*" #ID4 name="files"
+                                title="Load File" (click)="loadFile(ID4, 4)">
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+            <div class="btn-b-r">
+                <button class="mr-10px p-tb-27" mat-raised-button (click)="reset()">Reset</button>
+                <button class="rob-b _12px dark-petrol white p-tb-27" mat-raised-button color="primary"
+                    (click)="submit()">{{btnval==0?"Update":"Save "}}</button>
+
+            </div>
+        </div>
+    </div>
+
+</div>

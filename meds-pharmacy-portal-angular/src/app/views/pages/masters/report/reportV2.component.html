@@ -1,0 +1,113 @@
+<div class="parent-body">
+    <!-- Headers -->
+    <div fxLayout='row' class="n-s-h">
+        <!-- For Search -->
+        <!-- <div class="b-line rob col-md-2 tbox ml-20">
+            <mat-form-field appearance="legacy" class="w-100">
+                <mat-label>Search by OrderNo</mat-label>
+                <input class="l-c rob-b _12px" matInput (keyup)="applyFilter($event.target.value, true)">
+            </mat-form-field>
+        </div> -->
+
+
+        <!-- For by week -->
+        <div class="b-line rob col-md-2 tbox ml-20" style="margin-right: 10px;">
+            <mat-form-field class="w-100" appearance="legacy">
+                <div class="row">
+                    <input style="max-width: 225px;min-width: 160px;" readonly (dateInput)="dateEve($event)" matInput
+                        autocomplete="nope" [(ngModel)]="ByWeek" placeholder="By Week" [matDatepicker]="picker">
+
+                </div>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+
+            </mat-form-field>
+            <!-- <span><img src="../../../../../../assets/packapill-icons/multiply-16.png"
+                    (click)="resetDate(picker)"></span> -->
+        </div>
+
+        <div *ngIf="clear" style="margin: 5px;display: flex;align-items: center;">
+            <button class="bck-clr ex-btn rob-b pointer" matTooltip="Clear" (click)="resetDate(picker)">
+                Reset By Week
+            </button>
+        </div>
+
+        <div *ngIf="loginDetails.RoleId==1 || loginDetails.RoleId==2 || loginDetails.RoleId==5"
+            class="b-line rob col-md-2 tbox">
+            <mat-form-field class="w-100" appearance="legacy">
+                <mat-select class="arw" [(ngModel)]="filterPharmacyId" value="0" (ngModelChange)="filterPhrm($event)">
+                    <input class="searchfilter l-c rob-b _12px" matInput placeholder="Search"
+                        (keyup)="searchFilterBypharmacy($event.target.value, true)"
+                        (keydown)="$event.stopPropagation()">
+                    <mat-option value="0">
+                        By Pharmacy
+                    </mat-option>
+                    <mat-option *ngFor="let item of pharmList" [value]="item.PharmacyId">
+                        {{item.PharmacyName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <!-- For add report -->
+        <div class="col-md-6" style="text-align-last: end;" *ngIf="isRole">
+            <button class="bck-clr ex-btn rob-b pointer" matTooltip="Add Report" (click)="OpenDialog(0)">
+                <label class="lbl-cls pointer"><img style="margin-right:5px;"
+                        src="../../../../../assets/packapill-icons/add-16.png">Add Report</label>
+            </button>
+
+        </div>
+    </div>
+    <div fxLayout='row'>
+        <perfect-scrollbar style="max-height: calc(70vh - 0px);background-color: #fff;">
+            <div class="rob" style="background-color: #fff;padding: 0px 18px;width: 100%;">
+                <table class="table table-striped ">
+                    <thead class="v2-h-lt rob-b _12px l-c">
+                        <tr>
+                            <th class="p-l-46">Week</th>
+                            <th *ngIf="isRole" class="p-l-46">Pharmacy</th>
+                            <th class="p-l-46">Tax Invoice</th>
+                            <th class="p-l-46">Payment Summary</th>
+                            <th *ngIf="isRole" class="p-l-46">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="l-c">
+                        <tr *ngFor="let reportModel of ReportList | slice: lowValue : highValue">
+                            <td class="p-l-46">
+                                <p>{{reportModel.Week | date : 'dd/MM/y'}}</p>
+                            </td>
+                            <td class="p-l-46" *ngIf="isRole">
+                                {{retPharm(reportModel.PharmacyId)}}
+                            </td>
+                            <td class="p-l-46 ">
+                                <div class="row">
+                                    <img class="pointer" src="../../../../../../assets/packapill-icons/Download.svg"
+                                        (click)="pickDoc(reportModel.ReportId,1)" *ngIf="reportModel.TaxInvoice !=''">
+                                </div>
+                            </td>
+                            <td class="p-l-46 ">
+                                <div class="row">
+                                    <img class="pointer" src="../../../../../../assets/packapill-icons/Download.svg"
+                                        (click)="pickDoc(reportModel.ReportId,2)"
+                                        *ngIf="reportModel.PaymentSummary !=''">
+                                </div>
+                            </td>
+                            <td *ngIf="isRole" class="p-l-46">
+                                <img class="pointer" style="height: 14px;"
+                                    src="../../../../../assets/packapill-icons/EditRed.svg"
+                                    (click)="OpenDialog(reportModel)">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="ReportList.length == 0" class="rob-b r-c">
+                    No record found
+                </div>
+                <mat-paginator class="pag-mat" #paginator [length]="ReportList.length" [pageSize]=10
+                    [pageSizeOptions]="[5, 10, 25, 100]" (page)="getPaginatorData($event)">page
+                </mat-paginator>
+            </div>
+        </perfect-scrollbar>
+    </div>
+
+
+</div>

@@ -1,0 +1,135 @@
+<!-- <div class="lay-card">
+    <div fxLayout="row">
+        <div class="card1" fxLayout="row" fxLayout.xs="column">
+            <div class="chart">
+                <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+                    [options]="pieChartOptions" [plugins]="pieChartPlugins" [colors]="pieChartColors"
+                    [legend]="pieChartLegend">
+                </canvas>
+            </div>
+        </div>
+        <div class="card1" fxLayout="row" fxLayout.xs="column">
+
+        </div>
+    </div>
+</div>
+<div></div> -->
+<!-- <div class="fulldiv">
+    <div class="absCenter ">
+        <div class="loaderPill">
+            <div class="loaderPill-anim">
+                <div class="loaderPill-anim-bounce">
+                    <div class="loaderPill-anim-flop">
+                        <div class="loaderPill-pill"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="loaderPill-floor">
+                <div class="loaderPill-floor-shadow"></div>
+            </div>
+            <div class="loaderPill-text">Loading your PILL</div>
+        </div>
+    </div>
+</div> -->
+<div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column">
+    <div class="p-b card-c1"
+        *ngIf="this.userdlist.RoleId == 2 || this.userdlist.RoleId == 3 || this.userdlist.RoleId == 4 || this.userdlist.RoleId == 5"
+        style="text-align: center;">
+        <label class="rob-b l-c" style="font-size: x-large;margin: 90px 0px;cursor: pointer;"
+            routerLink="/app/masters/live-order-2">Live Orders</label>
+    </div>
+    <div class="p-b card-cls">
+        <div *ngIf="this.userdlist.RoleId == 1">
+            <canvas baseChart width="400" height="110" [data]="pieChartData" [labels]="pieChartLabels"
+                [chartType]="pieChartType" [options]="pieChartOptions" [colors]="pieChartColors"
+                [legend]="pieChartLegend">
+            </canvas>
+        </div>
+        <div *ngIf="this.userdlist.RoleId == 3 || this.userdlist.RoleId == 4"
+            style="text-align: -webkit-center;height: 115px;">
+            <label *ngIf="isStripe==1" class="Payoutlabel">Click
+                <a style="color: #005760;font-size: larger;cursor: pointer;" (click)="OnBoardLink()">here</a> to
+                start your stripe
+                on-boarding process</label>
+            <label *ngIf="isStripe==4" class="Payoutlabel">Contact Your Pharmacy</label>
+            <label *ngIf="isStripe==3" class="Payoutlabel">Click
+                <a style="color: #005760;font-size: larger;cursor: pointer;" (click)="OnBoardLink()">here</a> to
+                complete your
+                stripe on-boarding process</label>
+            <label *ngIf="isStripe==5" style="color: #005760;cursor: pointer;" class="Payoutlabel" (click)="addBnk()">
+                Add
+                Bank
+                Details
+            </label>
+            <div *ngIf="isStripe==2">
+                <div fxLayout="row" fxLayout.xs="row" fxLayout.sm="row"
+                    style="padding: 5px;width: 100%;margin-top: 5%;">
+                    <div fxLayout="column" style="text-align:left;width: 50%;margin-left: 6px;"><label style="font-size: small;margin-top: 10px;font-family: Roboto, 'Helvetica Neue', sans-serif;
+    font-weight: 500;">Since
+                            {{payldata.CreatedOn | date: 'MMM yyyy'}}</label>
+                        <label style="font-size: larger;font-family: Roboto, 'Helvetica Neue', sans-serif;
+    font-weight: 600;">
+                            {{payldata.PharmacyName}}
+                        </label>
+                        <!-- <label><a (click)="toAcc()"
+                                style="color: #005760;cursor: pointer;font-weight: 500;cursor: pointer;">View Your
+                                Stripe
+                                account</a></label> -->
+
+                    </div>
+                    <div fxLayout="column" style="text-align: right;width: 50%;margin-right: 6px;"><label style="font-size: small;margin-top: 10px;font-family: Roboto, 'Helvetica Neue', sans-serif;
+    font-weight: 500;">Your Current
+                            Stripe balance
+                        </label>
+                        <label style="font-size: larger;margin-right: 55px;font-family: Roboto, 'Helvetica Neue', sans-serif;
+    font-weight: 600;">
+                            $ {{sliceFn(baldata.amount.toString())}} {{baldata.currency.toUpperCase()}}
+                        </label>
+                        <!-- <label><a (click)="toPay()" style="color: #005760;cursor: pointer;font-weight: 500;">View
+                                payouts on
+                                Stripe</a></label> -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="this.userdlist.RoleId == 3 || this.userdlist.RoleId == 4" class="query">
+            Contact Hola Health at <p style="color: #005760;margin: 0px 5px;">support@hola.health</p> for any questions
+        </div>
+
+    </div>
+
+    <div class="p-b card-cls" *ngIf="this.userdlist.RoleId == 1">
+        <div class="txt-align" *ngIf="pieChartData1 == null">No Orders Available Today</div>
+        <canvas *ngIf="pieChartData1" baseChart width="400" height="110" [data]="pieChartData1"
+            [labels]="pieChartLabels1" [chartType]="pieChartType1" [options]="pieChartOptions"
+            [colors]="pieChartColors1" [legend]="pieChartLegend">
+        </canvas>
+    </div>
+</div>
+<div style="display: block;" class="line-chart p-b" *ngIf="this.userdlist.RoleId == 1">
+    <div>
+        Select Year: <mat-form-field class="field-full-width" appearence="outline">
+            <mat-select name="year" [value]="selectedYear" (selectionChange)="getVal($event.value)">
+                <mat-option *ngFor="let year of listOfYears" [value]="year">{{year}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <canvas baseChart width="400" height="110" [datasets]="barChartData" [labels]="barChartLabels"
+        [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType">
+    </canvas>
+</div>
+
+
+
+
+
+
+<!-- The Line Chart -->
+<!-- <div style="display: block;" class="line-chart hhh">
+    <canvas baseChart width="400" height="90" [datasets]="lineChartData" [labels]="lineChartLabels"
+        [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"
+        [plugins]="lineChartPlugins" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+</div> -->

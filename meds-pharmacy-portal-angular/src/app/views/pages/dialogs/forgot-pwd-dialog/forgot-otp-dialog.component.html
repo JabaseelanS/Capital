@@ -1,0 +1,79 @@
+<div class="slide-top" style="background: #f8f8f8;height: 100%;">
+    <div class="slide-container">
+        <div class="row" style="text-align-last: end;
+    padding: 20px 0px 14px 20px;
+    background-color: #f7f8fa;
+    border-bottom: 1px solid #ebedf2;">
+            <div style="width: 78%;    text-align-last: center;
+    padding-left: 50px;">
+                <span style="float: left;" (click)="backToEmail()">
+                    <img src="../../../../../assets/packapill_portal_icons/left-arrow.png">
+                </span>
+                <span style="color:  #005760;
+    font-size: 18px;
+    font-family: Roboto Bold;">Check Your Mail
+                </span>
+            </div>
+
+            <div>
+                <button (click)="closeDialog()" mat-raised-button class="rob-b _11px cls-btn-fp h-w-btn01"><img
+                        style="margin-right: 5px;"
+                        src="../../../../../assets/packapill-icons/multiply-16.png">Close</button>
+            </div>
+
+        </div>
+        <div style="padding-top: 80px;">
+            <div>
+                <form [formGroup]="verifyForm" style="text-align-last: center;">
+
+                    <div class="form-group"
+                        [ngClass]="{'error_cls_in': commonService.isValid, 'success_cls_in' : !commonService.isValid}">
+
+                        <!-- <otp [setting]="settings" (onValueChange)="onInputChange($event)"> </otp> -->
+                        <input tabindex="{{tabval}}" type="text" formControlName="VerifyOTP1" class="in-cls"
+                            pattern="[0-9]*" #VerifyOTP1 required maxLength="1" id="VerifyOTP1"
+                            (keypress)="onKeyPress($event); commonService.validateDigit($event)"
+                            (keyup)="otpController($event,VerifyOTP2,'', false)"
+                            (onValueChange)="forceUpdateMethod(forgotModel.VerifyOTP1)"
+                            [(ngModel)]="forgotModel.VerifyOTP1" />
+
+                        <input tabindex="{{tabval}}" type="text" formControlName="VerifyOTP2" class="in-cls"
+                            pattern="[0-9]*" #VerifyOTP2 required maxLength="1" id="VerifyOTP2"
+                            (keypress)="onKeyPress($event); commonService.validateDigit($event)"
+                            (keyup)="otpController($event,VerifyOTP3,VerifyOTP1, false)"
+                            (onValueChange)="forceUpdateMethod(forgotModel.VerifyOTP2)"
+                            [(ngModel)]="forgotModel.VerifyOTP2" />
+
+                        <input tabindex="{{tabval}}" type="text" formControlName="VerifyOTP3" class="in-cls"
+                            pattern="[0-9]*" #VerifyOTP3 required maxLength="1" id="VerifyOTP3"
+                            (keypress)="onKeyPress($event); commonService.validateDigit($event)"
+                            (keyup)="otpController($event,VerifyOTP4,VerifyOTP2, false)"
+                            (onValueChange)="forceUpdateMethod(forgotModel.VerifyOTP3)"
+                            [(ngModel)]="forgotModel.VerifyOTP3" />
+
+                        <input tabindex="{{tabval}}" type="text" formControlName="VerifyOTP4" class="in-cls"
+                            pattern="[0-9]*" #VerifyOTP4 required maxLength="1" id="VerifyOTP4"
+                            (keypress)="onKeyPress($event); commonService.validateDigit($event)"
+                            (keyup)="otpController($event,'',VerifyOTP3, false)"
+                            (onValueChange)="forceUpdateMethod(forgotModel.VerifyOTP4)"
+                            [(ngModel)]="forgotModel.VerifyOTP4" />
+                    </div>
+                    <!-- <div *ngIf="commonService.isValid" style="padding: 0px;">
+                        <span align="center" class="error_span1_cls">{{errorMessage}}</span>
+                    </div> -->
+                    <div style="padding-top:22px">
+                        <span class="rob-b _16px rclr cur-p" *ngIf="timerFlag">Resend in {{ timeLeft }}
+                            sec</span>
+                        <span (click)="resendCode(emailData.UserEmail)" class="rob-b _16px rclr cur-p"
+                            *ngIf="!timerFlag">Resend Code
+                        </span>
+                    </div>
+                    <!-- <button class="dark-petrol rob-b _11px white cls-btn-fp h-w-btn02"
+                        (click)="setPane('center')"><span style="margin-left: 20px;">Send Code</span>
+                        <img style="margin-left: 18%;" src="../../../../../assets/packapill-icons/right-24.png">
+                    </button> -->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

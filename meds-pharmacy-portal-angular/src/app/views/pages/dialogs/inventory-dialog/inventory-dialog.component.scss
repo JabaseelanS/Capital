@@ -1,0 +1,60 @@
+.form {
+  display: flex;
+  padding-top: 6px;
+}
+.image {
+  height: 50px;
+  width: 50px;
+}
+
+//Image Modal styles
+.image-modal {
+  .image-top {
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+  }
+  .img {
+    display: block;
+    max-width: 300px !important;
+    height: 300px !important;
+    border-radius: 10% !important;
+  }
+  .mat-dialog-container {
+    box-shadow: none !important;
+    background: #fff !important;
+    // color: none !important;
+    // width: 56% !important;
+  }
+}
+
+.ivd-body {
+  box-shadow: 0px 0px 15px 0px #cfcfcf;
+  border-radius: 12px;
+  background-color: #fff;
+  padding: 6px;
+  margin: 5px 24px;
+}
+.ivdh-text {
+  font-size: large;
+  color: rgb(34, 34, 43);
+  font-weight: 700;
+}
+.mat-form-field {
+  width: 300px !important;
+}
+
+::ng-deep .ivd-area {
+  .mat-form-field-flex {
+    height: 40px !important;
+  }
+  .mat-form-field-infix {
+    border-top: 1px !important;
+  }
+}
+.mat-row {
+  border: none !important;
+}
+.mat-header-row {
+  border: none !important;
+}

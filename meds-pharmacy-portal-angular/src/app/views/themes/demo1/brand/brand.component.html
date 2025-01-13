@@ -1,0 +1,25 @@
+<!-- begin:: Brand -->
+<div class="kt-aside__brand kt-grid__item " style="border-bottom: 1px solid #eff0f6;"
+    [ngClass]="htmlClassService.getClasses('brand', true)" id="kt_aside_brand">
+    <div ktToggle [options]="toggleOptions" id="kt_aside_toggler" class="kt-aside__brand-logo">
+        <a>
+            <img class="logo-hola-med" alt="logo" src="../../../../../assets/icons/hola-icon1.svg" />
+        </a>
+    </div>
+
+    <!-- <div class="logo ">
+        <img class="logo-icon" src="assets/logo/logo.svg">
+
+    </div> -->
+
+    <div class="kt-aside__brand-tools bck-clr">
+        <button ktToggle [options]="toggleOptions"
+            class="kt-aside__brand-aside-toggler kt-aside__brand-aside-toggler--left" id="kt_aside_toggler"
+            style="margin-right: -2px;margin-top: 10px;">
+            <span [inlineSVG]="'./assets/media/icons/svg/Navigation/Angle-double-left.svg'"></span>
+            <span><img style="width: 5vh;
+    border-radius: 15px;" class="logo-icon" alt="logo" src="../../../../../assets/icons/hola-icon4.png" /></span>
+        </button>
+    </div>
+</div>
+<!-- end:: Brand -->

@@ -1,0 +1,20 @@
+<div class="head-div">
+    <div style="background-color: #005760;" fxLayout="row" fxLayoutAlign="space-between">
+        <div style="margin: 6px 0px 5px 10%;">
+            <h4 style="color: #fff;">Notification</h4>
+        </div>
+
+    </div>
+</div>
+<div class="card-body" style="background-color: #ffffff; border-radius: 0px 0px 12px 12px;">
+    <div style="height: 120px;">
+        <p style="font-weight: 600;text-align: center;">{{data.text}}</p>
+        <p style="padding: 4% 0 0 16%;font-weight: 500;">Order Number Is <strong>{{data.orderno}}</strong> </p>
+
+    </div>
+    <div><button style="margin: 0px 12px 0 15px;
+    width: 140px;" mat-raised-button (click)="closeDialog('Hide')">Hide</button>
+        <button style="width: 140px;
+    margin: 0px 8px 0 25px;" mat-raised-button (click)="show('Show')">Show</button>
+    </div>
+</div>

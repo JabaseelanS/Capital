@@ -1,0 +1,74 @@
+<div class="row space-between top p1 w-100" style="border-radius: 8px;">
+    <perfect-scrollbar style="max-height: 600px;margin-top: 8px;">
+        <div class="row space-between">
+            <div class="w-50 row justify-content">
+                <lib-ngx-image-zoom [zoomMode]="'hover'" [thumbImage]='selectedScript.ThumbNail'
+                    [fullImage]='selectedScript.OrgImg' [magnification]="2" [enableScrollZoom]='true'
+                    [enableLens]="true" [lensWidth]="200">
+                </lib-ngx-image-zoom>
+                <!-- <img style="width: 75%;height: 75%;"
+                    src="../../../../../../assets/packapill-icons/SVG/prescription_blu.svg"
+                    onError="this.src='../../../../../../assets/img/imageloader.gif'"> -->
+            </div>
+            <div class="w-50 column">
+                <div class="row space-between bc-hash w-87 p2p mb-5px">
+                    <span>Patient Medicare Number</span>
+                    <p style="font-weight: bold;">{{selectedScript.patientMedicareNo}}</p>
+                </div>
+                <div class="row space-between bc-hash w-87 p2p mb-5px">
+                    <span>Expiry</span>
+                    <p style="font-weight: bold;">{{selectedScript.medicareExpiry}}</p>
+                </div>
+                <div class="row space-between bc-hash w-87 p2p mb-5px">
+                    <span>Concession Card</span>
+                    <p style="font-weight: bold;">{{selectedScript.concessionCard}}</p>
+                </div>
+                <div class="row space-between bc-hash w-87 p2p mb-5px">
+                    <span>Concession Card</span>
+                    <p style="font-weight: bold;">{{selectedScript.concessionCardExpiry}}</p>
+                </div>
+                <div class="row space-between bc-hash w-87 p2p mb-5px">
+                    <span>Expiry</span>
+                    <p style="font-weight: bold;">{{selectedScript.concessionCard}}</p>
+                </div>
+                <div class="row space-between bc-hash w-87 p2p mb-5px">
+                    <span>Entitlement Type</span>
+                    <p style="font-weight: bold;">{{selectedScript.EntitlementType}}</p>
+                </div>
+                <div class="row space-between w-87 p2p mb-5px">
+                    <span><strong>Are you ok with Generic Medicines?</strong></span>
+                    <mat-checkbox [checked]="selectedScript.IsGenericMedicine" disabled></mat-checkbox>
+                </div>
+                <div class="row space-between w-87 p2p mb-5px">
+                    <span> <strong>Are you allergic to any Medicines?</strong></span>
+                    <mat-checkbox [checked]="selectedScript.IsAllergicMedicine" disabled></mat-checkbox>
+                </div>
+                <div *ngIf="selectedScript.IsAllergicMedicine" class="row space-between w-87 p2p mb-5px">
+                    <!-- <span> <strong>Are you allergic to any Medicines?</strong></span> -->
+                    <mat-form-field class="Mat-Box" appearance="legacy">
+                        <textarea name="" id="" cols="100" rows="3" matInput
+                            readonly>{{selectedScript.OtherMedicine}}</textarea>
+                    </mat-form-field>
+                </div>
+                <div class="row space-between w-87 p2p mb-5px">
+                    <span><strong>Are you on any other Medication?</strong>
+                    </span>
+                    <mat-checkbox [checked]="selectedScript.IsOtherMedicine" disabled></mat-checkbox>
+                </div>
+                <div *ngIf="selectedScript.IsOtherMedicine" class="row space-between w-87 p2p mb-5px">
+                    <mat-form-field class="Mat-Box" appearance="legacy">
+                        <!-- <input matInput> -->
+                        <textarea name="" id="" cols="100" rows="3" matInput
+                            readonly>{{selectedScript.OtherMedicine}}</textarea>
+                    </mat-form-field>
+
+                </div>
+                <div class="row space-between w-87 p2p mb-5px">
+                    <span><strong>Have you taken this medicine already</strong></span>
+                    <mat-checkbox [checked]="selectedScript.IsAlreadyMedicine" disabled></mat-checkbox>
+                </div>
+            </div>
+        </div>
+    </perfect-scrollbar>
+
+</div>

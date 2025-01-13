@@ -1,0 +1,100 @@
+<div class="delivery t-box h-p-100" style="margin: 0px !important;">
+    <div class="row">
+        <div class="col-md-2" style="padding: 0;">
+            <h5 class="rob-m _16px pink">Order Type</h5>
+        </div>
+        <div class="col-md-3">
+            <label class="b-1" [ngClass]="{'col-true': order.DeliverBy === 1, 'col-false': order.DeliverBy !== 1}"
+                style="border-radius: 5px 0px 0px 5px;">Delivery</label>
+            <label class="b-1" [ngClass]="{'col-true': order.DeliverBy === 2, 'col-false': order.DeliverBy !== 2}"
+                style="border-radius: 0px;">Pickup</label>
+            <label class="next-day-del"
+                [ngClass]="{'col-true': order.DeliverBy === 3, 'col-false': order.DeliverBy !== 3}"
+                style="border-radius: 0px 5px 5px 0px ;">Next Business Day Delivery</label>
+        </div>
+
+        <div *ngIf="this.commonServices.isPage==1 && this.userdetails.RoleId==1" class="col-md-7">
+            <span class="text-link" [innerHTML]="order.PharmacyName" (click)="changePharmacy(order)"></span>
+        </div>
+    </div>
+    <div class="row" style="width: 100%;">
+        <div [ngClass]="{'text-display-b':  (order.DeliverBy==1||order.DeliverBy==3) && this.commonServices.isPage==1}"
+            class="column m-t text-display-n">
+            <label class="row rob-b _11px  l-c">Delivery Address</label>
+            <mat-form-field class="text-display-n rob _11px l-c"
+                [ngClass]="{'text-display-b': this.commonServices.isPage==1}" appearance="outline"
+                style="width: 500px !important;margin-bottom: 16px !important;">
+                <textarea (focus)="commonServices.setAutoFillOff($event)" matInput rows="5"
+                    [(ngModel)]="order.deliveryAddressModel.DeliveryAdd" name="Address" autocorrect="off"
+                    autocapitalize="off" spellcheck="off" #search autocomplete="nope"></textarea>
+            </mat-form-field>
+            <div class="nobrdr" [delivery-address]="AddressModel" [cond-data]="condata"
+                (sendBackData)="recievedItem($event, false)">
+            </div>
+            <button (click)="changeAddress(order.deliveryAddressModel)" style="margin-left: 1%;"
+                class="success-button red-clr rob-b _12px"> Save Address</button>
+        </div>
+
+        <div *ngIf="this.commonServices.isPage!=1" class="column m-t">
+            <label class="row rob-b _11px  l-c">Delivery Address</label>
+            <label class="row rob _12px">{{order.deliveryAddressModel.DeliveryAdd}}</label>
+        </div>
+
+        <div *ngIf="(order.DeliverBy==1 || order.DeliverBy==3) && order.DeliveryByDate" class="column m-t">
+            <label class="row rob-b _11px  l-c">Delivery Date</label>
+            <label class="row rob _12px ">{{order.DeliveryByDate | date : 'dd/MM/yyyy'}}</label>
+        </div>
+        <div *ngIf="(order.DeliverBy==1 || order.DeliverBy==3) && order.DeliveryByDate" class="column m-t">
+            <label class="row rob-b _11px  l-c">Delivery Time</label>
+            <label class="row  rob _12px ">{{order.DeliveryByTime}}</label>
+        </div>
+        <div *ngIf="(order.DeliverBy==1 || order.DeliverBy==3) && order.DeliveryNotes" class="column m-t">
+            <label class="row rob-b _11px  l-c">Delivery Notes</label>
+            <label class="row rob _12px ">{{order.deliveryAddressModel.DeliveryNotes}}</label>
+        </div>
+        <div *ngIf="order.OrderNotes" class="column m-t" style="width: 300px;">
+            <label class="row rob-b _11px  l-c">Notes</label>
+            <p readonly class="row rob _12px" style="background: #f8f8f8;
+    overflow-wrap: anywhere;">{{order.OrderNotes}}</p>
+        </div>
+
+        <div *ngIf="order.PharmacyNotes" class="column m-t" style="width: 300px;">
+            <label class="row rob-b _11px  l-c">Pharmacy Notes</label>
+            <p readonly class="row rob _12px" style="background: #f8f8f8;
+            overflow-wrap: anywhere;">{{order.PharmacyNotes}}</p>
+        </div>
+        <div *ngIf="order.DeliverBy==2 && order.IsDeactivate==1" class="column m-t">
+            <label class="row rob-b _11px  l-c">User Status</label>
+            <label class="row rob _12px ">Others - Account Deactivated</label>
+        </div>
+        <div *ngIf="order.DeliverBy==2 && order.CancelReason!='' && order.CancelReason!=null" class="column m-t">
+            <label class="row rob-b _11px  l-c">Cancel Reason</label>
+            <label class="row rob _12px ">{{order.CancelReason}}</label>
+        </div>
+        <div *ngIf="order.DeliverBy==2 && order.CancelFeedback!='' && order.CancelFeedback!=null" class="column m-t">
+            <label class="row rob-b _11px  l-c">Cancel Feedback</label>
+            <label class="row rob _12px ">{{order.CancelFeedback}}</label>
+        </div>
+    </div>
+
+    <div class="row" style="width: 100%;">
+        <div *ngIf="order.DiscountName!='' && order.DiscountName!=null" class="column m-t">
+            <label class="row rob-b _11px  l-c">Discount Coupon Code</label>
+            <label class="row rob _12px ">{{order.DiscountName}}</label>
+        </div>
+        <div *ngIf="(order.DeliverBy==1||order.DeliverBy==3) && order.IsDeactivate==1" class="column m-t">
+            <label class="row rob-b _11px  l-c">User Status</label>
+            <label class="row rob _12px ">Others - Account Deactivated</label>
+        </div>
+        <div *ngIf="(order.DeliverBy==1||order.DeliverBy==3) && order.CancelReason!='' && order.CancelReason!=null"
+            class="column m-t">
+            <label class="row rob-b _11px  l-c">Cancel Reason</label>
+            <label class="row rob _12px ">{{order.CancelReason}}</label>
+        </div>
+        <div *ngIf="(order.DeliverBy==1||order.DeliverBy==3) && order.CancelFeedback!='' && order.CancelFeedback!=null"
+            class="column m-t">
+            <label class="row rob-b _11px  l-c ">Cancel Feedback</label>
+            <label class="row rob _12px ">{{order.CancelFeedback}}</label>
+        </div>
+    </div>
+</div>

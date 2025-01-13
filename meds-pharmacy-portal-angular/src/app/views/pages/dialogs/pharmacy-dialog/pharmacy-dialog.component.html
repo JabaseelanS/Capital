@@ -1,0 +1,739 @@
+<div *ngIf="edited" class="top" style="background-color: #f4f4f4;">
+    <div class="dialog-header" fxLayout="row" fxLayoutAlign="space-between">
+        <div fxLayout="row" fxLayoutAlign="start">
+            <h3 class="headerborder">
+                <p class="header-text">{{modalData.PharmacyId ? 'Edit' : 'Create'}} Pharmacy</p>
+            </h3>
+        </div>
+
+        <div>
+            <button *ngIf="this.loginDetails.RoleId !=null && this.loginDetails.RoleId!=5" class="mr-4"
+                [disabled]="!pharmacyForm.valid || !pharmacyForm.dirty" (click)="onSave()" mat-raised-button>
+                <img style="margin-right: 5px;"
+                    src="../../../../../assets\orderv2\packapill_portal_icons\Elements\Petrol.svg">{{modalData.PharmacyId
+                ? 'Update' :
+                'Save'}}</button>
+            <!-- <button class="mr-4" (click)="onSave()"
+                mat-raised-button>{{modalData.PharmacyId ? 'Update' : 'Save'}}</button> -->
+            <button mat-raised-button (click)="closeDialog()" [mat-dialog-close]>
+                <img style="margin-right: 5px;" src="../../../../../assets/packapill-icons/multiply-16.png">Close
+            </button>
+        </div>
+    </div>
+    <perfect-scrollbar style="max-width: 100%; max-height: 620px">
+
+        <div class="phrm-body">
+            <form name=" pharmacyForm" [formGroup]="pharmacyForm" novalidate fxLayout="column">
+                <!--Pharmacy Information -->
+                <div class="sec-div" fxLayout="row" fxLayoutAlign="start">
+                    <h3>
+                        <p class="htxt">Pharmacy Information</p>
+                    </h3>
+                </div>
+                <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" style="margin-left: 60px;">
+                    <div class="mr-4 cls-top">
+                        <p style="text-align: center;">Logo</p>
+                        <input type="file" accept="image/*" id="fileLoader" #fileLoader name="files" title="Load File"
+                            hidden />
+                        <img (click)="this.loginDetails.RoleId==1? getImages(fileLoader): null"
+                            style="max-width: 60px;max-height: 50px;border-radius: 50px;" src="{{base64Image}}"
+                            (error)="commonServices.errorProfileImage($event)">
+                    </div>
+                    <div class="mr-4 cls-top">
+                        <p>Pharmacy Group<small style="color: red;">*</small></p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <mat-select required formControlName="PharmacyGrpId">
+                                <mat-option>- None -</mat-option>
+                                <mat-option *ngFor="let item of pharmacyGroup" [value]="item.PharmacyGrpId">
+                                    {{item.PharmacyGrpName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mr-4 cls-top">
+                        <p>Pharmacy Name<small style="color: red;">*</small></p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <input matInput formControlName="PharmacyName" name="PharmacyName" required>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mr-4 cls-top">
+                        <p>Technical Contact Name<small style="color: red;">*</small></p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <input matInput formControlName="ContactPersonName" name="ContactPersonName" required>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mr-4 cls-top">
+                        <p>Pharmacy Off Set<small style="color: red;">*</small></p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <mat-select required formControlName="PharmacyOffSet">
+                                <mat-option>- None -</mat-option>
+                                <mat-option *ngFor="let item of pharmacyOffSet" [value]="item.id">
+                                    {{item.UserName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                </div>
+
+                <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" style="margin-left: 60px;">
+                    <div class="mr-4 cls-top">
+                        <p>Service Fee<small style="color: red;">*</small></p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <input matInput formControlName="ServiceFee" (focusout)="setDecimal(1, $event)"
+                                (keypress)="commonServices.validateDigit($event)" name="ServiceFee" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="mr-4 cls-top">
+                        <p>Delivery Fee<small style="color: red;">*</small></p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <input matInput formControlName="DeliveryCharge" (focusout)="setDecimal(2, $event)"
+                                (keypress)="commonServices.validateDigit($event)" name="DeliveryCharge" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="mr-4 cls-top">
+                        <p>Convenience Fee</p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <input matInput formControlName="ConvenienceFee" (focusout)="setDecimal(3, $event)"
+                                (keypress)="commonServices.validateDigit($event)" name="ConvenienceFee">
+                        </mat-form-field>
+                    </div>
+                    <div class="mr-4 cls-top">
+                        <p>Return Prescription Fee</p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <input matInput formControlName="ReturnPrescriptionFee" (focusout)="setDecimal(6, $event)"
+                                (keypress)="commonServices.validateDigit($event)" name="ReturnPrescriptionFee">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- </div> -->
+                <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" style="margin-left: 60px;">
+                    <!-- <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" fxLayout.xs="column"
+                        fxLayout.lg="column"> -->
+
+                    <div class="mr-4 cls-top">
+                        <p>Payment Processing Fee <small style="color: red;">*</small></p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <input style="width: 90%;" (focusout)="setDecimal(4, $event)" matInput
+                                formControlName="PaymentProcessingFee" (keypress)="commonServices.validateDigit($event)"
+                                name="PaymentProcessingFee" required><i>%</i>
+                        </mat-form-field>
+                    </div>
+                    <div class="mr-4 cls-top">
+                        <p>Transaction Fee<small style="color: red;">*</small></p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <input matInput formControlName="TransactionFee" (focusout)="setDecimal(5, $event)"
+                                (keypress)="commonServices.validateDigit($event)" name="TransactionFee" required>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mr-4 cls-top">
+                        <p>Fee Per Script</p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <input matInput formControlName="PerScriptFee" (focusout)="setDecimal(7, $event)"
+                                (keypress)="commonServices.validateDigit($event)" name="PerScriptFee">
+                        </mat-form-field>
+                    </div>
+                    <div class="mr-4 cls-top">
+                        <p>Commission On OTC</p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <input style="width: 90%;" (focusout)="setDecimal(8, $event)" matInput
+                                formControlName="OFees" (keypress)="commonServices.validateDigit($event)"
+                                name="OFees"><i>%</i>
+                        </mat-form-field>
+                    </div>
+
+                </div>
+                <!-- </div> -->
+
+                <div *ngIf="this.loginDetails.RoleId==1" fxLayout="row" fxLayout.sm="column" fxLayout.md="column"
+                    style="margin-left: 60px;margin-bottom: 10px;">
+                    <div class="mr-4 cls-top">
+                        <p>OTCDB<small style="color: red;">*</small></p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <mat-select required value="0" formControlName="OTCDB">
+                                <mat-option *ngFor="let item of OTCDB" [value]="item.value">
+                                    {{item.Name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="mr-4 cls-top">
+                        <p>Stripe Connection Id</p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <input (focusout)="removeSpaces(this.pharmacyForm.get('StripeConnectId').value)" matInput
+                                formControlName="StripeConnectId" name="StripeConnectId">
+                        </mat-form-field>
+                    </div>
+                    <div class="mr-4 cls-top">
+                        <p>Store Id<small style="color: red;">*</small></p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <input matInput (keypress)="commonServices.validateDigit($event)" formControlName="StoreId"
+                                name="StoreId " required>
+                        </mat-form-field>
+                    </div>
+                    <div class="mr-4 cls-top" style="margin-top: 25px;">
+                        <mat-checkbox formControlName="IsPharmacyDelivery">
+                            Is Pharmacy own delivery
+                        </mat-checkbox>
+                    </div>
+
+                    <div *ngIf="this.modalData.StripeConnectId != '' && this.modalData.StripeConnectId != null && !this.modalData.StripeDetailsubmitted && !this.modalData.StripeBankDetailsubmitted && this.modalData.ValidStripeAccount;"
+                        class="mr-4 cls-top" style="margin-top: 1.5vw;">
+                        <button class="mr-4" (click)="addBnk()" mat-raised-button>Update Bank Details</button>
+                    </div>
+                </div>
+
+                <div *ngIf="this.loginDetails.RoleId==1" fxLayout="row" fxLayout.sm="column" fxLayout.md="column"
+                    style="margin-left: 60px;margin-bottom: 10px;">
+                    <div class="mr-4 cls-top">
+                        <p>On Demand Price</p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <input (keypress)="commonServices.validateDigit($event)" matInput
+                                formControlName="OnDemandPrice" name="OnDemandPrice">
+                        </mat-form-field>
+                    </div>
+                    <div class="mr-4 cls-top">
+                        <p>Medical Certificate Price</p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <input matInput (keypress)="commonServices.validateDigit($event)"
+                                formControlName="MedicalCertificatePrice" name="MedicalCertificatePrice">
+                        </mat-form-field>
+                    </div>
+                    <div class="mr-4 cls-top">
+                        <p>On Demand Code</p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <input matInput formControlName="OnDemandCode" name="OnDemandCode">
+                        </mat-form-field>
+                    </div>
+                    <div class="mr-4 cls-top">
+                        <p>Medical Certificate Code</p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <input matInput formControlName="MedicalCertificateCode" name="MedicalCertificateCode">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" style="margin-left: 60px">
+                    <div class="mr-4 cls-top">
+                        <p>Create Order Delivery Fee<small style="color: red">*</small></p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <input matInput formControlName="CreateOrderDeliveryFee" (focusout)="setDecimal(11, $event)"
+                                (keypress)="commonServices.validateDigit($event)" name="CreateOrderDeliveryFee"
+                                required />
+                        </mat-form-field>
+                    </div>
+                    <div class="mr-4 cls-top">
+                        <p>Long Distance Delivery Fee</p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <input matInput formControlName="LongDistanceDeliveryFee"
+                                (focusout)="setDecimal(12, $event)" (keypress)="commonServices.validateDigit($event)"
+                                name="LongDistanceDeliveryFee" required />
+                        </mat-form-field>
+                    </div>
+                    <div class="mr-4 cls-top">
+                        <p>Vendor Id</p>
+                        <mat-form-field class="pharmtxt-area"
+                            [ngClass]="loginDetails.RoleId==1?'class-enable1-repeat': 'class-disabled1-repeat'"
+                            appearance="outline">
+                            <input matInput formControlName="VendorId" name="VendorId" />
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div *ngIf="this.loginDetails.RoleId==1" fxLayout="row" fxLayout.sm="column" fxLayout.md="column"
+                    style="margin-left: 60px;margin-bottom: 10px;">
+                    <div class="mr-4 cls-top">
+                        <p
+                            *ngIf="this.modalData !=null && this.modalData !=undefined && this.modalData.PharmacyId !=null && this.modalData.PharmacyId >0">
+                            WOS QR Code</p>
+                        <img *ngIf="WosQrCode !=null && WosQrCode !=''"
+                            style="max-width: 60px;max-height: 50px;border-radius: 50px;" src="{{WosQrCode}}"
+                            (error)="commonServices.errorProfileImage($event)">
+                        <div *ngIf="this.modalData !=null && this.modalData !=undefined && this.modalData.PharmacyId !=null && this.modalData.PharmacyId >0"
+                            class="mr-4 cls-top">
+                            <button *ngIf="WosQrCode ==null || WosQrCode ==''" mat-raised-button
+                                (click)="GenerateQRWOSImage()">
+                                Generate
+                            </button>
+                            <a *ngIf="WosQrCode !=null && WosQrCode !='' && WosQrCode!=undefined"
+                                style="text-decoration: underline;margin-left: 10px;" href="{{WosQrCode}}"
+                                download="qrwosimage">Download</a>
+                            <!-- <span *ngIf="WosQrCode !=null && WosQrCode !='' && WosQrCode!=undefined"
+                                style="margin-left: 10px;" class="copy-link"
+                                (click)="copyUrl(modalData.WosQrBranch)">Copy link</span> -->
+                        </div>
+                    </div>
+
+                    <div class="mr-4 cls-top">
+                        <p
+                            *ngIf="this.modalData !=null && this.modalData !=undefined && this.modalData.PharmacyId !=null && this.modalData.PharmacyId >0">
+                            QR Code</p>
+                        <img *ngIf="QrCode !=null && QrCode !=''"
+                            style="max-width: 60px;max-height: 50px;border-radius: 50px;" src="{{QrCode}}"
+                            (error)="commonServices.errorProfileImage($event)">
+                        <div *ngIf="this.modalData !=null && this.modalData !=undefined && this.modalData.PharmacyId !=null && this.modalData.PharmacyId >0"
+                            class="mr-4 cls-top">
+                            <button *ngIf="QrCode ==null || QrCode ==''" mat-raised-button (click)="GenerateQRImage()">
+                                Generate
+                            </button>
+                            <a *ngIf="QrCode !=null && QrCode !='' && QrCode!=undefined"
+                                style="text-decoration: underline;margin-left: 10px;" href="{{QrCode}}"
+                                download="qrimage">Download</a>
+                            <!-- <span *ngIf="QrCode !=null && QrCode !='' && QrCode!=undefined" style="margin-left: 10px;"
+                                class="copy-link" (click)="copyUrl(modalData.BranchUrl)">Copy link</span> -->
+                        </div>
+                    </div>
+
+                    <div class="mr-4 cls-top">
+                        <p
+                            *ngIf="this.modalData !=null && this.modalData !=undefined && this.modalData.PharmacyId !=null && this.modalData.PharmacyId >0">
+                            GP Consults QR Code</p>
+                        <img *ngIf="QrCodeTelehealthBooking !=null && QrCodeTelehealthBooking !=''"
+                            style="max-width: 60px;max-height: 50px;border-radius: 50px;"
+                            src="{{QrCodeTelehealthBooking}}" (error)="commonServices.errorProfileImage($event)">
+                        <div *ngIf="this.modalData !=null && this.modalData !=undefined && this.modalData.PharmacyId !=null && this.modalData.PharmacyId >0"
+                            class="mr-4 cls-top">
+                            <button *ngIf="QrCodeTelehealthBooking ==null || QrCodeTelehealthBooking ==''"
+                                mat-raised-button (click)="GenerateQRImageTelehealth()">
+                                Generate
+                            </button>
+                            <a *ngIf="QrCodeTelehealthBooking !=null && QrCodeTelehealthBooking !='' && QrCodeTelehealthBooking!=undefined"
+                                style="text-decoration: underline;margin-left: 10px;" href="{{QrCodeTelehealthBooking}}"
+                                download="qrgpimage">Download</a>
+                            <span
+                                *ngIf="QrCodeTelehealthBooking !=null && QrCodeTelehealthBooking !='' && QrCodeTelehealthBooking!=undefined"
+                                style="margin-left: 10px;" class="copy-link"
+                                (click)="copyUrl(modalData.TelehealthBranchUrl)">Copy link</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="phrm-body" style="margin: 10px;">
+                            <form name="pharmacyForm" [formGroup]="pharmacyForm" novalidate fxLayout="column">
+                                <div class="sec-div" fxLayout.lg="column" fxLayout.xl="column" fxLayoutAlign="start">
+                                    <h3 class="headerborder">
+                                        <p class="htxt">DoorDash</p>
+                                    </h3>
+                                </div>
+                                <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column"
+                                    style="margin-left: 55px;">
+                                    <div class="mr-4 cls-top togclr align-c">
+                                        <mat-slide-toggle
+                                            [ngClass]="loginDetails.RoleId==1?'class-enable1-repeat': 'class-disabled1-repeat'"
+                                            formControlName="IsDD">Active</mat-slide-toggle>
+                                    </div>
+                                    <div class="mr-4 cls-top togclr align-c">
+                                        <mat-slide-toggle
+                                            (change)="changeDDOnline(pharmacyForm.controls['IsDDOnline'].value)"
+                                            [ngClass]="loginDetails.RoleId==1?'class-enable1-repeat': 'class-disabled1-repeat'"
+                                            formControlName="IsDDOnline">Online</mat-slide-toggle>
+                                    </div>
+                                    <div class="mr-4 cls-top DDdeactivate" style="padding-left: 12%;"
+                                        *ngIf="pharmacyForm.controls['DoorDashStoreId'].value != '' && !pharmacyForm.controls['IsDDOnline'].value">
+                                        <p>DoorDash reason <small *ngIf="!pharmacyForm.controls['IsDDOnline'].value"
+                                                style="color: red;">*</small></p>
+                                        <mat-form-field class="pharmtxt-area" appearance="outline"
+                                            [ngClass]="loginDetails.RoleId==1?'class-enable1-repeat': 'class-disabled1-repeat'">
+                                            <mat-select placeholder="--please select reason--" value="0"
+                                                formControlName="DDOnlineReasonId">
+                                                <mat-option>- None -</mat-option>
+                                                <mat-option *ngFor="let item of DDReasonList" [value]="item.id">
+                                                    {{item.UserName}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column"
+                                    style="margin-left: 55px;margin-bottom: 10px;">
+                                    <div class="mr-4 cls-top">
+                                        <p>Store ID</p>
+                                        <mat-form-field
+                                            [ngClass]="loginDetails.RoleId==1?'class-enable1-repeat': 'class-disabled1-repeat'"
+                                            class="pharmtxt-area" appearance="outline">
+                                            <input
+                                                [ngClass]="loginDetails.RoleId==1?'class-enable1-repeat': 'class-disabled1-repeat'"
+                                                matInput type="text" formControlName="DoorDashStoreId"
+                                                name="DoorDashStoreID">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="mr-4 cls-top">
+                                        <p>OTC Price(%)</p>
+                                        <mat-form-field class="pharmtxt-area"
+                                            [ngClass]="loginDetails.RoleId==1?'class-enable1-repeat': 'class-disabled1-repeat'"
+                                            appearance="outline">
+                                            <input
+                                                [ngClass]="loginDetails.RoleId==1?'class-enable1-repeat': 'class-disabled1-repeat'"
+                                                style="width: 90%;" matInput
+                                                (keypress)="commonServices.validateDigit($event)"
+                                                (focusout)="this.pharmacyForm.controls['DDOTCPercentage'].value != null && this.pharmacyForm.controls['DDOTCPercentage'].value != '' ? setDecimal(9, $event) : false"
+                                                formControlName="DDOTCPercentage" name="DDOTCPercentage"><i>%</i>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="phrm-body" style="margin: 10px;">
+                            <form name="pharmacyForm" [formGroup]="pharmacyForm" novalidate fxLayout="column">
+                                <div class="sec-div" fxLayout.lg="column" fxLayout.xl="column" fxLayoutAlign="start">
+                                    <h3 class="headerborder">
+                                        <p class="htxt">Uber Eats</p>
+                                    </h3>
+                                </div>
+                                <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column"
+                                    style="margin-left: 55px;margin-bottom: 20px;">
+                                    <div class="mr-4 cls-top togclr">
+                                        <mat-slide-toggle
+                                            [ngClass]="loginDetails.RoleId==1?'class-enable1-repeat': 'class-disabled1-repeat'"
+                                            formControlName="IsUE">Active</mat-slide-toggle>
+                                    </div>
+                                    <div class="mr-4 cls-top togclr">
+                                        <mat-slide-toggle
+                                            [ngClass]="loginDetails.RoleId==1?'class-enable1-repeat': 'class-disabled1-repeat'"
+                                            formControlName="IsUEOnline">Online</mat-slide-toggle>
+                                    </div>
+                                </div>
+                                <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column"
+                                    style="margin-left: 55px;margin-bottom: 10px;">
+                                    <div class="mr-4 cls-top">
+                                        <p>Store ID</p>
+                                        <mat-form-field
+                                            [ngClass]="loginDetails.RoleId==1?'class-enable1-repeat': 'class-disabled1-repeat'"
+                                            class="pharmtxt-area" appearance="outline">
+                                            <input
+                                                [ngClass]="loginDetails.RoleId==1?'class-enable1-repeat': 'class-disabled1-repeat'"
+                                                matInput type="text" formControlName="UberEatsStoreId"
+                                                name="UberEatsStoreID">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="mr-4 cls-top">
+                                        <p>OTC Price(%)</p>
+                                        <mat-form-field
+                                            [ngClass]="loginDetails.RoleId==1?'class-enable1-repeat': 'class-disabled1-repeat'"
+                                            class="pharmtxt-area" appearance="outline">
+                                            <input
+                                                [ngClass]="loginDetails.RoleId==1?'class-enable1-repeat': 'class-disabled1-repeat'"
+                                                style="width: 90%;" matInput
+                                                (keypress)="commonServices.validateDigit($event)"
+                                                (focusout)="this.pharmacyForm.controls['UEOTCPercentage'].value != null && this.pharmacyForm.controls['UEOTCPercentage'].value != '' ? setDecimal(10, $event) : false"
+                                                formControlName="UEOTCPercentage" name="DDOTCPercentage"><i>%</i>
+                                        </mat-form-field>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="phrm-body">
+            <!-- Pharmacy Contact Information -->
+            <form name="pharmacyForm" [formGroup]="pharmacyForm" novalidate fxLayout="column">
+                <div class="sec-div" fxLayout="row" fxLayoutAlign="start">
+                    <h3 class="headerborder">
+                        <p class="htxt">Pharmacy Contact Information</p>
+                    </h3>
+                </div>
+                <!-- Section-1 -->
+                <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" style="margin-left: 60px;">
+
+                    <!-- <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" fxLayout.xs="column"
+                        fxLayout.lg="column"> -->
+
+                    <div class="mr-4 cls-top">
+                        <p>Email 1<small style="color: red;">*</small></p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <!-- <mat-label class="header-text">First Name</mat-label> -->
+                            <input matInput type="email" formControlName="Email1" name="Email1" required>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mr-4 cls-top">
+                        <p>Email 2</p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <!-- <mat-label class="header-text">Last Name</mat-label> -->
+                            <input matInput type="email" formControlName="Email2" name="Email2">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mr-4 cls-top">
+                        <p>Phone 1<small style="color: red;">*</small></p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <!-- <mat-label class="header-text">Phone</mat-label> -->
+                            <input matInput (ngModelChange)="onChangeByMob($event,2)" type="tel" [maxlength]="MobLength"
+                                [textMask]="{mask: mobMask,guide:false}" formControlName="Phoneno1" name="Phoneno1"
+                                required>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mr-4 cls-top">
+                        <p>Phone 2</p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <!-- <mat-label class="header-text">Phone</mat-label> -->
+                            <input matInput (ngModelChange)="onChangeByMob($event, 1)" type="tel"
+                                [maxlength]="MobLength2" [textMask]="{mask: mobMask2,guide:false}"
+                                formControlName="Phoneno2" name="Phoneno2">
+                        </mat-form-field>
+                    </div>
+
+                    <!-- </div> -->
+                </div>
+                <!-- Section-2 -->
+                <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" style="margin-left: 60px;">
+                    <!-- <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" fxLayout.xs="column"
+                        fxLayout.lg="column"> -->
+                    <div class="mr-4 cls-top">
+                        <p>City<small style="color: red;">*</small></p>
+
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <!-- <mat-label class="header-text">City</mat-label> -->
+                            <input matInput formControlName="City" name="city" />
+                        </mat-form-field>
+                    </div>
+                    <div class="mr-4 cls-top">
+                        <p>Select State<small style="color: red;">*</small></p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <mat-select value="0" formControlName="StateId">
+                                <input class="searchfilter" matInput placeholder="Search"
+                                    (keyup)="searchStatesFilter($event.target.value, true)">
+                                <mat-option value="0">
+                                    choose the state
+                                </mat-option>
+                                <mat-option *ngFor="let item of statesList" [value]="item.id">
+                                    {{item.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mr-4 cls-top">
+                        <p>Country<small style="color: red;">*</small></p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <mat-select value="0" formControlName="CountryId">
+                                <mat-option value="0">
+                                    choose the country
+                                </mat-option>
+                                <mat-option *ngFor="let item of countryList" [value]="item.id">
+                                    {{item.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="mr-4 cls-top">
+                        <p>Postcode<small style="color: red;">*</small></p>
+
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <!-- <mat-label class="header-text">Pin Code</mat-label> -->
+                            <input matInput formControlName="Pincode" name="PinCode">
+                        </mat-form-field>
+                    </div>
+                    <!-- </div> -->
+
+                </div>
+
+                <!-- Section-3 -->
+                <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" style="margin-left: 60px;">
+                    <!-- <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" fxLayout.xs="column"
+                        fxLayout.lg="column"> -->
+
+                    <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" fxLayout.xs="column"
+                        fxLayout.lg="column">
+                        <div class="mr-4 cls-top">
+                            <p>Address<small style="color: red;">*</small></p>
+                            <mat-form-field appearance="outline" style="width: 500px !important;">
+                                <textarea matInput rows="5" formControlName="Address" name="Address" autocorrect="off"
+                                    (focus)="commonServices.setAutoFillOff($event)" autocapitalize="off"
+                                    spellcheck="off" #search required></textarea>
+                                <!-- <textarea formControlName="Address" matInput rows="4" autocorrect="off"
+                                    autocapitalize="off" spellcheck="off" class="form-control" #search
+                                    [formControl]="searchControl"></textarea> -->
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <!-- 
+                    <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" fxLayout.xs="column"
+                        fxLayout.lg="column">
+
+                        <div class="mr-4 cls-top">
+                            <p>Pharmacy Notes</p>
+                            <mat-form-field appearance="outline" style="width: 500px !important;">
+                                <textarea matInput rows="5" formControlName="PharmacyNotes"
+                                    name="PharmacyNotes"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div> -->
+                </div>
+
+                <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" style="margin-left: 60px;">
+                    <div class="mr-4 cls-top">
+                        <p>Fax No<small style="color: red;">*</small></p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <!-- <input matInput formControlName="FaxId" name="faxId"> -->
+                            <input matInput (ngModelChange)="onFaxchange($event)" type="tel" [maxlength]="faxLength"
+                                [textMask]="{mask: faxMask,guide:false}" formControlName="FaxId" name="FaxId" required>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mr-4 cls-top">
+                        <p>Latitude<small style="color: red;">*</small></p>
+                        <mat-form-field class="pharmpb-area" appearance="outline">
+                            <input readonly matInput formControlName="Latitude" name="Latitude">
+                        </mat-form-field>
+                    </div>
+                    <div class="mr-4 cls-top">
+                        <p>Longitude<small style="color: red;">*</small></p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <input readonly matInput formControlName="Longitude" name="Longitude">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="phrm-body">
+            <div class="sec-div" fxLayout="row" fxLayoutAlign="start">
+                <h3 class="headerborder">
+                    <p class="htxt">Pharmacy Schedule Information</p>
+                </h3>
+            </div>
+            <form name=" pharmacyForm" [formGroup]="pharmacyForm" novalidate fxLayout="column">
+                <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" style="margin-left: 60px;">
+                    <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" fxLayout.xs="column"
+                        fxLayout.lg="column">
+                        <div class="col-md-4 cls-top">
+                            <mat-checkbox formControlName="AvailableDelivery">
+                                Delivery
+                            </mat-checkbox>
+                        </div>
+                    </div>
+
+                    <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" fxLayout.xs="column"
+                        fxLayout.lg="column">
+                        <div class="col-md-4 cls-top">
+                            <mat-checkbox formControlName="AvailablePickup">
+                                Pickup
+                            </mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <mat-tab-group animationDuration="800ms" mat-align-tabs="center" style="min-height: 469px;">
+                <mat-tab label="Delivery">
+
+                    <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column">
+                        <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" fxLayout.xs="column"
+                            fxLayout.lg="column" style="width: 100%; border-radius: 12px;">
+                            <form name="pharmacyForm" [formGroup]="pharmacyForm" novalidate fxLayout="column"
+                                style="padding-left: 2px;width: 100%;">
+                                <mat-table #table [dataSource]="dataSource" style="border-radius: 12px;">
+                                    <ng-container matColumnDef="WeekDays">
+                                        <mat-header-cell *matHeaderCellDef>Working Days</mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.Days}} </mat-cell>
+                                    </ng-container>
+                                    <ng-container matColumnDef="OpeningHours">
+                                        <mat-header-cell *matHeaderCellDef>From</mat-header-cell>
+                                        <mat-cell *matCellDef="let element;let i = index">
+                                            <input formControlName="OpeningHours" class="col-md-5"
+                                                (input)="dataSource.data[i].OpeningHours = $event.target.value" matInput
+                                                type="time" [value]="element.OpeningHours">
+                                            <!-- <mat-select style="height: 20px;width: 60px;" [value]=element.OpeningFormat>
+                                        <mat-option [value]="Otrue" (click)="dataSource.data[i].OpeningFormat = true">AM
+                                        </mat-option>
+                                        <mat-option [value]="Ofalse" (click)="dataSource.data[i].OpeningFormat = false">
+                                            PM</mat-option>
+                                    </mat-select> -->
+                                        </mat-cell>
+                                    </ng-container>
+                                    <ng-container matColumnDef="ClosingHours">
+                                        <mat-header-cell *matHeaderCellDef>To</mat-header-cell>
+                                        <mat-cell *matCellDef="let element;let i = index"><input
+                                                formControlName="ClosingHours" class="col-md-5 end"
+                                                (input)="dataSource.data[i].ClosingHours = $event.target.value" matInput
+                                                type="time" [value]="element.ClosingHours">
+                                            <!-- <mat-select style="height: 20px;width: 60px;" [value]=element.ClosingFormat>
+                                        <mat-option [value]="Ctrue" (click)="dataSource.data[i].ClosingFormat = true">AM
+                                        </mat-option>
+                                        <mat-option [value]="Cfalse" (click)="dataSource.data[i].ClosingFormat = false">
+                                            PM</mat-option>
+                                    </mat-select> -->
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <mat-header-row style="border-radius: 0 0 12px 12px;"
+                                        *matHeaderRowDef="displayedColumnsDay; sticky: true">
+                                    </mat-header-row>
+                                    <mat-row style="border-radius: 0 0 12px 12px;"
+                                        *matRowDef="let row; columns: displayedColumnsDay;">
+                                    </mat-row>
+                                </mat-table>
+                            </form>
+                        </div>
+                    </div>
+
+                </mat-tab>
+                <mat-tab label="Pickup">
+                    <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column">
+                        <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" fxLayout.xs="column"
+                            fxLayout.lg="column" style="width: 100%; border-radius: 12px;">
+                            <form name="pharmacyForm" [formGroup]="pharmacyForm" novalidate fxLayout="column"
+                                style="padding-left: 2px;width: 100%;">
+                                <mat-table #table [dataSource]="dataSource2" style="border-radius: 12px;">
+                                    <ng-container matColumnDef="WeekDays">
+                                        <mat-header-cell *matHeaderCellDef>Working Days</mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.Days}} </mat-cell>
+                                    </ng-container>
+                                    <ng-container matColumnDef="OpeningHours">
+                                        <mat-header-cell *matHeaderCellDef>From</mat-header-cell>
+                                        <mat-cell *matCellDef="let element;let i = index">
+                                            <input formControlName="OpeningHours" class="col-md-5"
+                                                (input)="dataSource2.data[i].OpeningHours = $event.target.value"
+                                                matInput type="time" [value]="element.OpeningHours">
+                                            <!-- <mat-select style="height: 20px;width: 60px;" [value]=element.OpeningFormat>
+                                                        <mat-option [value]="Otrue" (click)="dataSource2.data[i].OpeningFormat = true">AM
+                                                        </mat-option>
+                                                        <mat-option [value]="Ofalse" (click)="dataSource2.data[i].OpeningFormat = false">
+                                                            PM</mat-option>
+                                                    </mat-select> -->
+                                        </mat-cell>
+                                    </ng-container>
+                                    <ng-container matColumnDef="ClosingHours">
+                                        <mat-header-cell *matHeaderCellDef>To</mat-header-cell>
+                                        <mat-cell *matCellDef="let element;let i = index"><input
+                                                formControlName="ClosingHours" class="col-md-5 end"
+                                                (input)="dataSource2.data[i].ClosingHours = $event.target.value"
+                                                matInput type="time" [value]="element.ClosingHours">
+                                            <!-- <mat-select style="height: 20px;width: 60px;" [value]=element.ClosingFormat>
+                                                        <mat-option [value]="Ctrue" (click)="dataSource.data[i].ClosingFormat = true">AM
+                                                        </mat-option>
+                                                        <mat-option [value]="Cfalse" (click)="dataSource.data[i].ClosingFormat = false">
+                                                            PM</mat-option>
+                                                    </mat-select> -->
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <mat-header-row style="border-radius: 0 0 12px 12px;"
+                                        *matHeaderRowDef="displayedColumnsDay; sticky: true">
+                                    </mat-header-row>
+                                    <mat-row style="border-radius: 0 0 12px 12px;"
+                                        *matRowDef="let row; columns: displayedColumnsDay;">
+                                    </mat-row>
+                                </mat-table>
+                            </form>
+                        </div>
+                    </div>
+
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+
+    </perfect-scrollbar>
+</div>

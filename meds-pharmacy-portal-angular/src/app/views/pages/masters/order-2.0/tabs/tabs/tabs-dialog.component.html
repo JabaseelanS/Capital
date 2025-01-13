@@ -1,0 +1,28 @@
+<div class="top">
+    <div class="dialog-header" fxLayout="row" fxLayoutAlign="space-between"
+        style="padding: 2% 2% 1% 20px;background-color: #f4f4f4;">
+        <div fxLayout="row" fxLayoutAlign="start">
+            <h3 class="headerborder">
+                <p class="header-text" style="background-color: #f4f4f4;">{{dialogData.action == 'view' ? 'ViewMedicine'
+                    :'Add Medicine'}}</p>
+            </h3>
+        </div>
+
+        <div>
+            <button *ngIf="dialogData.action != 'view'" class="mr-4" (click)="onSave()" mat-raised-button>
+                <img style="margin-right: 5px;"
+                    src="../../../../../assets\orderv2\packapill_portal_icons\Elements\Petrol.svg">
+                Save</button>
+            <!-- <button class="mr-4" (click)="onSave()"
+                    mat-raised-button>{{modalData.PharmacyId ? 'Update' : 'Save'}}</button> -->
+            <button mat-raised-button (click)="closeDialog()" [mat-dialog-close]>
+                <img style="margin-right: 5px;" src="../../../../../assets/packapill-icons/multiply-16.png">Close
+            </button>
+        </div>
+    </div>
+    <div style="padding: 0px 16px 0 16px;">
+        <pp-medicine-list [selectedScript]="selectedScript"
+            [prescriptionDetailsDataSource]="prescriptionDetailsDataSource" [isView]="isView">
+        </pp-medicine-list>
+    </div>
+</div>

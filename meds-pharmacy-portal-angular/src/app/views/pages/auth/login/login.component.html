@@ -1,0 +1,79 @@
+<div class="form-pill" style="display: table;">
+    <div class="login100-form-img">
+        <img style="height: 40%;width: 40%;margin-left: 30%;"
+            src="../../../../assets/packapill-icons/PharmacyPortalLogin.svg">
+    </div>
+    <form class="login100-form bg-g" [formGroup]="loginForm" autocomplete="nope">
+        <div class="rounded-icon">
+            <img class="w-43p" src="../../../../assets/icons/hola-icon1.svg">
+        </div>
+
+        <div class="form-group">
+            <mat-form-field class="login-tbg rob _11px l-c " appearance="legacy">
+                <mat-label>{{ 'AUTH.INPUT.EMAIL' | translate }}</mat-label>
+                <input matInput type="email" placeholder="{{ 'AUTH.INPUT.EMAIL' | translate }}" formControlName="email"
+                    autocomplete="nope" />
+                <mat-error *ngIf="isControlHasError('email','required')">
+                    <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('email','email')">
+                    <strong>{{ 'AUTH.VALIDATION.INVALID_INPUT' | translate }}</strong>
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('email','minLength')">
+                    <strong>{{ 'AUTH.VALIDATION.MIN_LENGTH_FIELD' | translate }} 3</strong>
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('email','maxLength')">
+                    <strong>{{ 'AUTH.VALIDATION.MAX_LENGTH_FIELD' | translate }} 320</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0px;">
+            <mat-form-field appearance="legacy" class="login-tbg rob _11px l-c ">
+                <mat-label>{{ 'AUTH.INPUT.PASSWORD' | translate }}</mat-label>
+                <input matInput [type]="hide ? 'text':'password'" placeholder="{{ 'AUTH.INPUT.PASSWORD' | translate }}"
+                    formControlName="password" autocomplete="nope" />
+                <button mat-icon-button matSuffix>
+                    <mat-icon (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}
+                    </mat-icon>
+                </button>
+                <mat-error *ngIf="isControlHasError('password','required')">
+                    <strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('password','minLength')">
+                    <strong>{{ 'AUTH.VALIDATION.MIN_LENGTH_FIELD' | translate }} 3</strong>
+                </mat-error>
+                <mat-error *ngIf="isControlHasError('password','maxLength')">
+                    <strong>{{ 'AUTH.VALIDATION.MAX_LENGTH_FIELD' | translate }} 100</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="pwd">
+            <div style="width: 100%;margin-top: 6px;">
+                <button class="txt1 fpcolor" (click)="forgot()">
+                    Forgot Password
+                </button>
+            </div>
+        </div>
+
+
+        <div class="container-login100-form-btn" style="width:100%;margin-top: 18%;">
+            <button class="log-btn dark-petrol white rob-b  _11px" (click)="login()">
+                <span style="margin-left: 35%;">Login</span> <img style="margin-left: 35%;"
+                    src="../../../../../assets/packapill-icons/right-24.png">
+            </button>
+        </div>
+        <div class="txt-div">
+
+            <!-- <div>
+                Don't have an account?<a routerLink="/auth/forgot-password" class="txt2">
+                    Sign up
+                </a>
+            </div> -->
+        </div>
+
+    </form>
+    <div style="margin-top: -25px;margin-right: 10px;float: right;">v 3.0.6</div>
+
+</div>

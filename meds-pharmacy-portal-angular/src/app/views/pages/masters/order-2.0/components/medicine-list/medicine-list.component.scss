@@ -1,0 +1,109 @@
+.max-h-210 {
+    max-height: 210px;
+}
+
+.max-h-400 {
+    max-height: 350px;
+}
+
+.row-style {
+    background-color: #fff;
+    border-bottom-width: 0px;
+    margin-bottom: 14px;
+    border-radius: 6px;
+}
+
+.top-style {
+    margin-bottom: 18px;
+    height: 225px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    // margin-top: 24px;
+}
+
+.table-hd-div {
+    background-color: #f4f4f4;
+    height: 340px;
+    width: 100%;
+    border-radius: 8px;
+    padding-bottom: 14px;
+}
+
+::ng-deep .medlist {
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+        // background-color: #e8f1e8 !important;
+        background: white;
+        color: transparent !important;
+        top: 1.25em !important;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-outline-end,
+    .mat-form-field-appearance-outline .mat-form-field-outline-start {
+        border: none !important;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-infix {
+        padding: 2vh 0 1vh 0 !important;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-prefix,
+    .mat-form-field-appearance-outline .mat-form-field-suffix {
+        top: 0 !important;
+    }
+}
+
+.table-n {
+    background: #f8f8f8 !important;
+}
+
+.raise-btn {
+    min-width: 70px !important;
+    padding: 0px !important;
+}
+
+.tot {
+    margin-right: 2vh;
+    font-size: large;
+    color: #005760;
+    font-weight: 600;
+}
+
+::ng-deep .merr-a {
+    mat-form-field .mat-form-field-wrapper {
+        .mat-form-field-subscript-wrapper {
+            margin-top: 3px;
+            padding: 0;
+        }
+    }
+}
+
+.stockavail-text {
+    background-color: #005760;
+    padding: 0.2em 0.6em 0.3em;
+    font-size: 65%;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25em;
+    text-wrap: wrap;
+}
+
+.stockunavail-text {
+    background-color: #ff9978;
+    padding: 0.2em 0.6em 0.3em;
+    font-size: 65%;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25em;
+    text-wrap: wrap;
+}

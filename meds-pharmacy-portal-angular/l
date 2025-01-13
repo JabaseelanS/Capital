@@ -1,0 +1,114 @@
+[1mdiff --git a/angular.json b/angular.json[m
+[1mindex 95e07ee..7470287 100644[m
+[1m--- a/angular.json[m
+[1m+++ b/angular.json[m
+[36m@@ -22,6 +22,7 @@[m
+                         "main": "src/main.ts",[m
+                         "polyfills": "src/polyfills.ts",[m
+                         "tsConfig": "src/tsconfig.app.json",[m
+[32m+[m[32m                        "aot": false,[m
+                         "assets": [[m
+                             "src/favicon.ico",[m
+                             "src/assets",[m
+[1mdiff --git a/package.json b/package.json[m
+[1mindex 3094471..7b7ab97 100644[m
+[1m--- a/package.json[m
+[1m+++ b/package.json[m
+[36m@@ -122,4 +122,4 @@[m
+     "typescript": "3.5.3",[m
+     "webpack-bundle-analyzer": "^3.5.1"[m
+   }[m
+[31m-}[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/src/replace.build.js b/src/replace.build.js[m
+[1mdeleted file mode 100644[m
+[1mindex 7d7145d..0000000[m
+[1m--- a/src/replace.build.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,21 +0,0 @@[m
+[31m-var replaceFile = require('replace-in-file');[m
+[31m-var package = require("./package.json");[m
+[31m-var buildVersion = package.version;[m
+[31m-const options = {[m
+[31m-    files: 'src/environments/environment.prod.ts',[m
+[31m-    from: /version: '(.*)'/g,[m
+[31m-    to: "version: '" + buildVersion + "'",[m
+[31m-    allowEmptyPaths: false,[m
+[31m-};[m
+[31m-[m
+[31m-try {[m
+[31m-    let changeFiles = replaceFile.sync(options);[m
+[31m-    if (changeFiles == 0) {[m
+[31m-        throw "Please make sure file have version";[m
+[31m-    }[m
+[31m-    console.log('Build version set: ' + buildVersion);[m
+[31m-}[m
+[31m-catch (error) {[m
+[31m-    console.error('Error occurred:', error);[m
+[31m-    throw error[m
+[31m-}[m
+[1mdiff --git a/src/versioning.build.js b/src/versioning.build.js[m
+[1mdeleted file mode 100644[m
+[1mindex 55ce0a6..0000000[m
+[1m--- a/src/versioning.build.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,57 +0,0 @@[m
+[31m-var fs = require('fs');[m
+[31m-var path = require('path');[m
+[31m-var replaceFile = require('replace-in-file');[m
+[31m-var package = require("./package.json");[m
+[31m-var angular = require("./angular.json");[m
+[31m-var buildVersion = package.version;[m
+[31m-var buildPath = '\\';[m
+[31m-var defaultProject = angular.defaultProject;[m
+[31m-var appendUrl = '?v=' + buildVersion;[m
+[31m-[m
+[31m-const getNestedObject = (nestedObj, pathArr) => {[m
+[31m-    return pathArr.reduce((obj, key) =>[m
+[31m-        (obj && obj[key] !== 'undefined') ? obj[key] : undefined, nestedObj);[m
+[31m-}[m
+[31m-[m
+[31m-const relativePath = getNestedObject(angular, ['projects', defaultProject, 'architect', 'build', 'options', 'outputPath']); // relative build path[m
+[31m-buildPath += relativePath.replace(/[/]/g, '\\');[m
+[31m-var indexPath = __dirname + buildPath + '/' + 'index.html';[m
+[31m-[m
+[31m-console.log('Angular build path:', __dirname, buildPath);[m
+[31m-console.log('Change by buildVersion:', buildVersion);[m
+[31m-[m
+[31m-fs.readdir(__dirname + buildPath, (err, files) => {[m
+[31m-    files.forEach(file => {[m
+[31m-        if (file.match(/^(es2015-polyfills|main|polyfills|runtime|scripts|styles)+([a-z0-9.\-])*(js|css)$/g)) {[m
+[31m-            console.log('Current Filename:', file);[m
+[31m-            const currentPath = file;[m
+[31m-            const changePath = file + appendUrl;[m
+[31m-            changeIndex(currentPath, changePath);[m
+[31m-        }[m
+[31m-    });[m
+[31m-});[m
+[31m-[m
+[31m-function changeIndex(currentfilename, changedfilename) {[m
+[31m-[m
+[31m-    const options = {[m
+[31m-        files: indexPath,[m
+[31m-        from: '"' + currentfilename + '"',[m
+[31m-        to: '"' + changedfilename + '"',[m
+[31m-        allowEmptyPaths: false,[m
+[31m-    };[m
+[31m-[m
+[31m-    try {[m
+[31m-        let changedFiles = replaceFile.sync(options);[m
+[31m-        if (changedFiles == 0) {[m
+[31m-            console.log("File updated failed");[m
+[31m-        } else if (changedFiles[0].hasChanged === false) {[m
+[31m-            console.log("File already updated");[m
+[31m-        }[m
+[31m-        console.log('Changed Filename:', changedfilename);[m
+[31m-        // process.exit(1);[m
+[31m-    }[m
+[31m-    catch (error) {[m
+[31m-        console.error('Error occurred:', error);[m
+[31m-        throw error[m
+[31m-    }[m
+[31m-}[m
+\ No newline at end of file[m

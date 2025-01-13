@@ -1,0 +1,26 @@
+.pag-mat {
+    ::ng-deep .mat-paginator-page-size {
+        display: none;
+    }
+
+    ::ng-deep .mat-icon-button {
+        background-color: #005760;
+        color: #fff;
+        margin-left: 12px;
+    }
+}
+
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+    background-color: #005760;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: #f9f9f9;
+}
+
+// ::ng-deep .mat-slide-toggle:not(.mat-checked):not(.mat-disabled) .mat-slide-toggle-bar {
+//     background-color: #dbd8d8;
+// }
+// ::ng-deep  .mat-slide-toggle:not(.mat-checked):not(.mat-disabled) .mat-slide-toggle-thumb {
+//     background-color: #f9f9f9 ;
+// }

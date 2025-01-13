@@ -1,0 +1,76 @@
+<div class="parent-body">
+    <div fxLayout='row' class="n-s-h">
+        <div class="b-line rob col-3 tbox ml-20">
+            <!-- <mat-form-field appearance="legacy" class="w-100">
+                <mat-label>Search Order Type</mat-label>
+                <input #searchkey class="l-c rob-b _12px" matInput (keyup)="applyFilter($event.target.value)">
+            </mat-form-field> -->
+            <mat-form-field class="pharmtxt-area" appearance="legacy" class="w-100">
+                <mat-select placeholder="Choose report type" [(ngModel)]="search" class="arw"
+                    (selectionChange)="applyFilter($event.value)">
+                    <mat-option value="">Show All</mat-option>
+                    <mat-option *ngFor="let list of commonservices.reportlist" [value]="list.id">
+                        {{list.reportname}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6" style="text-align-last: end;"> <button (click)="Newreport(null)" mat-raised-button
+                matTooltip="Create new report" class="rob-b _12px dark-petrol white" type="button"> <img
+                    style="margin-right:5px;" src="../../../../../assets/packapill-icons/add-16.png"><span>
+                    Add New</span>
+            </button>
+        </div>
+    </div>
+    <div fxLayout='row'>
+        <perfect-scrollbar style="max-height: calc(70vh - 0px);background-color: #fff;">
+            <div class="rob" style="background-color: #fff;padding: 0px 18px 18px 18px;width: 100%;">
+                <table class="table table-striped ">
+                    <thead class="v2-h-lt rob-b _12px l-c">
+                        <tr>
+                            <th>Date</th>
+                            <th>Report Type</th>
+                            <th>From and To Date</th>
+                            <th>Files</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="report !=null && report.length >0" class="l-c">
+                        <tr *ngFor="let data of report | slice: lowValue : highValue;let i=index">
+                            <td class="b-no">{{data.CreatedOn | date : 'dd/MM/yyyy'}}</td>
+                            <td class="b-no">{{reporttype(data.ReportType)}}</td>
+                            <td class="b-no"> {{data.FromDate | date : 'dd/MM/yyyy'}} <span
+                                    *ngIf="data.FromDate!=null">-</span> {{data.ToDate | date
+                                : 'dd/MM/yyyy'}}</td>
+                            <td class=" b-no"><a class="underline pointer" matTooltip="Report Download"
+                                    (click)="downloadfile(data)">{{data.FileName}}</a></td>
+                            <td class="b-no">
+                                <!-- <button (click)="Newreport(data)" mat-raised-button
+                                    matTooltip="Create new report" class="rob-sm _12px dark-petrol white"
+                                    type="button"> <img style="margin-right:5px;"
+                                        src="../../../../../assets/packapill-icons/add-16.png"><span>
+                                        Newreport</span>
+
+                                </button> -->
+                                <!-- <button mat-icon-button matTooltip="Edit user" style="min-height: 34px;
+                                                              height: 34px;" (click)="Newreport(data)">
+                                    <img style="height: 18px;margin-top: -8px;"
+                                        src="../../../../../assets/packapill-icons/EditRed.svg">
+                                </button> -->
+                                <button matTooltip="Delete" type="button" mat-icon-button color="warn"
+                                    (click)="delete(data,i)"><img style="height: 18px;margin-top: -8px;"
+                                        src="../../../../../assets/packapill_portal_icons/delete.svg"></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="report.length == 0" class="rob-b r-c">
+                    No record found
+                </div>
+                <mat-paginator class="pag-mat" [length]="report.length" [pageSize]=5 [pageSizeOptions]="pageSizeOptions"
+                    (page)="getPaginatorData($event)">page
+                </mat-paginator>
+
+            </div>
+        </perfect-scrollbar>
+    </div>

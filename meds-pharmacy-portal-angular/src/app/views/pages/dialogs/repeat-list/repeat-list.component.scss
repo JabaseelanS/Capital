@@ -1,0 +1,60 @@
+::ng-deep .mat-dialog-container {
+    padding: 0px !important;
+}
+
+.bck-clr {
+    background-color: #005760;
+}
+
+.ex-btn {
+    height: 27px;
+    border: none;
+    width: 18%;
+    border-radius: 4px;
+    color: white;
+    text-align-last: center;
+    min-width: 145px !important;
+
+    ::ng-deep .mat-select-arrow {
+        color: white;
+        margin: 4px 0px 0px 0px !important;
+    }
+}
+
+table {
+    width: 100%;
+}
+
+thead,
+tbody,
+tr,
+td,
+th {
+    display: block;
+}
+
+tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+thead th {
+    height: 40px;
+
+    /*text-align: left;*/
+}
+
+tbody {
+    height: 200px;
+    overflow-y: auto;
+}
+
+
+
+tbody td,
+thead th {
+    width: 15%;
+    float: left;
+}

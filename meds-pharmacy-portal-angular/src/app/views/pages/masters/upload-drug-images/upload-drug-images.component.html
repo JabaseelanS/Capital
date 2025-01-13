@@ -1,0 +1,99 @@
+<div class="editor-div">
+    <div class="parent-body n-s-h-9">
+        <div fxLayout='row'>
+            <h3 style="margin-left: 2vh">Upload Drug Images</h3>
+        </div>
+        <div fxLayout='row'>
+            <div class="col c-1">
+                <p class="inp-2">Product barcode</p>
+                <input type="text" class="inp-1" placeholder="Enter barcode" [(ngModel)]="barcode"
+                    (keypress)="commonServices.validateOnlyNumber($event)">
+                <button type="button" class="lookup" value="Look Up" (click)="loadUsersList(barcode)">Look
+                    Up</button>
+            </div>
+        </div>
+        <div>
+            <div class="uder c-2 col-md-10 col-lg-11 col-sm-6 ">
+                <div *ngIf="this.isShow ==false" class="Centered">
+                    <p class="label">Look up a product using a barcode number to display its details here</p>
+                </div>
+            </div>
+        </div>
+        <div fxLayout='row'>
+            <div class="usr-body uder c-3 col-md-10 col-lg-11" *ngIf="this.isShow">
+                <div>
+                    <div class="usrhed-div">
+                        <div class="con">
+                            <div class="usr-title2">Product details({{data.Ean}})</div>
+                            <div class="usr-title2"><button (click)="save()"
+                                    [ngClass]="ImageCount.length!=0 || myarray.length!=0? 'save-button bck-clr ex-btn rob-b':'disablebutton bck-clr ex-btn rob-b'">Save
+                                    Changes</button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-div" style="padding: 15px;">
+                        <div class="d-block">
+                            <div class="box-margin-15px">
+                                <label>Product Name:</label>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="box-margin-15px">
+                                <label style="font-weight: bold;">{{data.Name}}</label>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div class="box-margin-15px ">
+                                <label>Product Images:</label>
+                            </div>
+                            <div class="box-margin-15px label-1"
+                                *ngIf="this.ImageCount.length ==0 && this.myarray.length==0">
+                                ⚠️ No product images found. Upload image files from your system to add images to this
+                                product.
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="box-margin-15px">
+                                <div fxLayout="row" fxLayoutAlign="start center">
+                                    <div class="file row" disabled="upload" (click)="loadFile(fileLoader,i,1,product)">
+                                        <input type="file" accept="image/*" id="fileLoader" #fileLoader name="files"
+                                            title="Load File" [ngModel]="filename" style="display: none;"
+                                            multiple="true" />
+                                        <img class="fileimg" src="../../../../../assets/images/Icons.svg" />
+                                        <p class="label-3">Upload Image</p>
+                                    </div>
+                                    <div class="row product-img">
+                                        <div class="wrapper" fxLayoutGap="10px"
+                                            *ngFor="let image of ImageCount;let i=index">
+                                            <input type="file" accept="image/*" id="fileLoader{{i}}" #fileLoader
+                                                name="files" title="Load File" [ngModel]="filename"
+                                                style="display: none;" />
+                                            <img class="upload-img" [src]="showImage(i,1)" height="100px"
+                                                (click)="loadFile(fileLoader,i,2,product)"
+                                                onError="this.src='../../../../../assets/images/dummy-pill.svg'"
+                                                width="100px" />
+                                            <span class="close" (click)="deleteByEan(i)"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="scrollable-container d-flex">
+                            <div class="box-margin-15px" *ngFor="let file of myarray; let i = index;">
+                                <div *ngIf="file.Key==''" class="data">
+                                    <ng-container><img src="../../../../../assets/images/Group.svg" class="img-name"
+                                            (click)="clear(i)">
+                                        <span>{{file.FileName}}</span></ng-container>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="myarray.length!=0" class="box-margin-15px">{{call()}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="column" style="background-color: transparent;margin-top: 12px;">
+    <!-- <perfect-scrollbar style="max-height: calc(76vh - 0px);"> -->
+    <mat-tab-group id="pp-tg" [selectedIndex]="activeTab" (selectedTabChange)="onTabChanged($event)">
+        <mat-tab id="pp-tt" *ngFor="let row of PrescriptionTab;let index = index" label="{{row.TabName}}">
+            <pp-scripts [orderModel]="commonServices.PrescriptionTabData.orderModel" [scripts]="row"
+                [scriptData]="PrescriptionTab" [tabIndex]='index'></pp-scripts>
+        </mat-tab>
+        <!-- <mat-tab label="OTC">
+        </mat-tab>
+        <mat-tab label="Repeats">
+            <pp-delivery-detail [order]="deldata"></pp-delivery-detail>
+        </mat-tab> -->
+    </mat-tab-group>
+    <!-- <pp-change-pharmacy *ngIf="this.commonServices.isPage==1 && this.userdetails.RoleId==1" id="pp-cp"
+        [order]="commonServices.PrescriptionTabData.orderModel"></pp-change-pharmacy> -->
+    <pp-delivery-detail
+        *ngIf="commonServices.PrescriptionTabData.orderModel.IsUploadType == 12 || commonServices.PrescriptionTabData.orderModel.IsUploadType == 13 ? false : true"
+        id="pp-dd" [order]="commonServices.PrescriptionTabData.orderModel"></pp-delivery-detail>
+
+    <pp-medicine-list id="pp-ml" (messageEvent7)="repeatValidation($event)"
+        [orderModelList]="commonServices.PrescriptionTabData">
+    </pp-medicine-list>
+    <!-- </perfect-scrollbar> -->
+</div>

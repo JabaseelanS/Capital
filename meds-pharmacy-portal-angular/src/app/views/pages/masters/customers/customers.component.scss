@@ -1,0 +1,117 @@
+.padding_bot {
+    padding-bottom: 0px !important;
+}
+
+.hed {
+    display: flex !important;
+    /* border-width: 0; */
+    /* border-bottom-width: 1px; */
+    /* border-style: solid; */
+    border: none !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+}
+
+::ng-deep .kt-container {
+    // padding: 0 !important;
+    padding: 0 25px !important;
+}
+
+.m-r-5 {
+    margin-right: 5px;
+}
+
+.mat-row {
+    border: none !important;
+}
+
+.mat-header-row {
+    border: none !important;
+}
+
+.top {
+    height: 500px;
+}
+
+.mat-paginator {
+    border-radius: 0px 0px 12px 0px;
+}
+
+.kt-wrapper {
+    background-color: #f4f4f4;
+}
+
+.tp-body {
+    box-shadow: 0px 0px 15px 0px #cfcfcf;
+    border-radius: 12px;
+}
+
+.scrl-cls {
+    max-width: 100%;
+    border-radius: 12px 12px 0px 0;
+}
+
+.mat-table__bottom {
+    background-color: #fff;
+    border-radius: 0px 0 12px 12px;
+}
+
+.bck-clr {
+    background-color: #005760;
+}
+
+::ng-deep .mat-paginator-range-actions {
+    margin-top: 14px !important;
+}
+
+.header {
+    padding: 2% !important;
+}
+
+.ex-btn {
+    height: 27px;
+    border: none;
+    width: 18%;
+    border-radius: 4px;
+    color: white;
+    text-align-last: center;
+    min-width: 145px !important;
+
+    ::ng-deep .mat-select-arrow {
+        color: white;
+        margin: 4px 0px 0px 0px !important;
+    }
+}
+
+.lbl-cls {
+    margin-bottom: 0px;
+    // margin-left: 4px;
+}
+
+.tbox {
+    background-color: #f7f7f7;
+    height: 35px;
+    color: #9e9e9e;
+}
+
+.pag-mat {
+    ::ng-deep .mat-paginator-page-size {
+        display: none;
+    }
+
+    ::ng-deep .mat-icon-button {
+        background-color: #005760;
+        color: #fff;
+        margin-left: 12px;
+    }
+}
+
+::ng-deep .mat-paginator-outer-container {
+    .mat-paginator-container {
+        justify-content: center;
+    }
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
+    display: none;
+}

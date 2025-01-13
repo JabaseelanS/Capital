@@ -1,0 +1,84 @@
+<!-- <button *ngIf="isRowSelected" (click)="oneRowUpdate()" class="save-button">Update Changes</button> -->
+
+<div class="n-s-h">
+    <div class="input-container">
+
+        <div class="column flex_start" style="display: flex;">
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Search</mat-label>
+                    <input matInput type="text" [(ngModel)]="filterText" (ngModelChange)="onFilterTextBoxChanged()" />
+                </mat-form-field>
+            </div>
+            <div style="display: flex;align-items: center;" class="b-line rob col-md-1.5 display-center ml-35">
+                <mat-checkbox [(ngModel)]="isActive" (change)="loadData(true)">
+                </mat-checkbox>
+                <span style="margin-left: 5px;" class="fw-500 rob l-c _12px margin-right">Show active items only</span>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="column flex_end">
+                <mat-form-field appearance="fill">
+                    <mat-label>Change Category</mat-label>
+                    <mat-select [disabled]="!enableCateogry" [(ngModel)]="categoryfield"
+                        (selectionChange)="SelectCategory(categoryfield)" (openedChange)="onSelectOpened($event)">
+                        <input class="searchfilter l-c rob-b _12px" matInput placeholder="Search"
+                            (keyup)="searchFilterBycategory(categoryfilterText)" [(ngModel)]="categoryfilterText">
+                        <mat-option *ngFor="let category of categoryNames; let i = index" [value]="category.id">
+                            {{ category.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="column flex_end">
+                <mat-form-field appearance="fill">
+                    <mat-label>Change Sub-Category</mat-label>
+                    <mat-select [disabled]="!enableCateogry" [(ngModel)]="subcategoryfield"
+                        (selectionChange)="SelectSubCategory()" (openedChange)="onSelectOpened($event)">
+                        <input class="searchfilter l-c rob-b _12px" matInput placeholder="Search"
+                            (keyup)="searchFilterBysubcategory(subcategoryfilterText)"
+                            [(ngModel)]="subcategoryfilterText">
+                        <mat-option *ngFor="let subcategory of tempsubCategory; let i = index" [value]="subcategory.Id">
+                            {{ subcategory.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="column flex_end" *ngIf="isRowSelectedColumnVisible">
+                <mat-form-field appearance="fill">
+                    <mat-label>Bulk Update Options</mat-label>
+                    <mat-select [disabled]="!enableCateogry" [(ngModel)]="selectedField" multiple>
+                        <mat-option *ngFor="let option of options; let i = index" [value]="option.Id"
+                            (click)="toggleSelection(option)">
+                            {{ option.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="column flex_end">
+                <button [disabled]="!isRowSelected&&categoryfield==''&&subcategoryfield==''" (click)="reset()"
+                    [ngClass]="(isRowSelected&&categoryfield!=''&&subcategoryfield!='')||(isRowSelected&&ischeckboxes!='')?'save-button':'disable-button'">
+                    Discard changes
+                </button>
+            </div>
+            <div class="column flex_end">
+                <button [disabled]="!isRowSelected&&categoryfield==''&&subcategoryfield==''" (click)="checkSubValue()"
+                    [ngClass]="(isRowSelected&&categoryfield!=''&&subcategoryfield!='')||(isRowSelected&&ischeckboxes!='')?'save-button':'disable-button'">
+                    Update changes
+                </button>
+            </div>
+        </div>
+    </div>
+    <ag-grid-angular class="ag-grid ag-theme-balham themeClass" [rowData]="rowData" [columnDefs]="columnDefs"
+        [gridOptions]="gridOptions" (gridReady)="onGridReady($event)" [groupUseEntireRow]="true"
+        (cellClicked)='onCellClicked($event)' (paginationChanged)="onPaginationChanged()">
+    </ag-grid-angular>
+    <div>
+        <span class="row-summary-pannel">
+            <span>{{ startRow }} to {{ endRow }} of {{ totalCount }}</span>
+        </span>
+    </div>
+</div>

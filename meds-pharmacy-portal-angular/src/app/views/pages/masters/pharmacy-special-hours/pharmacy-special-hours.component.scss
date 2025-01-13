@@ -1,0 +1,76 @@
+.marg-left-20px {
+    margin-left: 20px;
+}
+
+.state-column-width {
+    width: 15%;
+}
+
+.pag-mat {
+    ::ng-deep .mat-paginator-page-size {
+        display: none;
+    }
+
+    ::ng-deep .mat-icon-button {
+        background-color: #005760;
+        color: #fff;
+        margin-left: 12px;
+    }
+}
+
+.a-disable {
+    pointer-events: none !important;
+}
+
+.a-tag {
+    text-decoration: underline !important;
+    color: blue !important;
+    cursor: pointer !important;
+}
+
+.a-tag:hover {
+    text-decoration: underline;
+}
+
+.txt-align-end {
+    text-align-last: end;
+}
+
+.m-r-5px {
+    margin-right: 5px;
+}
+
+.scroll-bar {
+    max-height: calc(70vh - 0px);
+    background-color: #fff;
+}
+
+.tbl-main {
+    background-color: #fff;
+    padding: 0px 18px 18px 18px;
+    width: 100%;
+}
+
+.m-w110px {
+    min-width: 110px;
+}
+
+.h-14px {
+    height: 14px;
+}
+
+.w-100p {
+    width: 100%;
+}
+
+.cnt-center {
+    justify-content: center;
+}
+
+.txt-center {
+    text-align: center;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: #f9f9f9;
+}

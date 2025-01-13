@@ -1,0 +1,92 @@
+<!-- New UI 2 -->
+<div class="parent-body">
+    <!-- Headers -->
+    <div fxLayout='row' class="n-s-h">
+        <div class="b-line rob col-md-4 tbox ml-20">
+            <mat-form-field appearance="legacy" class="w-100">
+                <mat-label>Search name, mobile, email</mat-label>
+                <input class="l-c rob-b _12px" matInput (keyup)="applyFilter($event.target.value, true)">
+            </mat-form-field>
+        </div>
+        <div class="col-md-6" style="text-align-last: end;">
+            <button class="bck-clr ex-btn rob-b" matTooltip="Add Customer" (click)="createOrder(null)">
+                <img style="margin-right:5px;" src="../../../../../assets/packapill-icons/add-16.png"><span
+                    class="lbl-cls">Add Customer</span>
+            </button>
+        </div>
+    </div>
+
+
+    <div fxLayout='row'>
+        <perfect-scrollbar style="max-height: calc(70vh - 0px);background-color: #fff;">
+            <div class="rob" style="background-color: #fff;padding: 0px 18px;width: 100%;">
+                <table class="table table-striped ">
+                    <thead class="v2-h-lt rob-b _12px l-c">
+                        <tr>
+                            <th>Last Name</th>
+                            <th>First Name</th>
+                            <th>Mobile</th>
+                            <th>Email</th>
+                            <th *ngIf="isRole">Pharmacy</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="l-c">
+                        <tr *ngFor="let cModel of Customerlist | slice: lowValue : highValue">
+
+                            <td>
+                                {{cModel.LastName}}
+                            </td>
+                            <td>
+                                {{cModel.FirstName}}
+                            </td>
+                            <td>
+                                {{commonServices.convertNum(cModel.Mobileno)}}
+                            </td>
+                            <td>
+                                {{cModel.EmailId}}
+                            </td>
+                            <td *ngIf="isRole">
+                                {{cModel.PharmacyName}}
+                            </td>
+                            <td class="row">
+                                <button class="m-r-5 bck-clr ex-btn rob-b" matTooltip="Create Order"
+                                    (click)="createOrder(cModel)">
+                                    <img style="margin-right:5px;"
+                                        src="../../../../../assets/packapill-icons/add-16.png"><span
+                                        class="lbl-cls">Create Order
+                                    </span>
+                                </button>
+                                <button class="m-r-5 bck-clr ex-btn rob-b" matTooltip="Manage Profile"
+                                    (click)="openCusDialog(cModel)">
+                                    <span class="lbl-cls">Manage Profile
+                                    </span>
+                                </button>
+                                <button class="bck-clr ex-btn rob-b m-r-5" matTooltip="Manage Scripts"
+                                    (click)="openScriptDialog(cModel)">
+                                    <span class="lbl-cls">Manage Scripts
+                                    </span>
+                                </button>
+                                <button *ngIf="this.loginDetails.RoleId == 1||this.loginDetails.RoleId == 5"
+                                    [disabled]="cModel.IsBlock" class="m-r-5 bck-clr ex-btn rob-b"
+                                    matTooltip="Block Customer" (click)="blockUser(cModel)"
+                                    [style.opacity]="cModel.IsBlock?0.4:1">
+                                    <span class="lbl-cls">Block Customer</span>
+                                </button>
+                            </td>
+
+                        </tr>
+                    </tbody>
+
+                </table>
+                <div *ngIf="Customerlist.length == 0" class="rob-b r-c">
+                    No record found
+                </div>
+                <mat-paginator class="pag-mat" [length]="Customerlist.length" [pageSize]=10
+                    [pageSizeOptions]="[5, 10, 25, 100]" (page)="getPaginatorData($event)">page
+                </mat-paginator>
+            </div>
+        </perfect-scrollbar>
+    </div>
+
+</div>

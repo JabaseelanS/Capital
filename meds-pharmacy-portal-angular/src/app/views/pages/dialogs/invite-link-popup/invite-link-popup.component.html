@@ -1,0 +1,74 @@
+<div class="inv top" style="background-color: #f4f4f4;">
+    <div class="dialog-header" fxLayout="row" fxLayoutAlign="space-between">
+        <div fxLayout="row" fxLayoutAlign="start">
+            <h3 class="headerborder">
+                <p class="header-text">Invite Customer</p>
+            </h3>
+        </div>
+
+        <div>
+            <button mat-raised-button (click)="closeDialog()" [mat-dialog-close]>
+                <img style="margin-right: 5px;" src="../../../../../assets/packapill-icons/multiply-16.png">Close
+            </button>
+        </div>
+    </div>
+    <div class="phrm-body" style="padding: 20px;">
+        <form name="inviteForm" [formGroup]="inviteForm">
+            <div fxLayout="row" fxLayout.sm="row" fxLayout.md="row" fxLayout.xs="row" fxLayout.lg="row">
+                <div *ngIf="isRole" class="mr-4 cls-top">
+                    <p class="rob-b _11px l-c">Pharmacy List<small style="color: red;">*</small></p>
+                    <mat-form-field class="rob _11px l-c " appearance="outline">
+                        <mat-select class="mt-sel" value="0" formControlName="PharmacyId">
+                            <mat-option value="0"> Choose the pharmacy </mat-option>
+                            <mat-option *ngFor="let item of pharmacyList" [value]="item.PharmacyId">
+                                {{item.PharmacyName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="mr-4 cls-top">
+                    <p class="rob-b _11px l-c">Mobile No <small style="color: red;">*</small></p>
+                    <mat-form-field class="rob _11px l-c" appearance="outline">
+                        <input (keypress)="numberOnly($event)" (ngModelChange)="onChangeByMob2($event)" type="tel"
+                            [maxlength]="MobLength" [textMask]="{mask: mobMask,guide:false}" matInput
+                            formControlName="MobileNo" autocomplete="nope" myNumberOnly required>
+                        <mat-error class="rob _11px"
+                            *ngIf="this.inviteForm.controls['MobileNo'].touched && this.inviteForm.controls['MobileNo'].hasError('required')">
+                            Please enter a mobile
+                            number</mat-error>
+                        <mat-error class="rob _11px"
+                            *ngIf="this.inviteForm.controls['MobileNo'].hasError('pattern')||this.inviteForm.controls['MobileNo'].hasError('maxlength') ||this.inviteForm.controls['MobileNo'].hasError('minlength')">
+                            Invalid mobile number
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+
+                <div class="mr-4 cls-top">
+                    <p class="rob-b _11px l-c">First Name<small style="color: red;">*</small></p>
+                    <mat-form-field class="rob _11px l-c" appearance="outline">
+                        <input matInput formControlName="FirstName" autocomplete="nope" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="mr-4 cls-top">
+                    <p class="rob-b _11px l-c">Last Name<small style="color: red;">*</small></p>
+                    <mat-form-field class="rob _11px l-c" appearance="outline">
+                        <input matInput formControlName="LastName" autocomplete="nope" required>
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </form>
+        <div>
+            <button style="margin-left: 10px;" (click)="createUrl()" matTooltip="Send App Link"
+                class="success-button red-clr rob _12px fw-600" type="button">
+                <img style="margin-right:5px;" src="../../../../../assets/packapill-icons/add-16.png"><span>Send App
+                    Link
+                </span>
+            </button>
+        </div>
+
+    </div>
+</div>

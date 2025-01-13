@@ -1,0 +1,328 @@
+<div *ngIf="edited" class="top" style="background-color: #f4f4f4;">
+
+    <div class="dialog-header" fxLayout="row" fxLayoutAlign="space-between">
+        <div fxLayout="row" fxLayoutAlign="start">
+            <h3>
+                <p class="header-text">{{modalData.user ? 'Edit' : 'Create'}} Pharmacy User</p>
+            </h3>
+        </div>
+        <div>
+            <button *ngIf="this.loginDetails.RoleId !=null && this.loginDetails.RoleId!=5 && modalData.user"
+                class="mr-4" mat-raised-button (click)="sendWEmail()"><img style="margin-right: 5px;"
+                    src="../../../../../assets\orderv2\packapill_portal_icons\Elements\Petrol.svg">Send Welcome
+                Email</button>
+            <button *ngIf="this.loginDetails.RoleId !=null && this.loginDetails.RoleId!=5" class="mr-4"
+                [disabled]="!userForm.dirty || !userForm.valid" (click)="modalData.user ? onSave(false) :
+                onSave(true)" mat-raised-button><img style="margin-right: 5px;"
+                    src="../../../../../assets\orderv2\packapill_portal_icons\Elements\Petrol.svg">{{modalData.user ?
+                'Update' :
+                'Save'}}</button>
+            <!-- <button class="mr-4" (click)="onSave()" mat-raised-button>{{modalData ? 'Update' : 'Save'}}</button> -->
+            <button mat-raised-button (click)="closeDialog()" [mat-dialog-close]><img style="margin-right: 5px;"
+                    src="../../../../../assets/packapill-icons/multiply-16.png">Close</button>
+        </div>
+    </div>
+
+    <div>
+        <!--Login Details -->
+        <perfect-scrollbar style="max-width: 100%; max-height: 500px;">
+            <div class="phrmusr-body">
+                <form name="userForm" [formGroup]="userForm" fxLayout="column" fxLayout.xs="column" fxLayout.sm="column"
+                    fxLayout.md="column">
+                    <div class="sec-div" fxLayout="row" fxLayoutAlign="start">
+                        <h3>
+                            <p class="htxt">Login Information</p>
+                        </h3>
+                    </div>
+                    <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" style="margin-left: 60px;">
+                        <div class="mr-4 cls-top">
+                            <p>Pharmacy<small style="color: red;">*</small></p>
+                            <mat-form-field class="pharmtxt-area" appearance="outline">
+                                <mat-select value="All" formControlName="PharmacyId" required>
+                                    <input class="searchfilter" matInput placeholder="Search"
+                                        (keyup)="searchFilter($event.target.value, true)">
+                                    <mat-option value="All">
+                                        Choose the Pharmacy
+                                    </mat-option>
+                                    <mat-option *ngFor="let item of phamracyList" [value]="item.PharmacyId">
+                                        {{item.PharmacyName}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="mr-4 cls-top">
+                            <p>User Name <small style="color: red;">*</small></p>
+                            <mat-form-field class="pharmtxt-area" appearance="outline"
+                                *ngIf="userModel.UserId == null ||  userModel.UserId ==0">
+                                <input autocomplete="off" autocorrect="off"
+                                    (focus)="commonServices.setAutoFillOff($event)" autocapitalize="off" matInput
+                                    formControlName="UserName" required>
+                            </mat-form-field>
+                            <span class="disable-username" *ngIf="userModel.UserId != null &&  userModel.UserId >0"
+                                appearance="outline">
+                                <p class="m-username">{{userForm.controls['UserName'].value}}</p>
+                            </span>
+                        </div>
+
+                        <div *ngIf="this.modalData.user==null" class="mr-4 cls-top">
+                            <p> Password <small style="color: red;">*</small></p>
+                            <mat-form-field class="pharmtxt-area" appearance="outline">
+                                <input matInput formControlName="UserPassword" placeholder="Enter your password"
+                                    (focus)="commonServices.setAutoFillOff($event)" [type]="hide ? 'password' : 'text'"
+                                    required autocomplete="new-password">
+                                <button mat-icon-button matSuffix>
+                                    <mat-icon (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}
+                                    </mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="mr-4 cls-top" style="margin-top: 25px;">
+                            <mat-checkbox class="example-margin" formControlName="IsGroupAdmin">
+                                <p>Is Pharmacy Group Admin</p>
+                            </mat-checkbox>
+                        </div>
+
+                    </div>
+                    <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" style="margin-left: 60px;">
+                        <div class="mr-4 cls-top">
+                            <p>Mobile<small style="color: red;">*</small></p>
+                            <mat-form-field class="pharmtxt-area" appearance="outline">
+                                <input (ngModelChange)="onChangeByMob($event,1)" type="tel" [maxlength]="MobLength"
+                                    [textMask]="{mask: mobMask,guide:false}" matInput formControlName="Mobileno"
+                                    myNumberOnly required>
+                            </mat-form-field>
+                        </div>
+                        <div class="mr-4 cls-top">
+                            <p>Email <small style="color: red;">*</small></p>
+                            <mat-form-field class="pharmtxt-area" appearance="outline">
+                                <input type="email" matInput formControlName="UserEmail" required>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="phrmusr-body">
+                <form novalidate autocomplete="nope" name="userForm" [formGroup]="userForm" fxLayout="column"
+                    fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column" style="padding-left: 2px;">
+                    <div class="sec-div" fxLayout="row" fxLayoutAlign="start">
+                        <h3>
+                            <p class="htxt">Personal Information</p>
+                        </h3>
+                    </div>
+
+                    <div fxLayout="row" fxLayout.xs="column" fxLayout.md="column" fxLayout.sm="column"
+                        style="margin-left: 60px;">
+                        <div class="mr-4 cls-top">
+                            <p>First Name<small style="color: red;">*</small></p>
+                            <mat-form-field class="pharmtxt-area" appearance="outline">
+                                <input matInput formControlName="FirstName" name="FirstName" required>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="mr-4 cls-top">
+                            <p>Last Name<small style="color: red;">*</small></p>
+                            <mat-form-field class="pharmtxt-area" appearance="outline">
+                                <input matInput formControlName="LastName" name="LastName" required>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="mr-4 cls-top">
+                            <p>Dob<small style="color: red;">*</small></p>
+                            <mat-form-field class="pharmtxt-area" appearance="outline">
+                                <input matInput formControlName="UserDob" [matDatepicker]="picker" readonly required>
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+
+                    </div>
+                    <div fxLayout="row" fxLayout.xs="column" fxLayout.md="column" fxLayout.sm="column"
+                        style="margin-left: 60px;">
+                        <div class="mr-4 cls-top">
+                            <p>Gender<small style="color: red;">*</small></p>
+                            <mat-form-field class="pharmtxt-area" appearance="outline">
+                                <mat-select formControlName="Gender" required>
+                                    <mat-option *ngFor="let item of genders" [value]="item.GenderId">
+                                        {{item.value}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="mr-4 cls-top">
+                            <p>City<small style="color: red;">*</small></p>
+                            <mat-form-field class="pharmtxt-area" appearance="outline">
+                                <input matInput formControlName="City" name="city" required />
+                            </mat-form-field>
+                        </div>
+                        <div class="mr-4 cls-top">
+                            <p>Phone 1</p>
+                            <mat-form-field class="pharmtxt-area" appearance="outline">
+                                <input (ngModelChange)="onChangeByMob($event ,2)" type="tel" [maxlength]="phLength"
+                                    [textMask]="{mask: phoneMask,guide:false}" matInput formControlName="Phoneno1"
+                                    name="Phoneno1">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div fxLayout="row" fxLayout.xs="column" fxLayout.md="column" fxLayout.sm="column"
+                        style="margin-left: 60px;">
+
+                        <div class="mr-4 cls-top">
+                            <p>Phone 2</p>
+                            <mat-form-field class="pharmtxt-area" appearance="outline">
+                                <input (ngModelChange)="onChangeByMob($event,3)" type="tel" [maxlength]="phLength1"
+                                    [textMask]="{mask: phoneMask1,guide:false}" matInput formControlName="Phoneno2"
+                                    name="Phoneno2">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="mr-4 cls-top">
+                            <p>State<small style="color: red;">*</small></p>
+                            <mat-form-field class="pharmtxt-area" appearance="outline">
+                                <mat-select value="0" formControlName="StateId">
+                                    <input class="searchfilter" matInput placeholder="Search"
+                                        (keyup)="searchStatesFilter($event.target.value, true)">
+                                    <mat-option value="0">
+                                        choose the state
+                                    </mat-option>
+                                    <mat-option *ngFor="let item of statesList" [value]="item.id">
+                                        {{item.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="mr-4 cls-top">
+                            <p>Country<small style="color: red;">*</small></p>
+                            <mat-form-field class="pharmtxt-area" appearance="outline">
+                                <mat-select value="0" formControlName="CountryId">
+                                    <mat-option value="0">
+                                        choose the country
+                                    </mat-option>
+                                    <mat-option *ngFor="let item of countryList" [value]="item.id">
+                                        {{item.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="mr-4 cls-top">
+                            <p>Postcode<small style="color: red;">*</small></p>
+                            <mat-form-field class="pharmtxt-area" appearance="outline">
+                                <input matInput formControlName="Pincode" name="Pincode">
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+
+                    <div fxLayout="row" fxLayout.xs="column" style="margin-left: 60px;margin-right: 55px;">
+
+                        <div class=" col-md-6" style="padding-left: 0px;">
+                            <p>Address 1<small style="color: red;">*</small></p>
+                            <mat-form-field appearance="outline" style="width: 100% !important;">
+                                <textarea matInput formControlName="Address1" rows="3" name="address1"
+                                    (focus)="commonServices.setAutoFillOff($event)" autocomplete="nope"
+                                    autocorrect="off" autocapitalize="off" spellcheck="off" #search required></textarea>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-6 cls-top">
+                            <p>Address 2</p>
+                            <mat-form-field appearance="outline" style="width: 100% !important;">
+                                <textarea matInput formControlName="Address2" rows="3" name="address2" autocorrect="off"
+                                    (focus)="commonServices.setAutoFillOff($event)" autocomplete="nope"
+                                    autocapitalize="off" spellcheck="off" #search1></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- <div class="phrmusr-body">
+                <form autocomplete="nope" name="userForm" [formGroup]="userForm" style="padding-left: 2px;"
+                    fxLayout="column" fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column">
+                    <div class="sec-div" fxLayout="row" fxLayoutAlign="start">
+                        <h3>
+                            <p class="htxt">Bank Account Information</p>
+                        </h3>
+                    </div>
+                    <div fxLayout="row" style="margin-left: 60px;">
+
+                        <div class="mr-4 cls-top">
+                            <p>Bank Name<small style="color: red;">*</small></p>
+                            <mat-form-field class="pharmtxt-area" appearance="outline">
+                                <input matInput formControlName="BankName" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="mr-4 cls-top">
+                            <p>Branch Name<small style="color: red;">*</small></p>
+                            <mat-form-field class="pharmtxt-area" appearance="outline">
+                                <input matInput formControlName="BranchName" required>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="mr-4 cls-top">
+                            <p>Account Number<small style="color: red;">*</small></p>
+                            <mat-form-field class="pharmtxt-area" appearance="outline">
+                                <input matInput formControlName="AccountNumber" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="mr-4 cls-top">
+                            <p>IFSC Code<small style="color: red;">*</small></p>
+                            <mat-form-field class="pharmtxt-area" appearance="outline">
+                                <input matInput formControlName="IfscCode" required>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                </form>
+            </div> -->
+            <!-- <div class="phrmusr-body">
+                <form name="userForm" [formGroup]="userForm" fxLayout="column" fxLayout.xs="column" fxLayout.sm="column"
+                    fxLayout.md="column">
+                    <div>
+                        <ng-container matColumnDef="logindetail">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header class="email-cell header-text">Login Date
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let user" class="text-truncate">
+                                {{user.logindetail | date:'dd/MM/yy HH:mm a'}}
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="logoutdetail">
+                            <mat-header-cell class="header-text" *matHeaderCellDef mat-sort-header>Logout Date
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let user">{{user.logoutdetail | date:'dd/MM/yy HH:mm a'}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="totaltime">
+                            <mat-header-cell class="header-text" *matHeaderCellDef mat-sort-header>Time Duration
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let user">{{getTotalTime(user)}} Hrs</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="location">
+                            <mat-header-cell class="header-text" *matHeaderCellDef>Login Location</mat-header-cell>
+                            <mat-cell *matCellDef="let user">
+                                <p>{{user.location}}</p>
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="logoutLocation">
+                            <mat-header-cell class="header-text" *matHeaderCellDef>Logout Location</mat-header-cell>
+                            <mat-cell *matCellDef="let user">
+                                <p>{{user.logoutLocation}}</p>
+                            </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                        <div class="mat-table__message" *ngIf="userModel.loginHistory == null">No records found</div>
+                    </div>
+                </form>
+            </div> -->
+        </perfect-scrollbar>
+    </div>
+</div>

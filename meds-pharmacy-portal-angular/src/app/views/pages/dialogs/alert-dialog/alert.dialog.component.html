@@ -1,0 +1,22 @@
+<div style="background: #f4f4f4 !important;">
+    <div class="modal-header">
+        <h4 style="font-size: large !important;" class="modal-title">{{ title }}</h4>
+        <button type="button" class="close" aria-label="Close"
+            (click)="WEmail == false  ? closeDialog('Hide') : hideDialog() "><span aria-hidden="true">&times;</span>
+            <!-- <button type="button" *ngIf="!WEmail" class="close" aria-label="Close" (click)="closeDialog('Hide')">
+            <span aria-hidden="true">&times;</span> -->
+        </button>
+    </div>
+    <div class="modal-body">
+        {{ message }}
+    </div>
+    <div class="modal-footer">
+        <button mat-raised-button *ngIf="btnCancelText !='' && btnCancelText!=null" style="width: 18%;height: 35px;"
+            type="button" mat-raised-button class="light-button rob _12px fw-600" (click)="closeDialog('Hide')">{{
+            btnCancelText }}</button>
+        <button style="width: 20%;height: 35px;padding: 0px;" type="button"
+            class="success-button green-clr rob _12px fw-600" (click)="show('Show')">{{
+            btnOkText
+            }}</button>
+    </div>
+</div>

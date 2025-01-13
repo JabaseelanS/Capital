@@ -1,0 +1,819 @@
+<div class="createorder top" style="background-color:transparent;">
+
+    <div class="top-container">
+        <perfect-scrollbar style="max-height: 75vh;">
+            <div class="phrmusr-body">
+                <form class="padd" autocomplete="nope" name="orderForm" [formGroup]="orderForm" fxLayout="column"
+                    fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column">
+                    <div class="sec-div1" fxLayout="row" fxLayoutAlign="start">
+                        <h3 style="width: 90%;">
+                            <p class="rob-m _16px pink">Customer Information</p>
+                        </h3>
+                    </div>
+
+                    <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column">
+                        <div fxLayout="row" fxLayout.sm="row" fxLayout.md="row" fxLayout.xs="row" fxLayout.lg="row">
+                            <div class="mr-4 cls-top" style="padding-top: 2vh;">
+                                <div class="cls-top customalign" style="margin-bottom:2vh">
+                                    <span class="fw-500 rob l-c _12px" style="margin-right: 10px;">Process order on
+                                        behalf of customer in Carer
+                                        Mode</span>
+                                    <mat-checkbox (change)="isProcessChange()" formControlName="IsProcessOrder">
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column">
+
+                        <div fxLayout="row" fxLayout.sm="row" fxLayout.md="row" fxLayout.xs="row" fxLayout.lg="row">
+                            <div *ngIf="isRole" class="mr-4 cls-top">
+                                <p class="rob-b _11px l-c">Pharmacy List<small style="color: red;">*</small></p>
+                                <mat-form-field class="rob _11px l-c" appearance="outline">
+                                    <mat-select class="mt-sel"
+                                        (ngModelChange)="selectPharmacy(prePharId, $event, prescriptionDetailsDataSource)"
+                                        formControlName="PharmacyId">
+                                        <input class="searchfilter l-c rob-b _12px" matInput placeholder="Search"
+                                            (keyup)="searchFilterBypharmacy($event.target.value, true)"
+                                            (keydown)="$event.stopPropagation()">
+                                        <mat-option value="0"> Choose the pharmacy </mat-option>
+                                        <mat-option *ngFor="let item of pharmacyList" [value]="item.PharmacyId">
+                                            {{item.PharmacyName}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="mr-4 cls-top">
+                                <p class="rob-b _11px l-c">First Name<small style="color: red;">*</small></p>
+                                <mat-form-field class="rob _11px l-c" appearance="outline">
+                                    <input [readonly]="createByList" type="text" (change)="changeFName()" matInput
+                                        formControlName="FirstName" autocomplete="nope">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="mr-4 cls-top">
+                                <p class="rob-b _11px l-c">Last Name<small style="color: red;">*</small></p>
+                                <mat-form-field class="rob _11px l-c" appearance="outline">
+                                    <input [readonly]="createByList" type="text" matInput formControlName="LastName"
+                                        autocomplete="nope">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="mr-4 cls-top">
+                                <p class="rob-b _11px l-c">Mobile<small style="color: red;">*</small></p>
+                                <mat-form-field class="rob _11px l-c" appearance="outline">
+                                    <input [readonly]="createByList" type="tel" [maxlength]="MobLength"
+                                        [textMask]="{mask: mobMask,guide:false}" matInput formControlName="MobileNo"
+                                        myNumberOnly autocomplete="nope" (paste)="$event.preventDefault()"
+                                        (ngModelChange)="onChangeByMob($event)">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column">
+                        <div fxLayout="row" fxLayout.sm="row" fxLayout.md="row" fxLayout.xs="row" fxLayout.lg="row">
+                            <div class="mr-4 cls-top">
+                                <p class="rob-b _11px l-c">Email<small *ngIf="!orderForm.controls.IsProcessOrder.value"
+                                        style="color: red;">*</small></p>
+                                <mat-form-field class="rob _11px l-c" appearance="outline">
+                                    <input (keydown.space)="$event.preventDefault();" [readonly]="emailEdit"
+                                        type="email" matInput formControlName="EmailId" autocomplete="nope">
+                                </mat-form-field>
+                            </div>
+                            <div class="mr-4 cls-top">
+                                <p class="rob-b _11px l-c">Dob</p>
+                                <mat-form-field class="rob _11px l-c" appearance="outline">
+                                    <!-- <input type="text" maxlength="11" matInput formControlName="Dob" myNumberOnly
+                                                                    [textMask]="{mask: dateMask}" autocomplete="nope"> -->
+                                    <input [readonly]="createByList && dobValue != ''" type="text" matInput
+                                        formControlName="Dob" mask="00/00/0000" placeholder="dd/mm/yyyy"
+                                        autocomplete="nope">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="mr-4 cls-top">
+                                <p class="rob-b _11px l-c">Medicare No</p>
+                                <mat-form-field class="rob _11px l-c" appearance="outline">
+                                    <input type="text" (change)="changeValue($event)" matInput
+                                        formControlName="MedicareNo" myNumberOnly autocomplete="nope"
+                                        [textMask]="{mask: mediMask}">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="mr-4 cls-top">
+                                <p class="rob-b _11px l-c">Medicare Valid To
+                                </p>
+                                <mat-form-field class="rob _11px l-c" appearance="outline">
+                                    <input type="text" maxlength="11" (change)="changeValue($event)" matInput
+                                        formControlName="MedicareValidTo" placeholder="mm/yy" myNumberOnly
+                                        [textMask]="{mask: expMask}" autocomplete="nope">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column">
+                        <div fxLayout="row" fxLayout.sm="row" fxLayout.md="row" fxLayout.xs="row" fxLayout.lg="row">
+
+                            <div class="mr-4 cls-top">
+                                <p class="rob-b _11px l-c">Concession No</p>
+                                <mat-form-field class="rob _11px l-c" appearance="outline">
+                                    <input id="conplac" type="text" maxlength="15" matInput
+                                        formControlName="ConcessionNo" autocomplete="nope"
+                                        [textMask]="{mask: consMask,guide: false}" style="text-transform:uppercase;">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="mr-4 cls-top">
+                                <p class="rob-b _11px l-c">Concession Valid To</p>
+                                <mat-form-field class="rob _11px l-c" appearance="outline">
+                                    <input type="text" placeholder="mm/yy" matInput formControlName="ConcessionValidTo"
+                                        myNumberOnly [textMask]="{mask: expMask}" autocomplete="nope">
+                                </mat-form-field>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="disclaimer" fxLayout="row" fxLayoutAlign="start">
+                        <p class="rob-b _11px l-c"><small style="color: red;">*</small>Date of Birth and Medicare
+                            information are requirements on prescription orders for the customer and all family members.
+                        </p>
+                    </div>
+
+                    <div *ngIf="this.loginDetails.RoleId==1 || this.loginDetails.RoleId==5" class="sec-div1"
+                        fxLayout="row" fxLayoutAlign="start">
+                        <h3>
+                            <p class="rob-m _16px pink ">Upload File</p>
+                        </h3>
+                    </div>
+
+                    <div *ngIf="this.loginDetails.RoleId==1 || this.loginDetails.RoleId==5" fxLayout="column">
+                        <div class="mr-4 cls-top">
+
+                            <input type="file" accept="image/*" id="fileLoader" #fileLoader name="files"
+                                title="Load File" hidden />
+
+                            <button style="padding: revert;" class="mr-4 dark-petrol white rob-b _11px"
+                                mat-raised-button matTooltip="Choose file" type="button"
+                                (click)="this.loginDetails.RoleId==1 || this.loginDetails.RoleId==5? getImages(fileLoader): null">
+                                Choose file
+                            </button>
+                            <!-- <img 
+                                style="max-width: 60px;max-height: 50px;border-radius: 50px;" src="{{base64Image}}"
+                                (error)="commonServices.errorProfileImage($event)"> -->
+                        </div>
+                    </div>
+
+                    <div *ngIf="dataSourceUpload.length>0" class="mr-6 cls-top m-bottom">
+                        <perfect-scrollbar style="max-width: 100%;max-height: 200px;" class="scrl-cls">
+
+                            <table class="table table-striped">
+                                <thead class="v2-h-lt rob-b _12px l-c">
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>File Name</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="l-c">
+                                    <tr *ngFor="let customerdata of dataSourceUpload;let i = index">
+                                        <td><img style="max-width: 60px;max-height: 50px;border-radius: 50px;"
+                                                src="{{customerdata.Base64}}"
+                                                (error)="commonServices.errorProfileImage($event)"></td>
+                                        <td>{{customerdata.FileName}}</td>
+                                        <td><button style="padding: revert;" class="mr-4 dark-petrol white rob-b _11px"
+                                                mat-raised-button matTooltip="Delete" type="button"
+                                                (click)="uploaddelete(customerdata, i)">
+                                                <img class="deletv2"
+                                                    src="../../../../../assets/packapill-icons/delete.svg">Delete
+                                            </button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </perfect-scrollbar>
+                    </div>
+
+                    <div *ngIf="!orderForm.controls.IsProcessOrder.value" class="sec-div1" fxLayout="row"
+                        fxLayoutAlign="start">
+                        <h3>
+                            <p class="rob-m _16px pink ">Family Members</p>
+                        </h3>
+                    </div>
+
+                    <div *ngIf="!orderForm.controls.IsProcessOrder.value" fxLayout="column">
+                        <div>
+                            <div style="width: 35vh;" fxLayout="row" fxLayout.sm="column" fxLayout.md="column"
+                                fxLayout.xs="column" fxLayout.lg="column">
+                                <div class="cls-top customalign">
+                                    <span class="fw-500 rob l-c _12px">Are you ordering for someone else?</span>
+                                    <mat-checkbox [checked]="showPInfo == true"
+                                        (change)="showPInfo = !showPInfo; changeOrderTo();" formControlName="OrderTo">
+                                    </mat-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="showPInfo == true" fxLayout="row" fxLayout.sm="column">
+                            <div fxLayout="row" fxLayout.sm fxLayout.md="column">
+                                <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" fxLayout.xs="column"
+                                    fxLayout.lg="column">
+                                    <div class="m-top">
+                                        <p class="rob-b _11px l-c">First Name<small style="color: red;">*</small>
+                                        </p>
+                                        <mat-form-field class="rob _11px l-c m-w-70" appearance="outline">
+                                            <input type="text" matInput formControlName="FFirstName"
+                                                autocomplete="nope">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" fxLayout.xs="column"
+                                    fxLayout.lg="column">
+
+                                    <div class="m-top">
+                                        <p class="rob-b _11px l-c">Last Name<small style="color: red;">*</small>
+                                        </p>
+                                        <mat-form-field class="rob _11px l-c m-w-70" appearance="outline">
+                                            <input type="text" matInput formControlName="FLastName" autocomplete="nope">
+                                        </mat-form-field>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div fxLayout="row" fxLayout.sm fxLayout.md="column">
+
+                                <div class="m-w-25" *ngIf="showPInfo" fxLayout="row" fxLayout.sm="column"
+                                    fxLayout.md="column" fxLayout.xs="column" fxLayout.lg="column">
+
+                                    <div class="m-top">
+                                        <p class="rob-b _11px l-c">Medicare No
+                                        </p>
+                                        <mat-form-field class="rob _11px l-c m-w-70" appearance="outline">
+                                            <input myNumberOnly type="text" matInput formControlName="FMedicareNo"
+                                                autocomplete="nope" [textMask]="{mask: mediMask}">
+                                        </mat-form-field>
+                                    </div>
+
+                                </div>
+
+                                <div class="m-w-15" *ngIf="showPInfo" fxLayout="row" fxLayout.sm="column"
+                                    fxLayout.md="column" fxLayout.xs="column" fxLayout.lg="column">
+
+                                    <div class="m-top">
+                                        <p class="rob-b _11px l-c">Medicare Valid To</p>
+                                        <mat-form-field class="rob _11px l-c m-w-70" appearance="outline">
+                                            <input maxlength="10" myNumberOnly [textMask]="{mask: expMask}" type="text"
+                                                matInput formControlName="FMedicareValidTo" placeholder="mm/yy"
+                                                autocomplete="nope">
+                                        </mat-form-field>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div fxLayout="row" fxLayout.sm fxLayout.md="column">
+
+                                <div class="m-w-25" *ngIf="showPInfo" fxLayout="row" fxLayout.sm="column"
+                                    fxLayout.md="column" fxLayout.xs="column" fxLayout.lg="column">
+
+                                    <div class="m-top">
+                                        <p class="rob-b _11px l-c">Concession No</p>
+                                        <mat-form-field class="rob _11px l-c m-w-70" appearance="outline">
+                                            <input id="conplac2" maxlength="15" type="text" matInput
+                                                formControlName="FConcessionNo" autocomplete="nope"
+                                                [textMask]="{mask: consMask,guide: false}"
+                                                style="text-transform:uppercase;">
+                                        </mat-form-field>
+                                    </div>
+
+                                </div>
+
+                                <div class="m-w-15" *ngIf="showPInfo" fxLayout="row" fxLayout.sm="column"
+                                    fxLayout.md="column" fxLayout.xs="column" fxLayout.lg="column">
+
+                                    <div class="m-top">
+                                        <p class="rob-b _11px l-c">Concession Valid To</p>
+                                        <mat-form-field class="rob _11px l-c m-w-70" appearance="outline">
+                                            <input maxlength="10" myNumberOnly [textMask]="{mask: expMask}" type="text"
+                                                matInput formControlName="FConcessionValidTo" placeholder="mm/yy"
+                                                autocomplete="nope">
+                                        </mat-form-field>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" fxLayout.xs="column"
+                                fxLayout.lg="column">
+
+                                <div class="mr-4 m-top-60p">
+                                    <button class="mr-4 dark-petrol white rob-b _11px" (click)="onAdd()"
+                                        mat-raised-button><img style="margin-right: 5px;"
+                                            src="../../../../../assets/orderv2/packapill_portal_icons/Elements/White_2.svg">{{fAddBtn}}</button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div *ngIf="showPInfo == true && !orderForm.controls.IsProcessOrder.value"
+                        class="mr-6 cls-top m-bottom">
+                        <perfect-scrollbar style="max-width: 100%;max-height: 200px;" class="scrl-cls">
+                            <mat-table #table [dataSource]="dataSource" matSort>
+
+                                <ng-container matColumnDef="FName">
+                                    <mat-header-cell class="l-c rob-b _11px " *matHeaderCellDef>
+                                        First Name
+                                    </mat-header-cell>
+                                    <mat-cell class="_11px" *matCellDef="let customerdata">
+                                        {{customerdata.FirstName}}</mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="LName">
+                                    <mat-header-cell class="l-c rob-b _11px" *matHeaderCellDef>
+                                        Last Name
+                                    </mat-header-cell>
+                                    <mat-cell class="_11px" *matCellDef="let customerdata">
+                                        {{customerdata.LastName}}</mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="MedicareNo">
+                                    <mat-header-cell class="l-c rob-b _11px" *matHeaderCellDef>
+                                        Medicare No
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let customerdata"><input readonly
+                                            class="row rob _11px bnb l-c" [textMask]="{mask: mediMask}"
+                                            [ngModel]="customerdata.MedicareNo" [ngModelOptions]="{standalone: true}">
+                                    </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="MedicareValidTo">
+                                    <mat-header-cell class="l-c rob-b _11px" *matHeaderCellDef>
+                                        Medicare Valid To
+                                    </mat-header-cell>
+                                    <mat-cell class="_11px" *matCellDef="let customerdata">
+                                        {{getValidToData(customerdata.MedicareValidTo)}}</mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="ConcessionNo">
+                                    <mat-header-cell class="l-c rob-b _11px" *matHeaderCellDef>
+                                        Concession No
+                                    </mat-header-cell>
+                                    <mat-cell class="_11px" *matCellDef="let customerdata">
+                                        {{customerdata.ConcessionNo}}</mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="ConcessionValidTo">
+                                    <mat-header-cell class="l-c rob-b _11px" *matHeaderCellDef>
+                                        Concession Valid To
+                                    </mat-header-cell>
+                                    <mat-cell class="_11px" *matCellDef="let customerdata">
+                                        {{getValidToData(customerdata.ConcessionValidTo)}}</mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="actionsv2">
+                                    <mat-header-cell class="l-c rob-b _11px" *matHeaderCellDef>Actions
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let customerdata; let i = index;">
+                                        <button style="padding: revert;" (click)="editAdd(customerdata)"
+                                            mat-raised-button class="mr-4 dark-petrol white rob-b _11px"
+                                            matTooltip="Edit">
+                                            <img class="deletv2"
+                                                src="../../../../../assets/packapill-icons/Edit.svg">Edit
+                                        </button>&nbsp;
+                                        <button style="padding: revert;" class="mr-4 dark-petrol white rob-b _11px"
+                                            mat-raised-button matTooltip="Delete" type="button"
+                                            (click)="deleteAdd(customerdata, i)">
+                                            <img class="deletv2"
+                                                src="../../../../../assets/packapill-icons/delete.svg">Delete
+                                        </button>
+                                    </mat-cell>
+                                </ng-container>
+
+                                <mat-header-row class="bg-w" *matHeaderRowDef="displayedColumns; sticky: true">
+                                </mat-header-row>
+                                <mat-row class="l-c rob _11px" *matRowDef="let row; columns: displayedColumns;">
+                                </mat-row>
+
+                            </mat-table>
+                        </perfect-scrollbar>
+                    </div>
+
+                    <div class="sec-div1" fxLayout="row" fxLayoutAlign="start">
+                        <h3>
+                            <p class="rob-m _16px pink ">
+                                Order Type
+                            </p>
+                        </h3>
+                    </div>
+
+                    <!-- <div *ngIf="isPharmacySelected == false || isNoDeliveryPickup == true">
+                        <p class="rob-m _16px pink ">
+                            {{isPharmacySelected == false ? 'Please select pharmacy to choose order type' :
+                            isNoDeliveryPickup == true ? noPharmacy : ''}}
+                        </p>
+                    </div> -->
+                    <div *ngIf="isPharmacySelected == true" fxLayout="row" fxLayout.sm="column" fxLayout.md="column">
+
+                        <div fxLayout="row" fxLayout.sm="row" fxLayout.md="row" fxLayout.xs="row" fxLayout.lg="row">
+                            <div class="mr-4 cls-top">
+                                <!-- <p class="rob-b _11px l-c">Order Type<small style="color: red;">*</small></p> -->
+                                <mat-form-field class="rob _11px l-c" appearance="outline">
+                                    <mat-select (ngModelChange)="changeOrderType($event)" formControlName="OrderType"
+                                        class="mt-sel">
+                                        <mat-option value="0"> Choose the order type </mat-option>
+                                        <mat-option *ngFor="let item of orderTypeList" [value]="item.id">
+                                            {{item.value}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div *ngIf="createByList" class="mr-4 cls-top" style="padding-top: 3.5vh;width: 25vh;">
+                            <div class="cls-top customalign">
+                                <span class="fw-500 rob l-c _12px">Set as default pharmacy</span>
+                                <mat-checkbox formControlName="IsPreferredPharmacy">
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="orderForm.controls.OrderType.value!=0" class="sec-div1" fxLayout="row"
+                        fxLayoutAlign="start">
+                        <h3>
+                            <p class="rob-m _16px pink ">{{ orderForm.controls.OrderType.value==2?
+                                "Pickup Info":"Delivery Address"}}
+                            </p>
+                        </h3>
+                    </div>
+
+                    <div [hidden]="orderForm.controls.OrderType.value<=0" fxLayout="row" fxLayout.sm="column"
+                        fxLayout.md="column">
+
+                        <div fxLayout="column" fxLayout.sm="column" fxLayout.md="column" fxLayout.xs="column"
+                            fxLayout.lg="column">
+
+                            <div class="mr-4 cls-top">
+                                <p class="rob _11px fw-600 black">{{ orderForm.controls.OrderType.value==2?
+                                    "Customer Address":"Delivery Address"}}
+                                    <small style="color: red;">*</small>
+                                </p>
+                                <mat-form-field appearance="outline" style="width: 500px !important;">
+                                    <textarea (focus)="commonServices.setAutoFillOff($event)" matInput rows="5"
+                                        formControlName="DeliveryAddress" name="Address" autocorrect="off"
+                                        autocapitalize="off" spellcheck="off" #search autocomplete="nope"></textarea>
+                                </mat-form-field>
+                            </div>
+                            <div class="nobrdr" [delivery-address]="orderModel" [cond-data]="condata"
+                                (sendBackData)="recievedItem($event)">
+                            </div>
+                        </div>
+
+                        <div *ngIf="(orderForm.controls.OrderType.value==1||orderForm.controls.OrderType.value==3)"
+                            fxLayout="row" fxLayout.sm="column" fxLayout.md="column" fxLayout.xs="column"
+                            fxLayout.lg="column">
+
+                            <div class="mr-4">
+                                <p class="rob _11px fw-600 black">Delivery Date<small style="color: red;">*</small></p>
+                                <mat-form-field class="rob _11px l-c" appearance="outline">
+                                    <mat-label>Select Date</mat-label>
+                                    <input readonly (ngModelChange)="changeDelDate($event)" matInput
+                                        formControlName="DeliveryByDate" [min]="minDate" [max]="maxDate"
+                                        [matDatepicker]="picker">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div *ngIf="(orderForm.controls.OrderType.value==1||orderForm.controls.OrderType.value==3)"
+                            fxLayout="row" fxLayout.sm="column" fxLayout.md="column" fxLayout.xs="column"
+                            fxLayout.lg="column">
+
+                            <div class="mr-4">
+                                <p class="rob _11px fw-600 black">Delivery Time<small style="color: red;">*</small></p>
+                                <mat-form-field class="rob _11px l-c" appearance="outline">
+                                    <mat-select formControlName="DeliveryByTime">
+                                        <mat-option value="0"> Choose the delivery time </mat-option>
+                                        <mat-option *ngFor="let item of deliveryTimeSlots;" [value]="item">
+                                            {{item}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div [hidden]="orderForm.controls.OrderType.value<=0" fxLayout="row" fxLayout.sm="row"
+                        fxLayout.md="row" fxLayout.xs="row" fxLayout.lg="row">
+
+                        <div class="mr-4 cls-top">
+                            <div class="cls-top">
+                                <span class="fw-500 rob l-c _12px margin-right">Pharmacy accepts the convenience
+                                    fee</span>
+                                <mat-checkbox formControlName="IsConvenienceFee">
+                                </mat-checkbox>
+                            </div>
+                        </div>
+
+                        <div *ngIf="orderForm.controls.OrderType.value==1||orderForm.controls.OrderType.value==3"
+                            class="mr-4 cls-top">
+                            <div class="cls-top">
+                                <span class="fw-500 rob l-c _12px margin-right">Pharmacy accepts the delivery fee</span>
+                                <mat-checkbox formControlName="IsDeliveryFee">
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sec-div1" fxLayout="row" fxLayoutAlign="start">
+                        <h3>
+                            <p class="rob-m _16px pink">Pharmacy Comments</p>
+                        </h3>
+                    </div>
+
+                    <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column">
+                        <div fxLayout="column" fxLayout.sm="column" fxLayout.md="column" fxLayout.xs="column"
+                            fxLayout.lg="column">
+                            <div class="mr-4 cls-top">
+                                <!-- <p class="rob-b _11px l-c">Comments</p> -->
+                                <mat-form-field appearance="outline" style="width: 500px !important;">
+                                    <textarea (focus)="commonServices.setAutoFillOff($event)" matInput rows="5"
+                                        formControlName="PharmacyNotes" name="PharmacyNotes" autocorrect="off"
+                                        placeholder="Comments" autocapitalize="off" spellcheck="off"
+                                        autocomplete="nope"></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="sec-div1 padd" fxLayout="row" fxLayoutAlign="start">
+                    <h3>
+                        <p class="rob-m _16px pink ">Order Details</p>
+                    </h3>
+                </div>
+
+                <div class="bc-hash" style="margin-bottom: 10px;">
+                    <div>
+                        <perfect-scrollbar style="max-height: calc(45vh - 0px);border-radius: 8px;">
+
+                            <div class="setboady1">
+                                <mat-table #table class="table-n" [dataSource]="prescriptionDetailsDataSource">
+
+                                    <ng-container matColumnDef="FamilyId">
+                                        <mat-header-cell class="rob-b _11px l-c" *matHeaderCellDef fxHide.xs fxHide.sm>
+                                            Name
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let row" [@animation] fxHide.xs fxHide.sm>
+                                            <mat-form-field id="myselect" style="width: 95%;" appearance="outline"
+                                                (click)="row.confirmEditCreate()">
+                                                <mat-label>Please Select</mat-label>
+                                                <mat-select [disabled]="row.currentData.IsStock"
+                                                    [ngStyle]="row.currentData.IsStock && {'opacity':'50%'}" required
+                                                    [(ngModel)]="row.currentData.FamilyId">
+                                                    <mat-option *ngFor="let item of patientList"
+                                                        [value]="item.FamilyId">
+                                                        {{item.Name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error
+                                                    *ngIf="row.currentData.FamilyId == null || row.currentData.FamilyId == undefined || row.currentData.FamilyId == '' ">
+                                                    Patient Name is required</mat-error>
+                                            </mat-form-field>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="OrderScriptId">
+                                        <mat-header-cell class="rob-b _11px l-c" *matHeaderCellDef fxHide.xs fxHide.sm>
+                                            Script ID / Barcode
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let row" [@animation] fxHide.xs fxHide.sm>
+                                            <mat-form-field id="myselect1" style="width: 95% !important;"
+                                                (click)="row.confirmEditCreate()" appearance="outline">
+                                                <input (focus)="commonServices.setAutoFillOff($event)"
+                                                    autocomplete="nope" [disabled]="row.currentData.IsStock"
+                                                    [ngStyle]="row.currentData.IsStock && {'opacity':'50%'}" type="text"
+                                                    matInput [(ngModel)]="row.currentData.OrderScriptId" maxlength="8"
+                                                    (keypress)="commonServices.validateNumber($event)">
+                                            </mat-form-field>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="MedicineName">
+                                        <mat-header-cell class="rob-b _11px l-c" *matHeaderCellDef fxHide.xs fxHide.sm>
+                                            Medicine Name </mat-header-cell>
+                                        <mat-cell *matCellDef="let row" [@animation] fxHide.xs fxHide.sm>
+                                            <mat-form-field id="myselect1" style="width: 95% !important;"
+                                                (click)="row.confirmEditCreate()" appearance="outline">
+                                                <input (focus)="commonServices.setAutoFillOff($event)"
+                                                    autocomplete="nope" [disabled]="row.currentData.IsStock"
+                                                    (ngModelChange)="getMedicineList($event, row, orderModel)"
+                                                    type="text" matInput [(ngModel)]="row.currentData.MedicineName"
+                                                    [matAutocomplete]="auto" required>
+                                                <mat-autocomplete
+                                                    (optionSelected)='commonServices.selectMedicineBy(1, $event.option.value, row, medicineList, loginDetails)'
+                                                    #auto="matAutocomplete">
+                                                    <mat-option *ngFor="let option of medicineList"
+                                                        [value]="option.MedicineName">
+                                                        {{option.MedicineName}}
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                                <mat-error
+                                                    *ngIf="row.currentData.MedicineName == null || row.currentData.MedicineName == undefined || row.currentData.MedicineName == ''">
+                                                    Medicine name is required</mat-error>
+                                            </mat-form-field>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="Price">
+                                        <mat-header-cell class="rob-b _11px l-c" *matHeaderCellDef fxHide.xs fxHide.sm>
+                                            Price
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let row; let i = index" [@animation] fxHide.xs fxHide.sm>
+                                            <mat-form-field id="myselect1" style="width: 90%;" appearance="outline"
+                                                (click)="row.confirmEditCreate()">
+                                                <input (focus)="commonServices.setAutoFillOff($event)"
+                                                    autocomplete="nope" [disabled]="row.currentData.IsStock"
+                                                    (focusout)="setDecimal(i, row.currentData.Price)"
+                                                    (keypress)="commonServices.validateDigit($event)" type="text"
+                                                    matInput [(ngModel)]="row.currentData.Price" required>
+                                                <mat-error
+                                                    *ngIf="row.currentData.Price == null || row.currentData.Price == undefined || row.currentData.Price == '' ">
+                                                    Price is required</mat-error>
+                                            </mat-form-field>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="Quantity" class="merr-a">
+                                        <mat-header-cell class="rob-b _11px l-c" *matHeaderCellDef fxHide.xs fxHide.sm>
+                                            Qty
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let row" [@animation] fxHide.xs fxHide.sm>
+                                            <mat-form-field id="myselect" style="width: 90%;" appearance="outline"
+                                                (click)="row.confirmEditCreate()">
+                                                <input (focus)="commonServices.setAutoFillOff($event)"
+                                                    [disabled]="row.currentData.IsStock"
+                                                    (keypress)="commonServices.validateNumber($event)" type="text"
+                                                    matInput [(ngModel)]="row.currentData.Quantity" autocomplete="nope"
+                                                    required>
+                                                <mat-error style="width:100px;"
+                                                    *ngIf="row.currentData.Quantity == null || row.currentData.Quantity == undefined || row.currentData.Quantity == '' ">
+                                                    Qty is required</mat-error>
+                                            </mat-form-field>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="Repeats">
+                                        <mat-header-cell class="rob-b _11px l-c" *matHeaderCellDef fxHide.xs fxHide.sm>
+                                            Repeats
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let row" [@animation] fxHide.xs fxHide.sm>
+                                            <mat-form-field class="class-enable1-repeat" style="width: 90%;"
+                                                (click)="row.confirmEditCreate()" appearance="outline">
+                                                <mat-label>Please Select</mat-label>
+                                                <mat-select [disabled]="row.currentData.IsStock"
+                                                    class="class-enable-repeat" [(ngModel)]="row.currentData.Repeats">
+                                                    <mat-option (click)="commonServices.setEmpty(row.currentData)"
+                                                        *ngFor="let item of repeats" [value]="item.id">
+                                                        {{item.value}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="TotalRepeats">
+                                        <mat-header-cell class="rob-b _11px l-c" *matHeaderCellDef fxHide.xs fxHide.sm>
+                                            Total Repeats
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let row" [@animation] fxHide.xs fxHide.sm class="merr-a">
+                                            <mat-form-field (click)="row.confirmEditCreate()"
+                                                [ngClass]="{'class-disabled1': row.currentData.Repeats !=null && row.currentData.Repeats !=undefined && row.currentData.Repeats != 1, 'class-enable1': row.currentData.Repeats !=null && row.currentData.Repeats !=undefined && row.currentData.Repeats == 1}"
+                                                style="width: 90%;" appearance="outline">
+                                                <input [disabled]="row.currentData.IsStock"
+                                                    tabindex="{{row.currentData.Repeats == 1 ? 0:-1 }}"
+                                                    [ngStyle]="row.currentData.IsStock && {'opacity':'50%'}"
+                                                    [readonly]="row.currentData.Repeats != 1"
+                                                    (keypress)="commonServices.validateNumber($event)"
+                                                    [ngClass]="{'class-disabled': row.currentData.Repeats !=null || row.currentData.Repeats !=undefined || row.currentData.Repeats !='' || row.currentData.Repeats != 1, 'class-enable': row.currentData.Repeats ==1}"
+                                                    (keyup)="repeatValidation(row.currentData, 1)" type="text" matInput
+                                                    [(ngModel)]="row.currentData.TotalRepeats" required
+                                                    autocomplete="nope">
+                                                <mat-error
+                                                    *ngIf="row.currentData.Repeats !=null && row.currentData.Repeats !=undefined && row.currentData.Repeats==1?(row.currentData.TotalRepeats == null || row.currentData.TotalRepeats == undefined || row.currentData.TotalRepeats == ''):false ">
+                                                    Total Repeats is required</mat-error>
+                                            </mat-form-field>
+                                        </mat-cell>
+                                    </ng-container>
+                                    <ng-container matColumnDef="RemainingRepeats">
+                                        <mat-header-cell class="rob-b _11px l-c" *matHeaderCellDef fxHide.xs fxHide.sm>
+                                            Remaining Repeats
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let row" [@animation] fxHide.xs fxHide.sm class="merr-a">
+                                            <mat-form-field (click)="row.confirmEditCreate()"
+                                                [ngClass]="{'class-disabled1': row.currentData.Repeats !=null && row.currentData.Repeats !=undefined, 'class-enable1': row.currentData.Repeats !=null && row.currentData.Repeats !=undefined && row.currentData.Repeats == 1 && row.currentData.Repeats==1}"
+                                                style="width: 90%;" appearance="outline">
+                                                <input [disabled]="row.currentData.IsStock"
+                                                    tabindex="{{row.currentData.Repeats == 1 ? 0:-1 }}"
+                                                    [ngStyle]="row.currentData.IsStock && {'opacity':'50%'}"
+                                                    (keypress)="commonServices.validateNumber($event)"
+                                                    [ngClass]="{'class-disabled': row.currentData.Repeats !=null || row.currentData.Repeats !=undefined || row.currentData.Repeats !='', 'class-enable': row.currentData.Repeats==1}"
+                                                    (keyup)="repeatValidation(row.currentData, 2)" type="text" matInput
+                                                    [(ngModel)]="row.currentData.RemainingRepeats" required
+                                                    autocomplete="nope">
+                                                <mat-error
+                                                    *ngIf="row.currentData.Repeats !=null && row.currentData.Repeats !=undefined && row.currentData.Repeats==1?(row.currentData.RemainingRepeats == null || row.currentData.RemainingRepeats == undefined || row.currentData.RemainingRepeats == ''):false ">
+                                                    Remaining Repeats is required</mat-error>
+                                            </mat-form-field>
+                                        </mat-cell>
+                                    </ng-container>
+                                    <ng-container matColumnDef="DaysRemaining">
+                                        <mat-header-cell class="rob-b _11px l-c" *matHeaderCellDef fxHide.xs fxHide.sm>
+                                            Days Remaining
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let row" [@animation] fxHide.xs fxHide.sm class="merr-a">
+                                            <mat-form-field (click)="row.confirmEditCreate()"
+                                                [ngClass]="{'class-disabled1': row.currentData.Repeats !=null && row.currentData.Repeats !=undefined , 'class-enable1': row.currentData.Repeats !=null && row.currentData.Repeats !=undefined && row.currentData.Repeats == 1  && row.currentData.Repeats==1}"
+                                                style="width: 90%;" appearance="outline">
+                                                <input [disabled]="row.currentData.IsStock"
+                                                    tabindex="{{row.currentData.Repeats == 1 ? 0:-1 }}"
+                                                    [ngStyle]="row.currentData.IsStock && {'opacity':'50%'}"
+                                                    [ngClass]="{'class-disabled': row.currentData.Repeats !=null || row.currentData.Repeats !=undefined || row.currentData.Repeats !='' , 'class-enable':  row.currentData.Repeats==1}"
+                                                    (keypress)="commonServices.validateNumber($event)"
+                                                    (keyup)="repeatValidation(row.currentData, 3)" type="text" matInput
+                                                    [(ngModel)]="row.currentData.DaysRemaining" required
+                                                    autocomplete="nope">
+                                                <mat-error
+                                                    *ngIf="row.currentData.Repeats !=null && row.currentData.Repeats !=undefined && row.currentData.Repeats==1?(row.currentData.DaysRemaining == null || row.currentData.DaysRemaining == undefined || row.currentData.DaysRemaining == ''):false ">
+                                                    Days remaining is required</mat-error>
+                                            </mat-form-field>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="actionsv2Column">
+                                        <mat-header-cell *matHeaderCellDef>
+                                            <button class="mr-4 dark-petrol white rob-b _11px" matTooltip="Add"
+                                                (click)="prescriptionDetailsDataSource.createNew();preSelectDropDown(prescriptionDetailsDataSource);"
+                                                mat-raised-button><img style="margin-right: 5px;"
+                                                    src="../../../../../assets/orderv2/packapill_portal_icons/Elements/White_2.svg">Add</button>
+
+                                            <!-- <button mat-icon-button color="accent"
+                                                (click)="prescriptionDetailsDataSource.createNew();preSelectDropDown(prescriptionDetailsDataSource);"><img
+                                                    style="height: 22px;"
+                                                    src="../../../../../../assets/packapill_portal_icons/add-2.svg"></button> -->
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let row">
+                                            <button class="mr-4 dark-petrol white rob-b _11px" mat-raised-button
+                                                matTooltip="Delete" focusable="false"
+                                                (click)="deleteAlert(orderModel, row);"
+                                                [hidden]="row.currentData.IsStock"><img class="deletv2"
+                                                    src="../../../../../assets/packapill-icons/delete.svg"> Delete
+                                            </button>
+                                        </mat-cell>
+                                    </ng-container>
+                                    <!-- <ng-container matColumnDef="Save">
+                                                                    <mat-header-cell *matHeaderCellDef>
+                                                                        <button *ngIf="orderModel.IsOrderStatus !=1" mat-flat-button
+                                                                            color="success" style="background: #005760;color: white;"
+                                                                            focusable="false" (click)='medicineUpdate(orderModel,0,"")'>Submit
+                                                                        </button>
+                                                                    </mat-header-cell>
+                                                                    <mat-cell *matCellDef="let row"></mat-cell>
+                                                                </ng-container> -->
+                                    <mat-header-row style="background-color: white;margin: 0px 12px;"
+                                        *matHeaderRowDef="displayedPresDetailsColumns; sticky: true">
+                                    </mat-header-row>
+                                    <mat-row *matRowDef="let row; columns: displayedPresDetailsColumns;">
+                                    </mat-row>
+                                </mat-table>
+                            </div>
+                        </perfect-scrollbar>
+
+                    </div>
+                </div>
+
+                <div class="row" style="justify-content: center;margin: auto;margin-top: 10px;width: 100%;">
+                    <button style="margin: 4px;" class="dark-petrol white rob-b _11px"
+                        (click)="!orderForm.controls.IsProcessOrder.value ? onSave(false) : payNow()" mat-raised-button>
+                        <img style="margin-right:5px;" src="../../../../../assets/packapill-icons/add-16.png">
+                        {{ !orderForm.controls.IsProcessOrder.value ? 'Create Order' : 'Pay Now'}}
+                    </button>
+                    <button *ngIf="this.loginDetails.RoleId==1 || this.loginDetails.RoleId==5" style="margin: 4px;"
+                        class="dark-petrol white rob-b _11px" (click)="onPlaceOrder()" mat-raised-button>
+                        <img style="margin-right:5px;" src="../../../../../assets/packapill-icons/add-16.png">
+                        Place Order
+                    </button>
+                    <button *ngIf="IsChargeaccount && orderForm.controls.IsProcessOrder.value" style="margin: 4px;"
+                        class="dark-petrol white rob-b _11px" (click)="onSave(true)" mat-raised-button>
+                        <img style="margin-right:5px;" src="../../../../../assets/packapill-icons/add-16.png">Charge
+                        Account
+                    </button>
+                </div>
+
+            </div>
+
+        </perfect-scrollbar>
+    </div>
+</div>

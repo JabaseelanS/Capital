@@ -1,0 +1,54 @@
+<div class="delivery-cls" fxLayout="column" fxLayout.sm="column" fxLayout.md="column" fxLayout.xs="column"
+    fxLayout.lg="column">
+
+    <div class="row mbt-2">
+        <div class="col-md-4 mrig-0">
+            <p class="rob _11px fw-600 black m-b-5">Unit No</p>
+            <input [readonly]="this.condata.show" type="text"
+                class="form-control form-control-lg frmheight form-control-solid bn" autocomplete="nope"
+                [(ngModel)]="delData.DeliveryUnit" [ngModelOptions]="{standalone: true}"
+                (keyup)="onManualKeyup(4, $event)" (focus)="commonServices.setAutoFillOff($event)" />
+        </div>
+        <div class="col-md-3">
+            <p class="rob _11px fw-600 black m-b-5">Street No<small style="color: red;">*</small></p>
+            <input [readonly]="this.condata.show" type="text"
+                class="form-control form-control-lg frmheight form-control-solid bn" autocomplete="nope"
+                [(ngModel)]="delData.DeliveryStreetNumber" [ngModelOptions]="{standalone: true}"
+                (keyup)="onManualKeyup(4, $event)" (focus)="commonServices.setAutoFillOff($event)" />
+        </div>
+        <div class="col-md-5 pickaddress-cls2" style="padding-left: 0px;">
+            <p class="rob _11px fw-600 black m-b-5">Street Name<small style="color: red;">*</small></p>
+            <input [readonly]="this.condata.show" type="text"
+                class="form-control form-control-lg frmheight form-control-solid bn" autocomplete="nope"
+                [(ngModel)]="delData.DeliveryStreetName" [ngModelOptions]="{standalone: true}"
+                (keyup)="onManualKeyup(4, $event)" (focus)="commonServices.setAutoFillOff($event)" />
+        </div>
+    </div>
+
+    <div class="row mbt-2">
+        <div class="col-md-6 mrig-0">
+            <p class="rob _11px fw-600 black m-b-5">Suburb<small style="color: red;">*</small></p>
+            <input [readonly]="this.condata.show" type="text"
+                class="form-control form-control-lg frmheight form-control-solid bn" autocomplete="nope"
+                [ngModelOptions]="{standalone: true}" [(ngModel)]="delData.City" (keyup)="onManualKeyup(4, $event)"
+                (focus)="commonServices.setAutoFillOff($event)" />
+        </div>
+        <div class="col-md-6">
+            <p class="rob _11px fw-600 black m-b-5">Post Code<small style="color: red;">*</small></p>
+            <input [readonly]="this.condata.show" type="text"
+                class="form-control form-control-lg frmheight form-control-solid bn" autocomplete="nope"
+                [(ngModel)]="delData.Pincode" [ngModelOptions]="{standalone: true}" (keyup)="onManualKeyup(4, $event)"
+                (focus)="commonServices.setAutoFillOff($event)" />
+        </div>
+    </div>
+
+    <div class="row mbt-2">
+        <div class="col-md-12 mrig-0">
+            <p class="rob _11px fw-600 black m-b-5">State<small style="color: red;">*</small></p>
+            <input [readonly]="this.condata.show" type="text"
+                class="form-control form-control-lg frmheight form-control-solid bn" autocomplete="nope"
+                [(ngModel)]="delData.State" [ngModelOptions]="{standalone: true}" (keyup)="onManualKeyup(4, $event)"
+                (focus)="commonServices.setAutoFillOff($event)" />
+        </div>
+    </div>
+</div>

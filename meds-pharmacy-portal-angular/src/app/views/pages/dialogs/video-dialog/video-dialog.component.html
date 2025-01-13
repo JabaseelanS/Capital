@@ -1,0 +1,17 @@
+<div class="vdo">
+    <div class="row div1">
+        <h3 class="rob-b divH">{{videoToplay.name}}</h3>
+        <div class="divB">
+            <button (click)="closeIt()" mat-raised-button matTooltip="Close" class="rob-b _12px dark-petrol white divB2"
+                type="button">
+                <img class="divIB" src="../../../../../assets/packapill-icons/multiply-wsign.png"><span>Close</span>
+            </button>
+        </div>
+    </div>
+    <div style="width:auto;">
+        <video width="auto" controls preload="none" poster='../../../../../assets/logo/video-poster.png'
+            data-setup='{ "aspectRatio":"840:568", "playbackRates": [1, 1.5, 2] }' class="vtag">
+            <source src={{videoToplay.path}} type='video/mp4' />
+        </video>
+    </div>
+</div>

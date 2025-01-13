@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>logo_box</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="logo_box_blu-copy">
+            <g id="logo_box">
+                <rect id="Rectangle" fill="#35B14F" x="0" y="0" width="40" height="40" rx="16"></rect>
+                <path d="M22.787234,10.212766 C26.6532273,10.212766 29.787234,13.3467727 29.787234,17.212766 L29.787234,22.787234 C29.787234,26.6532273 26.6532273,29.787234 22.787234,29.787234 L17.212766,29.787234 C16.9219216,29.787234 16.63522,29.7694963 16.3536842,29.7350435 C13.4912371,30.2037093 11.4442062,32.188737 10.212766,35.688379 L10.212766,35.688379 L10.212766,23.6513322 L10.2709894,23.6942434 C10.2325761,23.3973386 10.212766,23.0945998 10.212766,22.787234 L10.212766,17.212766 C10.212766,13.3467727 13.3467727,10.212766 17.212766,10.212766 L22.787234,10.212766 Z" id="Rectangle-2" fill="#FFFFFF"></path>
+                <circle id="Oval" fill="#35B14F" cx="20" cy="20" r="5.53191489"></circle>
+                <line x1="14.7694717" y1="22.6017328" x2="25.5319149" y2="17.5607966" id="Path-2" stroke="#FFFFFF" fill="#FFFFFF"></line>
+            </g>
+        </g>
+    </g>
+</svg>

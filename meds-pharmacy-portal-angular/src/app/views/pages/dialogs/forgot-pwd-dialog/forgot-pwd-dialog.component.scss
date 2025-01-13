@@ -1,0 +1,140 @@
+.slide-top {
+    height: 100%;
+    // display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slide-container {
+    height: 100%;
+    width: 100%;
+    background: #f8f8f8;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.parent-slide-container {
+    width: 1510px;
+    height: 100%;
+    display: flex;
+
+    div {
+        flex: 1;
+        text-align: center;
+        padding-top: 32px;
+    }
+}
+
+.buttons-list {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+
+    button {
+        margin: 0 5px;
+    }
+}
+
+::ng-deep .mat-dialog-container {
+    padding: 0px;
+    border-radius: 10px;
+}
+
+.rclr {
+    color: #005760;
+}
+
+.head-part {
+    color: #005760;
+    font-size: 18px;
+    font-family: "Roboto Bold";
+}
+
+.cls-btn-div {
+    text-align-last: end;
+    padding: 20px 20px 14px 0px;
+    background-color: #f7f8fa;
+    border-bottom: 1px solid #ebedf2;
+}
+
+.cls-btn-fp {
+    border-radius: 5px;
+    border: none;
+    text-align-last: center;
+}
+
+.h-w-btn01 {
+    height: 25px;
+    line-height: 0px;
+    padding: 0px;
+    width: 74px;
+    background-color: #fff !important;
+    color: #5a5a5a !important;
+}
+
+.h-w-btn02 {
+    height: 30px;
+    width: 150px;
+}
+
+::ng-deep .otp-input:focus {
+    outline: #005760 auto 5px !important;
+    caret-color: #005760;
+}
+
+::ng-deep .otp-input {
+    font-size: 22px !important;
+    border: 1px solid #005760 !important;
+    font-family: Roboto;
+}
+
+::ng-deep .otp-container {
+    .btn {
+        width: 220px;
+        // background-color:  #005760;
+        background-color: #f8f8f8;
+        color: #005760;
+        // border-radius: 5px;
+        height: 30px;
+        font-size: 14px !important;
+        font-family: "Roboto SemiBold";
+        padding-top: 4px;
+        margin-top: 40px;
+    }
+
+    .btn:hover {
+        color: #005760 !important;
+    }
+}
+
+.error_cls {
+    input.in-cls {
+        border: 1px solid #e02830;
+        outline: none;
+    }
+}
+
+.success_cls {
+    input.in-cls {
+        border: none;
+        outline: none;
+    }
+}
+
+.in-cls {
+    margin-right: 10px;
+    width: 10%;
+    height: 45px;
+    border: 1px solid #E6E7E7;
+    box-shadow: 1px 1px #E6E7E7;
+}
+
+input.in-cls:focus {
+    outline: none;
+}
+
+.error_span1_cls {
+    color: #e02830;
+    font-size: 12px;
+    font-family: Roboto Medium;
+}

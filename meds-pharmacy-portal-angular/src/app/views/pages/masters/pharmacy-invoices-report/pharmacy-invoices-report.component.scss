@@ -1,0 +1,16 @@
+.pag-mat {
+    ::ng-deep .mat-paginator-page-size {
+        display: none;
+    }
+
+    ::ng-deep .mat-icon-button {
+        background-color: #005760;
+        color: #fff;
+        margin-left: 12px;
+    }
+}
+
+.underline {
+    border-bottom: solid 2px #005760;
+    color: #005760 !important;
+}

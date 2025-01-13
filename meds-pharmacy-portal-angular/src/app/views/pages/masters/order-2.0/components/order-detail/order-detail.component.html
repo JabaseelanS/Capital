@@ -1,0 +1,259 @@
+<!-- New UI 2 -->
+<div class="parent-body">
+	<!-- Headers -->
+	<div fxLayout="row" class="n-s-h">
+		<div *ngIf="(userdetails.RoleId == 1 || userdetails.RoleId == 5) && (isPage == 1 || isPage == 3)" class="b-line rob col-md-1.5 tbox ml-35">
+			<mat-form-field appearance="legacy" class="w-100">
+				<mat-select class="arw" [(ngModel)]="filterStatusId" value="0" (ngModelChange)="isPage == 1 || isPage == 3 ? fetchDataByOrders($event) : null">
+					<mat-option value="0"> Filter by order type </mat-option>
+					<mat-option *ngFor="let item of viewAllOrders" [value]="item.id">
+						{{ item.value }}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+		<div class="b-line rob tbox ml-20" [ngClass]="this.userdetails.RoleId == 2 || this.userdetails.RoleId == 3 ? 'col-md-3' : 'col-md-1.5'">
+			<mat-form-field appearance="legacy" class="w-100">
+				<mat-label>Search name, mobile, order no, marketplace reference no</mat-label>
+				<input class="l-c rob-b _12px" matInput [(ngModel)]="filterSearch" (ngModelChange)="isPage == 1 || isPage == 3 ? applyFilter($event, true) : null" />
+			</mat-form-field>
+		</div>
+
+		<div class="b-line rob col-md-2 tbox ml-35">
+			<mat-form-field appearance="legacy" class="w-100">
+				<mat-select value="0" class="arw" [(ngModel)]="filterOrderStatusId" (selectionChange)="isPage == 1 || isPage == 3 ? fetchData($event) : null">
+					<mat-option value="0"> Filter by order status </mat-option>
+					<mat-option *ngFor="let item of orderStatusList" [value]="item.id">
+						{{ item.value }}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+
+		<div *ngIf="userdetails.RoleId == 1 || userdetails.RoleId == 2 || userdetails.RoleId == 5" class="b-line rob col-md-2 tbox ml-35">
+			<mat-form-field appearance="legacy" class="w-100">
+				<mat-select class="arw" [(ngModel)]="filterPharmacyId" value="0" (ngModelChange)="isPage == 1 || isPage == 3 ? fetchDataByPharmacy($event) : null">
+					<input class="searchfilter l-c rob-b _12px" matInput placeholder="Search" (keyup)="searchFilterBypharmacy($event.target.value, true)" (keydown)="$event.stopPropagation()" />
+					<mat-option value="0"> View all pharmacies </mat-option>
+					<mat-option *ngFor="let item of pharmacyList" [value]="item.PharmacyId">
+						{{ item.PharmacyName }}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+
+		<div *ngIf="userdetails.RoleId == 1 || userdetails.RoleId == 5" class="b-line rob col-md-1.5 tbox ml-35">
+			<mat-form-field appearance="legacy" class="w-100">
+				<mat-select class="arw" [(ngModel)]="filterOrderType" value="0" (ngModelChange)="isPage == 1 || isPage == 3 ? fetchDataByOrderType($event) : null">
+					<mat-option value="0"> Choose type of order </mat-option>
+					<mat-option *ngFor="let item of OrderTypeList" [value]="item.id">
+						{{ item.value }}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+
+		<div *ngIf="isPage == 2" class="b-line rob col-md-1.5 tbox ml-35">
+			<!-- <mat-form-field appearance="fill">
+                <mat-label>Filter by date</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                    <input matStartDate placeholder="Start date">
+                    <input matEndDate placeholder="End date">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field> -->
+			<mat-form-field appearance="legacy" class="w-100 dpic">
+				<input matInput placeholder="Filter by date" [satDatepicker]="picker" (dateInput)="dateEve($event)" style="max-width: 225px" autocomplete="nope" [(ngModel)]="FilterByDate" />
+				<sat-datepicker #picker [rangeMode]="true"> </sat-datepicker>
+				<sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+			</mat-form-field>
+			<!-- <mat-form-field class="w-100" appearance="legacy">
+                <div class="row">
+                    <input style="max-width: 225px;min-width: 160px;" readonly (dateInput)="dateEve($event)" matInput
+                        autocomplete="nope" [(ngModel)]="FilterByDate" placeholder="Filter by date"
+                        [matDatepicker]="picker">
+                </div>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field> -->
+		</div>
+
+		<div *ngIf="isPage == 2" class="b-line rob col-md-1.5 ml-35">
+			<button mat-raised-button class="bck-clr ex-btn rob-b" matTooltip="Search" (click)="OnSearch()">
+				<span> Search</span>
+			</button>
+		</div>
+
+		<div *ngIf="userdetails.RoleId == 1 && isPage != 3" class="b-line rob col-md-1.5 display-center ml-35">
+			<span class="fw-500 rob l-c _12px margin-right">Show Test Orders</span>
+			<mat-checkbox [(ngModel)]="showTestOrders" (change)="OnshowTestOrders(showTestOrders, false)"> </mat-checkbox>
+		</div>
+	</div>
+	<div fxLayout="row">
+		<perfect-scrollbar style="max-height: calc(70vh - 0px); background-color: #fff">
+			<div class="rob" style="background-color: #fff; padding: 0px 18px; width: 100%">
+				<table class="table table-striped">
+					<thead class="v2-h-lt rob-b _12px l-c">
+						<tr>
+							<th>Order No</th>
+							<th>Order Date & Time</th>
+							<th>Qty</th>
+							<th>Total</th>
+							<th>Order By</th>
+							<th>Mobile No</th>
+							<th>Order Type</th>
+							<th>Payment Status</th>
+							<th>
+								<p *ngIf="isPage == 2">Order Status</p>
+							</th>
+							<th *ngIf="isPage == 2">Comments</th>
+						</tr>
+					</thead>
+					<tbody class="l-c">
+						<tr *ngFor="let orderModel of liveDataSource | slice : (isPage == 1 ? 0 : this.lowValue) : (isPage == 1 ? 10 : this.highValue)">
+							<td>
+								<div class="row">
+									<div class="col-4" style="padding-left: 0px; text-align-last: center; padding-right: 0px">
+										<img class="marketplace" matTooltip="{{ orderModel.IsUploadType == 7 || orderModel.IsUploadType == 8 || orderModel.IsUploadType == 9 ? 'Create Order' : orderModel.IsUploadType == 10 || orderModel.IsUploadType == 11 ? 'WOS' : orderModel.IsUploadType == 12 ? 'DoorDash' : orderModel.IsUploadType == 13 ? 'UberEats' : 'App Order' }}" [src]="getUploadTypeIcon(orderModel.IsUploadType)" alt="" />
+										<p *ngIf="orderModel.MarketPlaceDisplayId != null && orderModel.MarketPlaceDisplayId != ''" style="text-align: center; margin-top: 8px">
+											<!-- <span class="UE_order_id_box">#BC222 </span> -->
+											<span class="UE_order_id_box">#{{ orderModel.MarketPlaceDisplayId }}</span>
+										</p>
+									</div>
+									<div class="col-8" style="padding-left: 0px; padding-right: 0px">
+										<p style="-webkit-box-orient: vertical" class="pharmacycls two-line-text l-c" *ngIf="userdetails.RoleId == 1 || userdetails.RoleId == 5 || userdetails.RoleId == 2">
+											{{ orderModel.PharmacyName }}
+										</p>
+
+										<p class="cur-p b-c l-c" (click)="gotoDetails(orderModel)">#{{ orderModel.OrderNo }}</p>
+										<span *ngIf="orderModel.IsUploadType == 13 && orderModel.IsOrderStatus != 8" [ngClass]="orderModel.MarketPlaceStockStatus == true ? 'class-unpaid' : ''"> {{ orderModel.MarketPlaceStockStatus == true ? "Stock Not Available" : "" }}</span>
+									</div>
+								</div>
+							</td>
+							<td>
+								<p>{{ orderModel.CreatedOn | date : "dd/MM/y h:mm aaaaa'm'" | uppercase }}</p>
+								<p *ngIf="isPage == 2" style="font-style: italic">
+									{{ orderModel.ModifiedOn | date : "dd/MM/y h:mm aaaaa'm'" | uppercase }}
+								</p>
+								<p *ngIf="userdetails.RoleId != 3 && userdetails.RoleId != 4" class="cur-p b-c l-c">
+									{{ orderModel.StateName }}
+								</p>
+							</td>
+							<td>
+								{{ orderModel.OrderDetailCount }}
+							</td>
+							<td>
+								<!-- {{ (userdetails.RoleId == 2 || userdetails.RoleId == 3) && (orderModel.IsUploadType ==
+                                13 || orderModel.IsUploadType == 12) ? '-' : orderModel.Total}} -->
+								{{ orderModel.IsUploadType == 13 || orderModel.IsUploadType == 12 ? (orderModel.PaidAmount != null && orderModel.PaidAmount != "" && orderModel.PaidAmount > 0 ? "$" + orderModel.PaidAmount : "") : orderModel.Total <= 0 ? orderModel.Total : "$" + orderModel.Total }}
+							</td>
+							<td>
+								{{ orderModel.FullName }}
+							</td>
+							<td>
+								{{ orderModel.IsUploadType == 13 || orderModel.IsUploadType == 12 ? (orderModel.MarketPlaceCustomerContact == null || orderModel.MarketPlaceCustomerContact == undefined || orderModel.MarketPlaceCustomerContact == "" ? commonServices.convertNum(orderModel.MobileNo) : orderModel.MarketPlaceCustomerContact) : commonServices.convertNum(orderModel.MobileNo) }}<img style="margin-left: 5px" *ngIf="orderModel.IsConsultation" src="../../../../../../assets/packapill-icons/SVG/call.svg" alt="" />
+								<p>{{ orderModel.Email }}</p>
+							</td>
+							<td>
+								<!-- <p>
+									{{ commonServices.getDeliveryType(orderModel?.DeliverBy) }}
+									<i class="material-icons hola_sync_btn_live_order loader" (click)="getDetailsSync(orderModel.BookingReference)" *ngIf="orderModel?.IsSherpaDelivery && userdetails.RoleId == 1">sync</i>
+								</p> -->
+								<p>
+									{{ commonServices.getDeliveryType(orderModel?.DeliverBy) }}
+									<i class="material-icons hola_sync_btn_live_order" [class.loading]="orderModel?.isLoading" (click)="getDetailsSync(orderModel)" *ngIf="orderModel?.IsSherpaDelivery && userdetails.RoleId == 1"> sync </i>
+								</p>
+								<!-- <span
+                                    *ngIf="orderModel.IsPharmacyDelivery !=null && orderModel.IsPharmacyDelivery && orderModel.DeliverBy == 1"
+                                    class="class-paid">
+                                    Pharmacy Own Delivery</span>
+                                <p class="text-link"
+                                    *ngIf="(orderModel.IsPharmacyDelivery ==null || !orderModel.IsPharmacyDelivery) && orderModel.DeliverBy == 1 && (isPage == 1 ||isPage == 3) && (userdetails.RoleId==1 || userdetails.RoleId==5) && orderModel.IsUploadType != 12 && orderModel.IsUploadType != 13"
+                                    [innerHTML]='commonServices.getStat(orderModel.CurrentStatus)'
+                                    (click)="getDetails(orderModel.OrderId,orderModel.CurrentStatus)">
+                                </p>
+                                <p
+                                    *ngIf="(orderModel.IsPharmacyDelivery ==null || !orderModel.IsPharmacyDelivery) && orderModel.BookingReference != null && orderModel.BookingReference!='' &&orderModel.DeliverBy == 1 &&  (isPage == 1 ||isPage == 3) && (userdetails.RoleId==1 || userdetails.RoleId==5)">
+                                    #{{
+                                    orderModel.BookingReference}}
+                                </p> -->
+								<div *ngIf="orderModel.IsUploadType != 13 && orderModel.IsUploadType != 12">
+									<span *ngIf="orderModel.IsPharmacyDelivery != null && orderModel.IsPharmacyDelivery && (orderModel.DeliverBy == 1 || orderModel.DeliverBy == 3)" class="class-paid"> Pharmacy Own Delivery</span>
+									<p class="text-link" *ngIf="(orderModel.IsPharmacyDelivery == null || !orderModel.IsPharmacyDelivery) && (orderModel.DeliverBy == 1 || orderModel.DeliverBy == 3) && (isPage == 1 || isPage == 3) && (userdetails.RoleId == 1 || userdetails.RoleId == 5)" [innerHTML]="commonServices.getStat(orderModel.CurrentStatus)" (click)="getBookingDetails(orderModel, userdetails)"></p>
+									<p *ngIf="(orderModel.IsPharmacyDelivery == null || !orderModel.IsPharmacyDelivery) && orderModel.BookingReference != null && orderModel.BookingReference != '' && (orderModel.DeliverBy == 1 || orderModel.DeliverBy == 3) && (isPage == 1 || isPage == 3) && (userdetails.RoleId == 1 || userdetails.RoleId == 5)">#{{ orderModel.BookingReference }}</p>
+								</div>
+							</td>
+							<td>
+								<span [ngClass]="{ 'class-paid': orderModel.PaymentType == 1 || (orderModel.PaymentType == 4 && orderModel.AwaitingPaymentDate != null && orderModel.AwaitingPaymentDate != '') || orderModel.ChargeAccount == true, 'class-unpaid': (orderModel.PaymentType === 0 || orderModel.AwaitingPaymentDate == null || orderModel.AwaitingPaymentDate == '') && orderModel.ChargeAccount == false }"> {{ orderModel.PaymentType == 1 || (orderModel.PaymentType == 4 && orderModel.AwaitingPaymentDate != null && orderModel.AwaitingPaymentDate != "") || orderModel.ChargeAccount ? "Paid" : "Unpaid" }}</span>
+								<p *ngIf="(userdetails.RoleId != 2 && userdetails.RoleId != 3) || (orderModel.IsUploadType != 13 && orderModel.IsUploadType != 12)" class="cur-p b-c l-c">{{ orderModel.PaidAmount != null && orderModel.PaidAmount != "" && !orderModel.ChargeAccount ? "$" + orderModel.PaidAmount : "" }}</p>
+								<img *ngIf="orderModel.ChargeAccount" style="width: 24px; height: 24px" src="../../../../../../assets/packapill-icons/chargepay.png" />
+								<div class="m-5px" *ngIf="orderModel.DriverName != null && orderModel.DriverMobileNumber != null">
+									<p>Driver Name: {{ orderModel.DriverName }}</p>
+									<p>Driver Mobile Number: {{ orderModel.DriverMobileNumber }}</p>
+								</div>
+							</td>
+
+							<td *ngIf="orderModel.isPage == 2">
+								<label *ngIf="orderModel.IsOrderStatus == 5 || orderModel.IsOrderStatus == 8" class="col-status-warn">{{ orderModel.NotificationText }}</label>
+							</td>
+
+							<td *ngIf="orderModel.isPage == 1 || orderModel.isPage == 3">
+								<div *ngIf="userdetails.RoleId == 3 || userdetails.RoleId == 4 || userdetails.RoleId == 5" class="">
+									<p>{{ orderModel.NotificationText }}</p>
+									<span *ngIf="orderModel.IsOrderStatus == 1 || orderModel.IsOrderStatus == 2 || orderModel.IsOrderStatus == 11 || orderModel.IsOrderStatus == 12 || orderModel.IsOrderStatus == 13 || orderModel.IsOrderStatus == 16" (click)="promptWarning(orderModel, false)" class="savestatus">
+										{{ orderModel.BtnNotificationText }}
+									</span>
+								</div>
+							</td>
+
+							<td *ngIf="userdetails.RoleId == 1 && isPage != 2" style="padding: 0px">
+								<label *ngIf="orderModel.IsOrderStatus != 1 && orderModel.IsOrderStatus != 2 && orderModel.IsOrderStatus != 11 && orderModel.IsOrderStatus != 12 && orderModel.IsOrderStatus != 13 && orderModel.IsOrderStatus != 16" class="col-status-warn admin-sts"> {{ orderModel.NotificationText }}</label>
+								<label *ngIf="orderModel.IsOrderStatus == 1 || orderModel.IsOrderStatus == 2 || orderModel.IsOrderStatus == 11 || orderModel.IsOrderStatus == 12 || orderModel.IsOrderStatus == 13 || orderModel.IsOrderStatus == 16" class="col-status-warn admin-sts">{{ orderModel.BtnNotificationText }}</label>
+								<div class="row">
+									<div style="margin-right: 2px" *ngIf="userdetails.RoleId == 1 || userdetails.RoleId == 2">
+										<mat-form-field *ngIf="orderModel?.DeliverBy == 1 || orderModel?.DeliverBy == 3" class="Mat-Box l-c pd-n" appearance="outline">
+											<mat-select [(ngModel)]="orderModel.IsOrderStatus">
+												<mat-option *ngFor="let item of successorderStatusList" [value]="item.id">
+													{{ (orderModel.DeliverBy == 1 || orderModel.DeliverBy == 3) && orderModel.IsOrderStatus == 13 && orderModel.IsUploadType == 1 && orderModel.IsOrderStatus == item.id ? item.value.toLowerCase() : item.value.toLowerCase() }}
+												</mat-option>
+												<!-- "Courier returning prescription" -->
+											</mat-select>
+										</mat-form-field>
+
+										<mat-form-field *ngIf="orderModel?.DeliverBy == 2" class="Mat-Box pd-n" appearance="outline">
+											<mat-select class="mt-sel" [(ngModel)]="orderModel.IsOrderStatus">
+												<mat-option *ngFor="let item of orderStatusListByPickup" [value]="item.id">
+													{{ item.value.toLowerCase() }}
+												</mat-option>
+											</mat-select>
+										</mat-form-field>
+									</div>
+
+									<div *ngIf="userdetails.RoleId == 1 || userdetails.RoleId == 2">
+										<img style="height: 28px; margin-right: 8px; margin-left: 4px; margin-top: 14px; outline: none !important; cursor: pointer" (click)="orderModel.IsOrderStatus == 8 || orderModel.IsOrderStatus == 17 ? onStatusChange(orderModel) : promptWarning(orderModel, true)" src="../../../../../../../assets/packapill-icons/SVG/Tick.svg" />
+									</div>
+								</div>
+							</td>
+
+							<td *ngIf="(userdetails.RoleId == 1 && isPage == 2) || userdetails.RoleId != 1">
+								<label *ngIf="orderModel.IsOrderStatus != 1 && orderModel.IsOrderStatus != 2 && orderModel.IsOrderStatus != 11 && orderModel.IsOrderStatus != 12 && orderModel.IsOrderStatus != 13 && orderModel.IsOrderStatus != 16" class="v2-status-warn">{{ orderModel.NotificationText }}</label>
+
+								<label *ngIf="orderModel.IsOrderStatus == 1 || orderModel.IsOrderStatus == 2 || orderModel.IsOrderStatus == 11 || orderModel.IsOrderStatus == 12 || orderModel.IsOrderStatus == 13 || orderModel.IsOrderStatus == 16" (click)="promptWarning(orderModel, false)" class="v2-status-success cur-p pointer">{{ orderModel.BtnNotificationText }}</label>
+							</td>
+
+							<td *ngIf="isPage == 2">
+								<!-- <p>{{orderModel?.CancelReason}}
+                                </p> -->
+								<p *ngIf="orderModel.CancelReasonId != 5">{{ orderModel?.CancelReason }}</p>
+								<p *ngIf="orderModel.CancelReasonId == 5">{{ orderModel?.CancelFeedback }}</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div *ngIf="liveDataSource.length == 0" class="rob-b r-c">No record found</div>
+				<mat-paginator class="pag-mat" #paginator [length]="isPage == 1 ? (liveDataSource.length > 0 ? liveDataSource[0].RecordCount : liveDataSource.length) : liveDataSource.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="getPaginatorData($event)">page </mat-paginator>
+			</div>
+		</perfect-scrollbar>
+	</div>
+</div>

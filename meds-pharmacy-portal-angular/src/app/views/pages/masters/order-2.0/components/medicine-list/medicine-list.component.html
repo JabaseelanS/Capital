@@ -1,0 +1,310 @@
+<div class="medlist row t-box h-p-100">
+    <div class="row">
+        <h5 class="h-5 rob-m _16px pink">Order Details</h5>
+    </div>
+    <!-- <label style="font-size: larger;
+    font-weight: bold;margin: 16px 0px 2px 22px;">Order Details Form</label> -->
+    <!-- <perfect-scrollbar style="max-height: calc(15vh - 0px);border-radius: 8px;"> -->
+    <mat-table #table class="table-n table" [dataSource]="prescriptionDetailsDataSource">
+
+        <ng-container matColumnDef="MarketPlaceItemStatus">
+            <mat-header-cell class="rob-b _11px l-c" *matHeaderCellDef fxHide.xs fxHide.sm>
+                Market Place Status
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" [@animation] fxHide.xs fxHide.sm>
+                <span [ngClass]="row.currentData.MarketPlaceItemStatus == 1? 'stockavail-text' : 'stockunavail-text'">
+                    {{ row.currentData.MarketPlaceItemStatus == 1 ? 'Stock Available' : 'Stock Not Available' }}
+                </span>
+            </mat-cell>
+        </ng-container>
+
+
+        <ng-container matColumnDef="FamilyId">
+            <mat-header-cell class="rob-b _11px  l-c" *matHeaderCellDef fxHide.xs fxHide.sm>
+                Name
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" [@animation] fxHide.xs fxHide.sm>
+
+                <mat-form-field id="myselect" style="width: 95%;" appearance="outline">
+                    <mat-label>Please Select</mat-label>
+
+                    <mat-select [disabled]="row.currentData.IsStock"
+                        [ngStyle]="row.currentData.IsStock && {'opacity':'50%'}"
+                        [ngClass]="{'class-disabled': row.currentData.IsStock}" (click)="row.confirmEditCreate()"
+                        [(ngModel)]="row.currentData.FamilyId" required>
+                        <mat-option *ngFor="let item of patientList" [value]="item.FamilyId">
+                            {{item.Name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error
+                        *ngIf="row.currentData.FamilyId == null || row.currentData.FamilyId == undefined || row.currentData.FamilyId == '' || row.currentData.FamilyId <= 0 ">
+                        Patient name is required</mat-error>
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="OrderScriptId">
+            <mat-header-cell class="rob-b _11px  l-c" *matHeaderCellDef fxHide.xs fxHide.sm>
+                Script ID / Barcode </mat-header-cell>
+            <mat-cell *matCellDef="let row" [@animation] fxHide.xs fxHide.sm>
+                <mat-form-field
+                    [ngClass]="{'class-disabled1': row.currentData.IsUploadType !=null && row.currentData.IsUploadType !=undefined && row.currentData.IsUploadType == 5, 'class-enable1': row.currentData.IsUploadType ==null || row.currentData.IsUploadType ==undefined || row.currentData.IsUploadType !=5 }"
+                    id="myselect1" style="width: 95% !important;" appearance="outline">
+                    <input [disabled]="row.currentData.IsStock" (focus)="commonServices.setAutoFillOff($event)"
+                        autocomplete="nope" [ngStyle]="row.currentData.IsStock && {'opacity':'50%'}"
+                        [ngClass]="{'class-disabled':  row.currentData.IsUploadType !=null && row.currentData.IsUploadType !=undefined && row.currentData.IsUploadType == 5, 'class-enable': row.currentData.IsUploadType ==null || row.currentData.IsUploadType ==undefined || row.currentData.IsUploadType !=5 }"
+                        (click)="row.confirmEditCreate()" type="text" matInput
+                        [(ngModel)]="row.currentData.OrderScriptId" maxlength="8"
+                        [required]="row.currentData.IsUploadType != 5"
+                        (keypress)="commonServices.validateNumber($event)">
+                    <!-- <mat-error
+                        *ngIf="row.currentData.OrderScriptId == null || row.currentData.OrderScriptId == undefined || row.currentData.OrderScriptId == '' ">
+                        Script id is required</mat-error> -->
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="MedicineName">
+            <mat-header-cell class="rob-b _11px  l-c" *matHeaderCellDef fxHide.xs fxHide.sm>
+                Medicine Name </mat-header-cell>
+            <mat-cell *matCellDef="let row" [@animation] fxHide.xs fxHide.sm>
+                <mat-form-field id="myselect1" style="width: 95% !important;" appearance="outline">
+                    <input [disabled]="row.currentData.IsStock" (focus)="commonServices.setAutoFillOff($event)"
+                        autocomplete="nope" [ngStyle]="row.currentData.IsStock && {'opacity':'50%'}"
+                        (click)="row.confirmEditCreate()" (ngModelChange)="getMedicineList($event, row, orderModel)"
+                        type="text" matInput [(ngModel)]="row.currentData.MedicineName" [matAutocomplete]="auto"
+                        required>
+                    <mat-autocomplete
+                        (optionSelected)='commonServices.selectMedicineBy(2, $event.option.value, row, medicineList, orderModel, userdetails)'
+                        #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of medicineList" [value]="option.MedicineName">
+                            {{option.MedicineName}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error
+                        *ngIf="row.currentData.MedicineName == null || row.currentData.MedicineName == undefined || row.currentData.MedicineName == ''">
+                        Medicine name is required</mat-error>
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Price">
+            <mat-header-cell class="rob-b _11px  l-c" *matHeaderCellDef fxHide.xs fxHide.sm>
+                Price
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row; let i = index" [@animation] fxHide.xs fxHide.sm>
+                <mat-form-field id="myselect1" style="width: 95%;" appearance="outline">
+                    <input [disabled]="row.currentData.IsStock" (focus)="commonServices.setAutoFillOff($event)"
+                        (focusout)="setDecimal(i, row.currentData.Price)" autocomplete="nope"
+                        [ngStyle]="row.currentData.IsStock && {'opacity':'50%'}" (click)="row.confirmEditCreate()"
+                        (input)="row.confirmEditCreate();" type="text" matInput [(ngModel)]="row.currentData.Price"
+                        (keypress)="commonServices.validateDigit($event)" required appTwoDigitDecimaNumber>
+                    <span matPrefix>&#x24;</span>
+                    <mat-error
+                        *ngIf="row.currentData.Price == null || row.currentData.Price == undefined || row.currentData.Price == '' ">
+                        Price is required</mat-error>
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="IsMedicineStatus">
+                                                <mat-header-cell class="rob-b _11px  l-c" *matHeaderCellDef fxHide.xs fxHide.sm>
+                                                    Stock
+                                                </mat-header-cell>
+                                                <mat-cell *matCellDef="let row" [@animation] fxHide.xs fxHide.sm>
+                                                    <mat-form-field id="myselect" style="width: 90%;">
+                                                        <mat-label>Please Select</mat-label>
+                                                        <mat-select (click)="row.confirmEditCreate()"
+                                                            [(ngModel)]="row.currentData.IsMedicineStatus">
+                                                            <mat-option *ngFor="let item of medicineStatus"
+                                                                [value]="item.id">
+                                                                {{item.value}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </mat-cell>
+                                            </ng-container> -->
+
+        <ng-container matColumnDef="Quantity">
+            <mat-header-cell class="rob-b _11px  l-c" *matHeaderCellDef fxHide.xs fxHide.sm>
+                Qty
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" [@animation] fxHide.xs fxHide.sm class="merr-a">
+                <mat-form-field class="class-enable1" id="myselect" style="width: 90%;" appearance="outline">
+                    <input [disabled]="row.currentData.IsStock" tabindex="{{row.currentData.IsUploadType !=null && row.currentData.IsUploadType !=undefined && row.currentData.IsUploadType == 5 
+                                                    ? 0:-1 }}" [ngStyle]="row.currentData.IsStock && {'opacity':'50%'}"
+                        (focus)="commonServices.setAutoFillOff($event)" autocomplete="nope"
+                        (keypress)="commonServices.validateNumber($event)"
+                        [ngClass]="{'class-enable': row.currentData.IsUploadType !=null && row.currentData.IsUploadType !=undefined && row.currentData.IsUploadType == 5 }"
+                        (click)="row.confirmEditCreate()" (input)="row.confirmEditCreate();" type="text" matInput
+                        [(ngModel)]="row.currentData.Quantity" maxlength="2" required>
+                    <mat-error style="width:100px;"
+                        *ngIf="row.currentData.Quantity == null || row.currentData.Quantity == undefined || row.currentData.Quantity == ''">
+                        Qty is required</mat-error>
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="TotalPrice">
+            <mat-header-cell class="rob-b _11px  l-c" *matHeaderCellDef fxHide.xs fxHide.sm>
+                Total Price
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" [@animation] fxHide.xs fxHide.sm>
+                <mat-form-field class="class-disabled1" style="width: 95%;" appearance="outline">
+                    <input autocomplete="nope" [ngStyle]="row.currentData.IsStock && {'opacity':'50%'}" readonly
+                        type="text" matInput maxlength="9"
+                        [ngModel]="getTotalPrice(row.currentData.Price, row.currentData.Quantity)">
+                    <span matPrefix>&#x24;</span>
+                    <!-- <mat-error
+                        *ngIf="row.currentData.Price == null || row.currentData.Price == undefined || row.currentData.Price == '' ">
+                        Price is required</mat-error> -->
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Repeats">
+            <mat-header-cell class="rob-b _11px  l-c" *matHeaderCellDef fxHide.xs fxHide.sm>
+                Repeats
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" [@animation] fxHide.xs fxHide.sm>
+                <mat-form-field class="class-enable1-repeat"
+                    [ngClass]="{'class-disabled1-repeat': row.currentData.IsUploadType==4 ||  row.currentData.IsUploadType==5}"
+                    style="width: 95%;" appearance="outline">
+                    <mat-label>Please Select</mat-label>
+                    <mat-select [disabled]="row.currentData.IsStock"
+                        [ngStyle]="row.currentData.IsStock && {'opacity':'50%'}" class="class-enable-repeat"
+                        [ngClass]="{'class-disabled-repeat':  row.currentData.IsUploadType==4 ||  row.currentData.IsUploadType==5}"
+                        (click)="row.confirmEditCreate()" [(ngModel)]="row.currentData.Repeats">
+                        <mat-option (click)="commonServices.setEmpty(row.currentData)" *ngFor="let item of repeatsList"
+                            [value]="item.id">
+                            {{item.value}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="TotalRepeats">
+            <mat-header-cell class="rob-b _11px  l-c" *matHeaderCellDef fxHide.xs fxHide.sm>
+                Total Repeats
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" [@animation] fxHide.xs fxHide.sm class="merr-a">
+                <mat-form-field
+                    [ngClass]="{'class-disabled1': row.currentData.Repeats !=null && row.currentData.Repeats !=undefined && row.currentData.Repeats != 1, 'class-enable1': row.currentData.Repeats !=null && row.currentData.Repeats !=undefined && row.currentData.Repeats == 1  &&orderModel.IsRepeatsOrderId > 0|| orderModel.IsRepeatsOrderId <= 0 && row.currentData.Repeats==1}"
+                    style="width: 90%;" appearance="outline">
+                    <input tabindex="{{row.currentData.Repeats == 1 ? 0:-1 }}" [disabled]="row.currentData.IsStock"
+                        (focus)="commonServices.setAutoFillOff($event)" autocomplete="nope"
+                        [ngStyle]="row.currentData.IsStock && {'opacity':'50%'}"
+                        [readonly]="row.currentData.Repeats != 1" (keypress)="commonServices.validateNumber($event)"
+                        [ngClass]="{'class-disabled': row.currentData.Repeats !=null || row.currentData.Repeats !=undefined || row.currentData.Repeats !='' || row.currentData.Repeats != 1, 'class-enable': row.currentData.Repeats ==1}"
+                        (keyup)="repeatValidation(row.currentData, 1)" (click)="row.confirmEditCreate()" type="text"
+                        matInput [(ngModel)]="row.currentData.TotalRepeats" required>
+                    <mat-error
+                        *ngIf="row.currentData.Repeats !=null && row.currentData.Repeats !=undefined && row.currentData.Repeats==1?(row.currentData.TotalRepeats == null || row.currentData.TotalRepeats == undefined || row.currentData.TotalRepeats == ''):false ">
+                        Total Repeats is required</mat-error>
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="RemainingRepeats">
+            <mat-header-cell class="rob-b _11px  l-c" *matHeaderCellDef fxHide.xs fxHide.sm>
+                Remaining Repeats
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" [@animation] fxHide.xs fxHide.sm class="merr-a">
+                <mat-form-field
+                    [ngClass]="{'class-disabled1': row.currentData.Repeats !=null && row.currentData.Repeats !=undefined ||orderModel.IsRepeatsOrderId <= 0, 'class-enable1': row.currentData.Repeats !=null && row.currentData.Repeats !=undefined && row.currentData.Repeats == 1  &&orderModel.IsRepeatsOrderId > 0|| orderModel.IsRepeatsOrderId <= 0 && row.currentData.Repeats==1}"
+                    style="width: 90%;" appearance="outline">
+                    <input tabindex="{{row.currentData.Repeats == 1 ? 0:-1 }}" [disabled]="row.currentData.IsStock"
+                        (focus)="commonServices.setAutoFillOff($event)" autocomplete="nope"
+                        [ngStyle]="row.currentData.IsStock && {'opacity':'50%'}"
+                        (keypress)="commonServices.validateNumber($event)"
+                        [ngClass]="{'class-disabled': row.currentData.Repeats !=null || row.currentData.Repeats !=undefined || row.currentData.Repeats !='' || orderModel.IsRepeatsOrderId <= 0 , 'class-enable':  orderModel.IsRepeatsOrderId > 0 || orderModel.IsRepeatsOrderId <= 0 && row.currentData.Repeats==1}"
+                        (keyup)="repeatValidation(row.currentData, 2)" (click)="row.confirmEditCreate()" type="text"
+                        matInput [(ngModel)]="row.currentData.RemainingRepeats" required>
+                    <mat-error
+                        *ngIf="row.currentData.Repeats !=null && row.currentData.Repeats !=undefined && row.currentData.Repeats==1?(row.currentData.RemainingRepeats == null || row.currentData.RemainingRepeats == undefined || row.currentData.RemainingRepeats == ''):false ">
+                        Remaining Repeats is required</mat-error>
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="DaysRemaining">
+            <mat-header-cell class="rob-b _11px  l-c" *matHeaderCellDef fxHide.xs fxHide.sm>
+                Days Remaining
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" [@animation] fxHide.xs fxHide.sm class="merr-a">
+                <mat-form-field
+                    [ngClass]="{'class-disabled1': row.currentData.Repeats !=null && row.currentData.Repeats !=undefined ||orderModel.IsRepeatsOrderId <= 0, 'class-enable1': row.currentData.Repeats !=null && row.currentData.Repeats !=undefined && row.currentData.Repeats == 1  &&orderModel.IsRepeatsOrderId > 0|| orderModel.IsRepeatsOrderId <= 0 && row.currentData.Repeats==1}"
+                    style="width: 90%;" appearance="outline">
+                    <input tabindex="{{row.currentData.Repeats == 1 ? 0:-1 }}" [disabled]="row.currentData.IsStock"
+                        (focus)="commonServices.setAutoFillOff($event)" autocomplete="nope"
+                        [ngStyle]="row.currentData.IsStock && {'opacity':'50%'}"
+                        [ngClass]="{'class-disabled': row.currentData.Repeats !=null || row.currentData.Repeats !=undefined || row.currentData.Repeats !='' || orderModel.IsRepeatsOrderId <= 0 , 'class-enable':  orderModel.IsRepeatsOrderId > 0 || orderModel.IsRepeatsOrderId <= 0 && row.currentData.Repeats==1}"
+                        (keypress)="commonServices.validateNumber($event)"
+                        (keyup)="repeatValidation(row.currentData, 3)" (click)="row.confirmEditCreate()" type="text"
+                        matInput [(ngModel)]="row.currentData.DaysRemaining" required>
+                    <mat-error
+                        *ngIf="row.currentData.Repeats !=null && row.currentData.Repeats !=undefined && row.currentData.Repeats==1?(row.currentData.DaysRemaining == null || row.currentData.DaysRemaining == undefined || row.currentData.DaysRemaining == ''):false ">
+                        Days remaining is required</mat-error>
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actionsColumn">
+            <mat-header-cell *matHeaderCellDef>
+
+                <button class="raise-btn mr-4 dark-petrol white _11px rob-b"
+                    *ngIf="(orderModel.isPage==1||orderModel.isPage==3) && orderModel.IsUploadType!=13" matTooltip="Add"
+                    (click)="prescriptionDetailsDataSource.createNew(); commonServices.preSelectDropDown(prescriptionDetailsDataSource, orderDatailPFList); medicineList = []; orderModel.rowCreate=true;"
+                    mat-raised-button><img style="margin-right: 5px;"
+                        src="../../../../../assets/orderv2/packapill_portal_icons/Elements/White_2.svg">Add</button>
+
+                <!-- <button matTooltip="Add" *ngIf="orderModel.isPage==1" class="mr-4 dark-petrol white"
+                        (click)="prescriptionDetailsDataSource.createNew(); commonServices.preSelectDropDown(prescriptionDetailsDataSource, orderDatailPFList); medicineList = []; orderModel.rowCreate=true;"><img
+                            style="height: 22px;"
+                            src="../../../../../assets/orderv2/packapill_portal_icons/Elements/White_2.svg">Add
+                    </button> -->
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <button *ngIf="orderModel.isPage==1||orderModel.isPage==3"
+                    class="raise-btn mr-4 dark-petrol white _11px rob-b" mat-raised-button matTooltip="Delete"
+                    (click)="deleteAlert(orderModel,row);" [hidden]="row.currentData.IsStock"><img class="deletv2"
+                        src="../../../../../../assets/packapill-icons/delete.svg">Delete
+
+                </button>
+            </mat-cell>
+        </ng-container>
+        <!-- <ng-container matColumnDef="Save">
+            <mat-header-cell *matHeaderCellDef>
+                <button *ngIf="orderModel.IsOrderStatus !=1" class="raise-btn mr-4 dark-petrol white _11px rob-b"
+                    matTooltip="Submit" mat-raised-button focusable="false"
+                    (click)='medicineUpdate(orderModel,0,"")'>Submit
+                </button>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"></mat-cell>
+        </ng-container> -->
+        <mat-header-row style="background-color: white;margin: 0px 12px;"
+            *matHeaderRowDef="displayedPresDetailsColumns; sticky: true">
+        </mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedPresDetailsColumns;">
+        </mat-row>
+    </mat-table>
+    <!-- </perfect-scrollbar> -->
+    <div class="column" style="justify-content: center;margin: auto;margin-top: 10px;width: 100%;">
+        <!-- <div fxLayout="row" style="justify-content: center;">
+            <p class="tot">Total Price: {{totalPrice > 0 ? totalPrice.toFixed(2) : '-'}}</p>
+        </div> -->
+        <div fxLayout="row" style="justify-content: center;">
+            <button *ngIf="(this.userdetails.RoleId == 1 || this.userdetails.RoleId == 5) && (orderModel.PaymentType==1 && orderModel.AwaitingPaymentDate!=null &&
+                        orderModel.AwaitingPaymentDate!='') && !orderModel.ChargeAccount"
+                (click)="refunDialog(orderModel)" class="success-button red-clr pop-sb _12px"
+                style="margin-right: 2%;margin-left: 0px;">Order
+                Refund</button>
+            <button *ngIf="orderModel.IsOrderStatus!=8 &&(orderModel.isPage==1||orderModel.isPage==3)"
+                (click)="onStatusChange(orderModel)" class="light-button pop-sb _12px">Cancel Order</button>
+            <button *ngIf="(orderModel.isPage==1||orderModel.isPage==3)&& orderModel.IsOrderStatus != 8"
+                (click)="orderModel.IsOrderStatus==1 && orderModel.MarketPlaceReferenceId == null && orderModel.IsUploadType != 13? promptWarning(orderModel, 4): promptWarning(orderModel, 5);"
+                class="success-button red-clr pop-sb _12px">{{orderModel.IsOrderStatus==1&&orderModel.MarketPlaceReferenceId==null?'Confirm':
+                'Save'}} Order</button>
+            <button
+                *ngIf="IsChargeaccount && orderModel.IsOrderStatus==1 && orderModel.MarketPlaceReferenceId==null && (orderModel.isPage==1||orderModel.isPage==3)"
+                (click)="chargeAccount(orderModel)" class="success-button red-clr pop-sb _12px"> Charge Account</button>
+        </div>
+    </div>
+</div>

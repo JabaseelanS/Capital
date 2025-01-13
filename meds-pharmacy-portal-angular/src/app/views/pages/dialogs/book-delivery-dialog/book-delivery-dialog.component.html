@@ -1,0 +1,352 @@
+<div class="top mat-form-pad" style="background-color: #f4f4f4 !important">
+	<div class="p86" fxLayout="row" fxLayoutAlign="space-between">
+		<div class="wid100" fxLayout="row" fxLayoutAlign="start">
+			<h3 class="wid100">
+				<p class="bnk-header">Delivery Booking</p>
+			</h3>
+		</div>
+	</div>
+	<perfect-scrollbar class="mw-mh">
+		<div class="phrmusr-body" *ngIf="IsUber || IsDD">
+			<form name="DeliveryForm" [formGroup]="bookDeliveryForm" fxLayout="column" fxLayout.xs="column"
+				fxLayout.sm="column" fxLayout.md="column">
+				<div class="sec-div1" fxLayout="row" fxLayoutAlign="start">
+					<h3>
+						<p class="hed-t">Delivery Partner</p>
+					</h3>
+				</div>
+				<div class="row delpat delpat class-enable1-repeat" style="margin-top: 10px">
+					<div [ngClass]="{ 'class-disabled1-repeat': (bnData.Dbook.ErrorFlag == 2 && item.DeliveryPartnerId == 1) || (bnData.Dbook.DDErrorFlag == 2 && item.DeliveryPartnerId == 2) || (bnData.Dbook.SherpaErrorFlag == 2 && item.DeliveryPartnerId == 3) }"
+						class="col-lg-4 col-md-6 col-sm-12" *ngFor="let item of deliverypartner"
+						(click)="onRadioChange(item)" style="position: relative; margin-bottom: 20px">
+						<div [ngClass]="{ highlighted: selectedDeliveryPartnerId === item.DeliveryPartnerId }"
+							class="card-ue-dd">
+							<input type="radio" style="display: none" />
+							<div class="row">
+								<div class="col-lg-2 col-md-2 col-sm-3 col-3" *ngIf="item.DeliveryPartnerId == 1"><img
+										class="udlogo" src="../../../../../assets/images/Uber_Direct.png" /></div>
+								<div class="col-lg-2 col-md-2 col-sm-3 col-3" *ngIf="item.DeliveryPartnerId == 2"><img
+										class="udlogo" src="../../../../../assets/images/Doordash.png" /></div>
+								<div class="col-lg-2 col-md-2 col-sm-3 col-3" *ngIf="item.DeliveryPartnerId == 3"><img
+										class="udlogo" src="../../../../../assets/images/Sherpa.png" /></div>
+								<div class="col-lg-10 col-md-10 col-sm-9 col-9">
+									<div class="row padding-top-container">
+										<div class="col-lg-12 col-md-12">
+											<p>{{ item.DeliveryPartnerName }}</p>
+
+											<div *ngIf="item.DeliveryPartnerId == 1 && bnData.Dbook.ErrorFlag == 1">
+												<p class="fnt">
+													{{ bnData.Dbook.Fee == null || bnData.Dbook.Fee == undefined ||
+													bnData.Dbook.Fee == "" || bnData.Dbook.Fee == "0" ||
+													bnData.Dbook.Fee <= 0
+														? "Unable to fetch price. Please close the pop-up and try again."
+														: "$" + bnData.Dbook.Fee / 100 }} </p>
+														<p class="fnt">
+															{{ bnData.Dbook.DropoffEta == null ||
+															bnData.Dbook.DropoffEta == undefined ||
+															bnData.Dbook.DropoffEta == "" || bnData.Dbook.DropoffEta ==
+															"0" || bnData.Dbook.DropoffEta <= 0
+																? "Unable to fetch estimated delivery time. Please close the pop-up and try again."
+																: "Estimated delivery time: " + bnData.Dbook.DropoffEta
+																}} </p>
+											</div>
+											<div *ngIf="item.DeliveryPartnerId == 2 && bnData.Dbook.DDErrorFlag == 1">
+												<p class="fnt">
+													{{ bnData.Dbook.DoordashFee == null || bnData.Dbook.DoordashFee ==
+													undefined || bnData.Dbook.DoordashFee == "" ||
+													bnData.Dbook.DoordashFee == "0" || bnData.Dbook.DoordashFee <= 0
+														? "Unable to fetch price. Please close the pop-up and try again."
+														: "$" + bnData.Dbook.DoordashFee / 100 }} </p>
+														<p class="fnt">
+															{{ bnData.Dbook.DoordashDropoffEta == null ||
+															bnData.Dbook.DoordashDropoffEta == undefined ||
+															bnData.Dbook.DoordashDropoffEta == "" ||
+															bnData.Dbook.DoordashDropoffEta == "0" ||
+															bnData.Dbook.DoordashDropoffEta <= 0
+																? "Unable to fetch estimated delivery time. Please close the pop-up and try again."
+																: "Estimated delivery time: " +
+																bnData.Dbook.DoordashDropoffEta }} </p>
+											</div>
+											<div
+												*ngIf="item.DeliveryPartnerId == 3 && (bnData.Dbook.SherpaErrorFlag == 1 || bnData.Dbook.SherpaErrorFlag == 0)">
+												<p class="fnt">{{ sherpadeliveryoptionPrice == null ||
+													sherpadeliveryoptionPrice == undefined || sherpadeliveryoptionPrice
+													== "" || sherpadeliveryoptionPrice == "0" ||
+													sherpadeliveryoptionPrice <= 0 ? "" : "$" +
+														sherpadeliveryoptionPrice }}</p>
+														<!-- <p class="fnt">
+														{{ sherpadeliveryoptionName == null || sherpadeliveryoptionName == undefined || sherpadeliveryoptionName == "" || sherpadeliveryoptionName == "0" || sherpadeliveryoptionName <= 0 ? "Select Option & Pricing." : "Estimated delivery time: " + bnData.Dbook.sherpadeliveryoptionName }}
+													</p> -->
+														<p class="fnt">
+															{{ sherpadeliveryoptionName == null ||
+															sherpadeliveryoptionName == undefined ||
+															sherpadeliveryoptionName == "" || sherpadeliveryoptionName
+															== "0" || sherpadeliveryoptionName <= 0
+																? "Select Option & Pricing." :
+																bnData.Dbook.DeliveryBookingId> 0 ? "Estimated delivery
+																time: " + bnData.Dbook.SherpaDeliverFor : "Estimated
+																delivery time: " + sherpadeliveryoptionName }}
+														</p>
+											</div>
+											<div *ngIf="bnData.Dbook.ErrorFlag == 2 && item.DeliveryPartnerId == 1">
+												<p class="fnt">{{ bnData.Dbook.ErroMessage }}</p>
+											</div>
+											<div *ngIf="bnData.Dbook.DDErrorFlag == 2 && item.DeliveryPartnerId == 2">
+												<p class="fnt">{{ bnData.Dbook.DDErrorMsg }}</p>
+											</div>
+											<div
+												*ngIf="bnData.Dbook.SherpaErrorFlag == 2 && item.DeliveryPartnerId == 3">
+												<p class="fnt">{{ bnData.Dbook.SherpaErrorMsg }}</p>
+											</div>
+											<span
+												*ngIf="item.DeliveryPartnerId == 3 && bnData.Dbook.SherpaErrorFlag == 1"
+												class="sherpa_drop_icon"><i
+													[class]="showDropdown ? 'fa fa-sort-desc' : 'fa fa-sort-asc'"
+													style="font-size: 24px"></i></span>
+											<div *ngIf="selectedDeliveryPartnerId === item.DeliveryPartnerId && (item.DeliveryPartnerId !== 3 || selectedOption)"
+												class="select-section">
+												<div class="sel-icon">
+													<img class="selected"
+														src="../../../../../assets/images/selected.svg" />
+													<span class="t-s">Selected</span>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div *ngIf="showDropdown && item.DeliveryPartnerId == 3 && bnData.Dbook.SherpaErrorFlag! == 1"
+										class="sherpa_dropdown_box">
+										<div *ngIf="sherpadeliveryOption.length > 0"
+											class="sherpa_drop_options_heading">Options and Pricing</div>
+
+										<div class="sherpa_dropdown_inner_box">
+											<div *ngFor="let drop of sherpadeliveryOption"
+												[class]="sherpadeliveryoptionId == drop.delivery_option ? 'sherpa_drop_options sherpa_drop_options_selected' : 'sherpa_drop_options'"
+												(click)="selectoption(drop)">
+												{{ drop.delivery_option_name }}
+												<span class="sherpa_price">${{ drop.price }}</span>
+											</div>
+										</div>
+									</div>
+									<div></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div class="phrmusr-body">
+			<form name="DeliveryForm" [formGroup]="bookDeliveryForm" fxLayout="column" fxLayout.xs="column"
+				fxLayout.sm="column" fxLayout.md="column">
+				<div class="sec-div1" fxLayout="row" fxLayoutAlign="start">
+					<h3>
+						<p class="hed-t">Pickup Details</p>
+					</h3>
+				</div>
+				<div class="row">
+					<div class="row">
+						<div fxLayout="column" fxLayout.sm="column" fxLayout.md="column">
+							<div fxLayout="row" fxLayout.md="column" fxLayout.xs="column" fxLayout.sm="column"
+								class="pick-pharm">
+								<div class="cls-top mar-ri-8" style="width: 50%">
+									<p class="frm-hd">Pickup Pharmacy<small style="color: red">*</small></p>
+									<mat-form-field class="rob _12px l-c bclr-book" appearance="outline">
+										<input [readonly]="this.show" type="text" matInput
+											formControlName="PickupContactName" autocomplete="nope" required />
+										<mat-error class="rob _11px"> Please enter pickup pharmacy</mat-error>
+									</mat-form-field>
+								</div>
+
+								<div class="cls-top mar-ri-8" style="width: 50%">
+									<p class="frm-hd">Pickup Phone<small style="color: red">*</small></p>
+									<mat-form-field class="rob _12px l-c bclr-book" appearance="outline">
+										<input [readonly]="this.show" matInput type="tel" [maxlength]="MobLength"
+											[minlength]="MinLength1" [textMask]="{ mask: mobMask, guide: false }"
+											formControlName="PickupContactMobile" autocomplete="nope" myNumberOnly
+											required (ngModelChange)="onChangeByMob($event, 1)" />
+										<mat-error class="rob _11px"
+											*ngIf="(this.bookDeliveryForm.controls['PickupContactMobile'].hasError('required') || this.bookDeliveryForm.controls['PickupContactMobile'].touched) && (this.bookDeliveryForm.controls['PickupContactMobile'].value == ' ' || this.bookDeliveryForm.controls['PickupContactMobile'].value == null || this.bookDeliveryForm.controls['PickupContactMobile'].value == undefined || this.bookDeliveryForm.controls['PickupContactMobile'].value.length < 1)">
+											Please enter pickup phone number</mat-error>
+										<mat-error class="rob _11px"
+											*ngIf="this.bookDeliveryForm.controls['PickupContactMobile'].hasError('pattern') || this.bookDeliveryForm.controls['PickupContactMobile'].hasError('maxlength') || this.bookDeliveryForm.controls['PickupContactMobile'].hasError('minlength')">
+											Invalid pickup phone number </mat-error>
+									</mat-form-field>
+								</div>
+							</div>
+							<div fxLayout="row" fxLayout.md="column" fxLayout.xs="column" fxLayout.sm="column"
+								class="pick-pharm">
+								<div class="cls-top mar-ri-8" style="width: 100%">
+									<p class="frm-hd">Pickup Instructions</p>
+									<mat-form-field style="width: 100%; min-width: 430px; max-width: 520px"
+										class="rob _12px l-c bclr-book" appearance="outline">
+										<textarea maxlength="280" [readonly]="this.show" matInput rows="5"
+											formControlName="PickupInstructions" autocomplete="nope"></textarea>
+										<!-- <mat-error class="rob _11px">
+                                                                                                        Please enter pickup instructions</mat-error> -->
+									</mat-form-field>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div fxLayout="row" fxLayout.sm="column" fxLayout.md="row" style="margin-left: 40px">
+						<!-- <div class="column" fxLayout="row" fxLayout.md="column" fxLayout.xs="column" fxLayout.sm="column"> -->
+						<div fxLayout="column" fxLayout.md="column" fxLayout.xs="column" fxLayout.sm="column"
+							style="width: 88%">
+							<div class="cls-top pa-cls">
+								<p class="frm-hd">Pickup Address</p>
+								<mat-form-field style="width: 100%; min-width: 300px; max-width: 530px"
+									class="rob _12px l-c bclr-book" appearance="outline">
+									<textarea [readonly]="this.show" (focus)="commonService.setAutoFillOff($event)"
+										matInput rows="5" formControlName="PickupAddress" name="Address"
+										autocorrect="off" autocapitalize="off" spellcheck="off"
+										#searchPickup></textarea>
+									<mat-error class="rob _11px"> Please enter pickup address</mat-error>
+								</mat-form-field>
+							</div>
+							<div class="wbrdr" [delivery-address]="PickupAddressModel" [cond-data]="condata"
+								(sendBackData)="precievedItem($event)"></div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div class="phrmusr-body">
+			<form name="DeliveryForm" [formGroup]="bookDeliveryForm" fxLayout="column" fxLayout.xs="column"
+				fxLayout.sm="column" fxLayout.md="column">
+				<div class="sec-div1" fxLayout="row" fxLayoutAlign="start">
+					<h3>
+						<p class="hed-t">Dropoff Details</p>
+					</h3>
+				</div>
+				<div fxLayout="row" fxLayout.sm="column" fxLayout.md="row" style="margin-left: 40px; width: 92%">
+					<div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" class="w-50">
+						<div class="cls-top mar-ri-8">
+							<p class="frm-hd">Dropoff First Name<small style="color: red">*</small></p>
+							<mat-form-field class="rob _12px l-c bclr-book" appearance="outline">
+								<input [readonly]="this.show" matInput formControlName="DropoffFirstName"
+									autocomplete="nope" required />
+								<mat-error class="rob _11px"> Please enter dropoff first name</mat-error>
+							</mat-form-field>
+						</div>
+
+						<div class="cls-top mar-ri-8">
+							<p class="frm-hd">Dropoff Last Name<small style="color: red">*</small></p>
+							<mat-form-field class="rob _12px l-c bclr-book" appearance="outline">
+								<input [readonly]="this.show" matInput formControlName="DropoffLastName"
+									autocomplete="nope" required />
+								<mat-error class="rob _11px"> Please enter dropoff last name</mat-error>
+							</mat-form-field>
+						</div>
+					</div>
+
+					<div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" style="width: 50%">
+						<div class="cls-top mar-ri-8">
+							<p class="frm-hd">Dropoff Email<small style="color: red">*</small></p>
+							<mat-form-field class="rob _12px l-c bclr-book" appearance="outline">
+								<input id="dpoffEmail" [readonly]="this.show" matInput formControlName="DropoffEmail"
+									autocomplete="nope" required (blur)="removeSpace()" (paste)="onPasting($event)" />
+								<!-- <mat-error class="rob _11px">
+                                                    Please enter dropoff email</mat-error> -->
+								<mat-error class="rob _11px"
+									*ngIf="(this.bookDeliveryForm.controls['DropoffEmail'].hasError('required') || this.bookDeliveryForm.controls['DropoffEmail'].touched) && (this.bookDeliveryForm.controls['DropoffEmail'].value == ' ' || this.bookDeliveryForm.controls['DropoffEmail'].value == null || this.bookDeliveryForm.controls['DropoffEmail'].value == undefined || this.bookDeliveryForm.controls['DropoffEmail'].value.length < 1)">
+									Please enter dropoff email</mat-error>
+								<mat-error class="rob _11px"
+									*ngIf="this.bookDeliveryForm.controls['DropoffEmail'].hasError('pattern')"> Invalid
+									dropoff email</mat-error>
+							</mat-form-field>
+						</div>
+						<div class="cls-top mar-ri-8">
+							<p class="frm-hd">Dropoff Phone<small style="color: red">*</small></p>
+							<mat-form-field class="rob _12px l-c bclr-book" appearance="outline">
+								<input [readonly]="this.show" matInput type="tel" [maxlength]="MobLength1"
+									[minlength]="MinLength2" [textMask]="{ mask: mobMask1, guide: false }"
+									formControlName="DropoffContactMobile" autocomplete="nope" myNumberOnly required
+									(ngModelChange)="onChangeByMob($event, 2)" />
+								<mat-error class="rob _11px"
+									*ngIf="(this.bookDeliveryForm.controls['DropoffContactMobile'].hasError('required') || this.bookDeliveryForm.controls['DropoffContactMobile'].touched) && (this.bookDeliveryForm.controls['DropoffContactMobile'].value == ' ' || this.bookDeliveryForm.controls['DropoffContactMobile'].value == null || this.bookDeliveryForm.controls['DropoffContactMobile'].value == undefined || this.bookDeliveryForm.controls['DropoffContactMobile'].value.length < 1)">
+									Please enter dropoff phone number</mat-error>
+								<mat-error class="rob _11px"
+									*ngIf="this.bookDeliveryForm.controls['DropoffContactMobile'].hasError('pattern') || this.bookDeliveryForm.controls['DropoffContactMobile'].hasError('maxlength') || this.bookDeliveryForm.controls['DropoffContactMobile'].hasError('minlength')">
+									Invalid dropoff phone number</mat-error>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+				<div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" class="df-ins" style="width: 92%">
+					<div class="cls-top pa-cls" style="width: 50%">
+						<p class="frm-hd">Dropoff Address</p>
+						<mat-form-field class="rob _12px l-c bclr-book df-matfield"
+							style="width: 100%; min-width: 300px; max-width: 530px" appearance="outline">
+							<textarea [readonly]="this.show" (focus)="commonService.setAutoFillOff($event)" matInput
+								rows="5" formControlName="DropoffAddress" name="Address" autocorrect="off"
+								autocapitalize="off" spellcheck="off" #searchDropoff></textarea>
+							<mat-error class="rob _11px"> Please enter dropoff address</mat-error>
+						</mat-form-field>
+						<div class="wbrdr" style="width: auto; max-width: 510px; min-width: 500px"
+							[delivery-address]="DropAddressModel" [cond-data]="condata"
+							(sendBackData)="drecievedItem($event)"></div>
+					</div>
+					<div class="cls-top" style="width: 50%">
+						<p class="frm-hd">Dropoff Instructions</p>
+						<mat-form-field class="rob _12px l-c bclr-book df-matfield" appearance="outline">
+							<textarea [readonly]="this.show" maxlength="280" rows="5" matInput
+								formControlName="DropOffInstructions" autocomplete="nope"></textarea>
+							<!-- <mat-error class="rob _11px">
+                                                                                                        Please enter DropOff Instruction</mat-error> -->
+						</mat-form-field>
+					</div>
+				</div>
+
+				<div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" class="df-ins"
+					style="margin-top: 0px !important">
+					<mat-checkbox formControlName="ContainsAlcohol"> Need ID verification </mat-checkbox>
+				</div>
+			</form>
+		</div>
+
+		<div class="phrmusr-body" *ngIf="show == true">
+			<form name="userForm" [formGroup]="bookDeliveryForm" fxLayout="column" fxLayout.xs="column"
+				fxLayout.sm="column" fxLayout.md="column">
+				<div class="sec-div1" fxLayout="row" fxLayoutAlign="start">
+					<h3>
+						<p class="hed-t">Delivery Details</p>
+					</h3>
+				</div>
+				<div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" class="delst">
+					<div style="width: 28%" class="cls-top row gprow">
+						<p class="frm-hd">Delivery Status :</p>
+						<p class="marleft-10 mtop-3">{{ commonService.getStat(this.deliveryBookModel.CurrentStatus) }}
+						</p>
+					</div>
+					<div style="width: 30%" class="gprow cls-top row">
+						<p class="frm-hd">Driver Name :</p>
+						<p class="marleft-10 mtop-3">{{ this.deliveryBookModel.DriverName }}</p>
+					</div>
+					<div style="width: 28%" class="gprow cls-top row">
+						<p class="frm-hd">Driver Contact :</p>
+						<p class="marleft-10 mtop-3">{{ this.deliveryBookModel.DriverContact }}</p>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div class="btnclasses">
+			<button [disabled]="!bookDeliveryForm.valid || bkDis" mat-raised-button class="add-btn rob-b marright-10"
+				type="button"
+				*ngIf="show != true && (this.deliveryBookModel.CurrentStatus == null || this.deliveryBookModel.CurrentStatus == '')"
+				(click)="bookDelivery(bookDeliveryForm.value, sherpadeliveryoptionId, commonService.getStat(this.deliveryBookModel.CurrentStatus))">Book
+				Delivery</button>
+			<button [disabled]="!bookDeliveryForm.valid"
+				*ngIf="(show == true && this.deliveryBookModel.CurrentStatus == 'scheduled') || this.deliveryBookModel.CurrentStatus == 'pending' || (this.deliveryBookModel.DeliveryPartnerId == 3 && this.deliveryBookModel.CurrentStatus == 'Pre-Opened') || (this.deliveryBookModel.DeliveryPartnerId == 3 && this.deliveryBookModel.CurrentStatus == 'awaiting payment verification') || (this.deliveryBookModel.DeliveryPartnerId == 3 && this.deliveryBookModel.CurrentStatus == 'opened')"
+				mat-raised-button class="add-btn rob-b marright-10" type="button"
+				(click)="cancelDelivery(this.deliveryBookModel.BookingReference)">Cancel Delivery</button>
+
+			<button mat-raised-button class="cancel-btn rob-b marright-10" type="button"
+				[mat-dialog-close]>Close</button>
+		</div>
+	</perfect-scrollbar>
+</div>

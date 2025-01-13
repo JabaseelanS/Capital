@@ -1,0 +1,15 @@
+<div [@visibilityChanged]="commonServices.visibility" style="opacity: 1" class="splash">
+    <div class="spinner">
+        <div class="cube1"></div>
+        <!-- <img src="/assets/packapill-icons/SVG/logo_box_mini.svg" alt=""> -->
+        <img style="width: 5vh;border-radius: 15px;" src="/assets/icons/hola-icon4.png" alt="log_loader">
+        <div class="cube2"></div>
+        <label *ngIf="commonServices.IsDownload" class="rob-b proc-con l-c">Please wait,
+            we are processing your request.</label>
+    </div>
+</div>
+
+
+<router-outlet>
+    <!-- <span *ngIf="showLoader" class="fulldiv"></span> -->
+</router-outlet>

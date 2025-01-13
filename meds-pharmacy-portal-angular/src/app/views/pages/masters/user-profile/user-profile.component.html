@@ -1,0 +1,82 @@
+<div class="top" style="background-color: #eceff4;">
+    <div class="usr-body col-md-8"
+        style="padding-left: 0px !important;padding-right: 0px !important; margin-top: 50px !important;">
+        <div class="usrhed-div">
+            <div class="usr-title2">Profile Information</div>
+        </div>
+        <div class="form-div">
+            <form [formGroup]="userForm" name="userForm" fxLayout="column">
+                <div class="row" style="padding: 20px 0px 0px 20px;">
+
+                    <div class="col-md-4">
+                        <mat-form-field class="usr-area" appearance="outline">
+                            <mat-label class="rob-b _12px">Username</mat-label>
+                            <input class="l-c rob _12px" matInput formControlName="UserName" name="UserName">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4">
+                        <mat-form-field class="usr-area" appearance="outline">
+                            <mat-label class="rob-b _12px">Email</mat-label>
+                            <input class="l-c rob _12px" matInput formControlName="UserEmail" name="UserEmail">
+                        </mat-form-field>
+                    </div>
+
+                    <!-- <div class="col-md-4">
+                        <mat-form-field class="usr-area" appearance="outline">
+                            <mat-label class="rob-b _12px">Password</mat-label>
+                            <input class="l-c rob _12px" matInput formControlName="UserPassword" name="UserPassword">
+                        </mat-form-field>
+                    </div> -->
+                </div>
+
+                <div class="row" style="padding: 20px 0px 0px 20px;">
+                    <div class="col-md-4">
+                        <mat-form-field class="usr-area" appearance="outline">
+                            <mat-label class="rob-b _12px">First name</mat-label>
+                            <input class="l-c rob _12px" matInput formControlName="FirstName" name="FirstName">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4">
+                        <mat-form-field class="usr-area" appearance="outline">
+                            <mat-label class="rob-b _12px">Last name</mat-label>
+                            <input class="l-c rob _12px" matInput formControlName="LastName" name="LastName">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4">
+                        <mat-form-field class="usr-area" appearance="outline">
+                            <mat-label class="rob-b _12px">Address</mat-label>
+                            <input class="l-c rob _12px" matInput formControlName="Address" name="Address">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row" style="padding: 20px 0px 0px 20px;">
+                    <div class="col-md-4">
+                        <mat-form-field class="usr-area" appearance="outline">
+                            <mat-label class="rob-b _12px">City</mat-label>
+                            <input class="l-c rob _12px" matInput formControlName="City" name="City">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4">
+                        <mat-form-field class="usr-area" appearance="outline">
+                            <mat-label class="rob-b _12px">Country</mat-label>
+                            <input class="l-c rob _12px" matInput formControlName="Country" name="Country">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4">
+                        <mat-form-field class="usr-area" appearance="outline">
+                            <mat-label class="rob-b _12px">Postcode</mat-label>
+                            <input class="l-c rob _12px" matInput formControlName="Pincode" name="Pincode">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

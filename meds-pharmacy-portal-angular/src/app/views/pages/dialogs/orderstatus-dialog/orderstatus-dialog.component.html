@@ -1,0 +1,49 @@
+<div class="top" style="background-color: #f4f4f4;">
+    <div class="dialog-header" fxLayout="row" fxLayoutAlign="space-between">
+        <div fxLayout="row" fxLayoutAlign="start">
+            <h3 class="headerborder">
+                <p class="header-text">{{DDFlag ? 'DoorDash reason' : 'Cancel Reason'}}</p>
+            </h3>
+        </div>
+    </div>
+
+    <div class="phrm-body">
+        <div class="row">
+            <div class="col-md-12 cls-top">
+                <p>{{DDFlag ? 'DoorDash reason' : 'Cancel Reason'}}<small style="color: red;">*</small></p>
+                <mat-form-field class="pharmtxt-area" appearance="outline">
+                    <mat-select (selectionChange)="onStatusChange($event)" value="0">
+                        <mat-option value="0">
+                            Choose the reason
+                        </mat-option>
+                        <mat-option *ngFor="let item of ReasonList" [value]="item.id">
+                            {{item.UserName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div *ngIf="CancelReasonId==5 && (DDFlag == false || DDFlag == undefined)" class="col-md-12 cls-top">
+                <p>Please provide details<small style="color: red;">*</small></p>
+                <mat-form-field nclass="pharmtxt-area" appearance="outline">
+                    <textarea (keyup)="onFeedbackChange($event.target)" #CancelReason matInput cdkTextareaAutosize
+                        cdkAutosizeMinRows="1" cdkAutosizeMaxRows="6"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button (click)="closeDialog()" mat-raised-button [mat-dialog-close]>
+            <img style="margin-right:5px;"
+                src="../../../../../assets/packapill-icons/multiply-16.png"><span>Close</span>
+        </button>
+        <button (click)="onSave()" style="width:140px" matTooltip="{{DDFlag ? 'Update' : 'Cancel order'}}"
+            class="success-button red-clr rob _12px fw-600" type="button">
+            <img style="margin-right:5px;" src="../../../../../assets/packapill-icons/add-16.png">{{ DDFlag ? 'Update' :
+            'Cancel Order'}}
+        </button>
+    </div>
+</div>

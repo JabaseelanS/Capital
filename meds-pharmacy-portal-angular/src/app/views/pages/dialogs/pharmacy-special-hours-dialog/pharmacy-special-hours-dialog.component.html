@@ -1,0 +1,219 @@
+<div class="top bg-clr-base">
+    <div class="dialog-header sec-div2" fxLayout="row" fxLayoutAlign="space-between">
+        <div fxLayout="row" fxLayoutAlign="start">
+            <h3 class="headerborder">
+                <p class="header-text bg-clr-base">{{pharmacySplHoursModel.SpecialhrsId!= 0 ? 'Edit ' :
+                    'Create '}}Holiday calendar & Special hours</p>
+            </h3>
+        </div>
+        <div>
+            <button mat-raised-button (click)="submit()" class="mr-4"><img class="mrg-r-5px"
+                    src="../../../../../assets\orderv2\packapill_portal_icons\Elements\Petrol.svg">{{pharmacySplHoursModel.SpecialhrsId!=
+                0 ? 'Update' :
+                'Save'}}</button>
+
+            <button mat-raised-button (click)="closeDialog()" [mat-dialog-close]>
+                <img class="mrg-r-5px" src="../../../../../assets/packapill-icons/multiply-16.png">Close
+            </button>
+        </div>
+    </div>
+    <perfect-scrollbar class="per-scroll">
+        <div class="phrm-body formhi" style="width: 100%;">
+            <form class="formwid" autocomplete="off" name="specialHrsForm" [formGroup]="specialHrsForm">
+                <div class="d-flex wid-100per">
+                    <div class="wid-45per">
+                        <p class="rob-b _11px l-c">Date<span class="form-mandatary">*</span></p>
+                        <mat-form-field appearance="outline" class="wid-100per">
+                            <input matInput placeholder="From and To Date" readonly [min]="minDate"
+                                [(ngModel)]="FormandToDate" [ngModelOptions]="{standalone: true}"
+                                [satDatepicker]="picker" autocomplete="nope">
+                            <sat-datepicker #picker [rangeMode]="true">
+                            </sat-datepicker>
+                            <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+                        </mat-form-field>
+                    </div>
+                    <div class="wid-10per"></div>
+                    <div class="wid-45per">
+                        <p class="rob-b _11px l-c">State<span class="form-mandatary">*</span></p>
+                        <mat-form-field class="hit rob-b wid-100per" appearance="outline">
+                            <mat-select multiple placeholder="Please select state" #selectState
+                                formControlName="StateId" name="StateId">
+                                <div>
+                                    <div class="select-all">
+                                        <mat-checkbox class="marg-left-1_3rem" [(ngModel)]="allSelectedState"
+                                            [ngModelOptions]="{standalone: true}" (change)="toggleAllState()">Select
+                                            All</mat-checkbox>
+                                    </div>
+                                </div>
+                                <mat-option (click)="optionClickState()" *ngFor="let state of stateList"
+                                    [value]="state.id">{{state.value}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="d-flex wid-100per mt-3">
+                    <div>
+                        <p class="rob-b _11px l-c">Included Pharmacies</p>
+                        <div ngbDropdown>
+                            <div ngbDropdownToggle n (click)="IncludedOpen()">
+                                <mat-form-field class="pharmtxt-are dropdown" appearance="outline">
+                                    <input matInput readonly formControlName="SearchForPharmacies"
+                                        name="SearchForPharmacies" class="ellip" placeholder="Please select pharmacy">
+                                </mat-form-field>
+                            </div>
+                            <div ngbDropdownMenu class="ngb-drop-menu">
+                                <perfect-scrollbar class="dropdown-scroll">
+                                    <div>
+                                        <div>
+                                            <div class="row p-r-24px">
+                                                <input class="searchfilter l-c rob-b _12px" matInput
+                                                    placeholder="Search"
+                                                    (keyup)="searchFilteronPharmacy($event.target.value)"
+                                                    (keydown)="$event.stopPropagation()"
+                                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="searchIncluded">
+                                            </div>
+                                            <table class="tbl-wid97per">
+                                                <thead>
+                                                    <tr class="hei-3rem" *ngIf="IncludedpharmacyList.length != 0">
+                                                        <th colspan="2">
+                                                            <p>All Pharmacies</p>
+                                                        </th>
+                                                        <th>
+                                                            <mat-checkbox [(ngModel)]="allSelectedIncluded"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                (change)="toggleAllSelectIncluded()"></mat-checkbox>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let item of IncludedpharmacyList">
+                                                        <td class="td-padding img-cloum-wid">
+                                                            <img *ngIf="item.PharmacyLogo != null && item.PharmacyLogo!= ''"
+                                                                [src]="item.PharmacyLogo"
+                                                                class="pharmacy-logo-dropdown">
+                                                        </td>
+                                                        <td class="td-padding detail-cloum-wid">
+                                                            <h6 class="m-0">{{item.PharmacyName}}</h6>
+                                                            <p>{{item.Address}}</p>
+                                                        </td>
+                                                        <td class="td-padding">
+                                                            <mat-checkbox [(ngModel)]="item.IsIncluded"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                (change)="singleChangeIncluded()"></mat-checkbox>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div *ngIf="IncludedpharmacyList.length == 0" class="rob-b r-c">
+                                                No record found
+                                            </div>
+                                        </div>
+                                    </div>
+                                </perfect-scrollbar>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wid-6per"></div>
+                    <div>
+                        <p class="rob-b _11px l-c">Excluded Pharmacies</p>
+                        <div ngbDropdown>
+                            <div ngbDropdownToggle (click)="ExcludedOpen()">
+                                <mat-form-field class="pharmtxt-are dropdown ellip" appearance="outline">
+                                    <input matInput readonly formControlName="ExcludedPharmacies"
+                                        name="ExcludedPharmacies" class="ellip" placeholder="Please select pharmacy">
+                                </mat-form-field>
+                            </div>
+                            <div ngbDropdownMenu *ngIf="pharmacySplHoursModel.SpecialhrsId!= 0" class="ngb-drop-menu">
+                                <perfect-scrollbar class="dropdown-scroll">
+                                    <div>
+                                        <div>
+                                            <div class="row p-r-24px">
+                                                <input class="searchfilter l-c rob-b _12px" matInput
+                                                    placeholder="Search"
+                                                    (keyup)="searchFilteronExcluded($event.target.value)"
+                                                    (keydown)="$event.stopPropagation()"
+                                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="searchExcluded">
+                                            </div>
+                                            <table class="tbl-wid97per">
+                                                <thead>
+                                                    <tr class="hei-3rem" *ngIf="ExcludedpharmacyList.length != 0">
+                                                        <th colspan="2">
+                                                            <p>All Pharmacies</p>
+                                                        </th>
+                                                        <th>
+                                                            <mat-checkbox [(ngModel)]="allSelectedExcluded"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                (change)="toggleAllSelectExcluded()"></mat-checkbox>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let item of ExcludedpharmacyList">
+                                                        <td class="td-padding img-cloum-wid">
+                                                            <img *ngIf="item.PharmacyLogo != null && item.PharmacyLogo!= ''"
+                                                                [src]="item.PharmacyLogo"
+                                                                class="pharmacy-logo-dropdown">
+                                                        </td>
+                                                        <td class="td-padding detail-cloum-wid">
+                                                            <h6 class="m-0">{{item.PharmacyName}}</h6>
+                                                            <p>{{item.Address}}</p>
+                                                        </td>
+                                                        <td class="td-padding">
+                                                            <mat-checkbox [(ngModel)]="item.IsIncluded"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                (change)="singleChangeExcluded()"></mat-checkbox>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div *ngIf="ExcludedpharmacyList.length == 0" class="rob-b r-c">
+                                                No record found
+                                            </div>
+                                        </div>
+                                    </div>
+                                </perfect-scrollbar>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wid-6per"></div>
+                    <div>
+                        <p class="rob-b _11px l-c">Label As<span class="form-mandatary">*</span></p>
+                        <mat-form-field class="pharmtxt-are dropdown" appearance="outline">
+                            <input matInput formControlName="LabelAs" name="LabelAs">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="d-flex wid-100per mt-3 hei58px">
+                    <div class="wid-33per"><mat-checkbox class="example-margin" formControlName="IsClosed"
+                            name="IsClosed" (change)="onChangeMarkAsClosed($event)">
+                            <p class="rob-b _11px l-c">Mark Pharmacies Are Closed<span *ngIf="markAsClosed"
+                                    class="form-mandatary">*</span></p>
+                        </mat-checkbox></div>
+                    <div class="wid-7per"></div>
+                    <div class="d-flex wid-33per">
+                        <div>
+                            <p class="rob-b _11px l-c">Opening Hours<span *ngIf="!markAsClosed"
+                                    class="form-mandatary">*</span></p>
+                            <input [readonly]="markAsClosed" class="m-top1_5rem" formControlName="OpeningHours"
+                                (input)="opentime = $event.target.value" matInput type="time"
+                                [value]="specialHrsForm.controls['OpeningHours'].value">
+                        </div>
+                        <div class="wid-9per"></div>
+                        <div>
+                            <p class="rob-b _11px l-c">Closing Hours<span *ngIf="!markAsClosed"
+                                    class="form-mandatary">*</span></p>
+                            <input [readonly]="markAsClosed" class="m-top1_5rem" formControlName="ClosingHours"
+                                (input)="closeingtime = $event.target.value" matInput type="time"
+                                [value]="specialHrsForm.controls['ClosingHours'].value">
+                        </div>
+                    </div>
+                    <div class="wid-6per"></div>
+                    <div class="wid-33per"><mat-checkbox class="example-margin" formControlName="RepeatEveryYear"
+                            name="RepeatEveryYear">
+                            <p class="rob-b _11px l-c">Repeat Every Year</p>
+                        </mat-checkbox></div>
+                </div>
+            </form>
+        </div>
+    </perfect-scrollbar>
+</div>

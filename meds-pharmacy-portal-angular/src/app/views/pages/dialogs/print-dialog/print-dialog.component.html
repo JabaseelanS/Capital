@@ -1,0 +1,126 @@
+<div class="container-fluid">
+
+    <!-- <div class="row no-gutters">
+        <div class="col">
+            <h1></h1>
+        </div>
+    </div> -->
+
+    <div class="row no-gutters">
+        <div class="col">
+            <img src="../../../../../assets/logo/logo_blu.svg" alt="logotipo" class="logotipo">
+        </div>
+
+        <div class="col">
+            <h2 style="color: #005760;">Hola Health</h2>
+            <div class="address">
+                <p>Bthinq@PackaPill.com.au</p>
+                <p>Av. Dr. Ribeiro de Magalhães,</p>
+                <p>Centro Comercial 123, Loja BD</p>
+                <p>4610-108 Felgueiras</p>
+            </div>
+        </div>
+    </div>
+    <div class="row no-gutters">
+        <div class="col">
+            <h1 style="color: #005760;"> Hola Health - Order History </h1>
+        </div>
+    </div>
+    <!-- <div class="row setheader">
+        <div class="col-md-2 maxwidth">
+            <p class="headercolor">Order ID</p>
+        </div>
+        <div class="col-md-2 maxwidth">
+            <p class="headercolor">Order Date</p>
+        </div>
+        <div class="col-md-2 maxwidthtotal">
+            <p class="headercolor">Order Status</p>
+        </div>
+        <div class="col-md-2 maxwidthtotal">
+            <p class="headercolor">Order By</p>
+        </div>
+        <div class="col-md-2 maxwidthtotal">
+            <p class="headercolor">No. of Items</p>
+        </div>
+        <div class="col-md-3 maxwidthtotal">
+            <p class="headercolor">Total Amount</p>
+        </div>
+
+    </div> -->
+
+    <!-- 
+    <mat-accordion>
+        <mat-expansion-panel
+            style="box-shadow: none !important;border-radius: 8px; margin-bottom: 10px;border-bottom: 2px solid #005760;height: 40px !important;"
+            hideToggle="true" *ngFor="let order of common.printdata">
+            <mat-expansion-panel-header style="border-radius: 8px !important;
+    height: 35px !important;">
+
+                <div style="width: 100%;align-items: center;" class="row">
+
+                    <div class="col-md-2 maxwidth">
+
+                        <p>Order ID : {{order.OrderId}}
+                        </p>
+                    </div> -->
+    <!-- <div class="col-md-2 maxwidth">
+
+                        <p>{{order.CreatedOn | date : 'dd/MM/yyyy'}}</p>
+                    </div>
+                    <div class="col-md-2 maxwidthtotal">
+
+                        <p>{{apiServices.getStatus(order.IsOrderStatus)}}</p>
+                    </div> -->
+    <!-- <div class="col-md-2 maxwidthtotal">
+
+                        <p>Order By : {{findByCustomer(order.CustomerId, true)}}</p>
+                    </div> -->
+
+    <!-- <div class="col-md-2 maxwidthtotal">
+
+                        <p>{{order.OrderDetailCount}}</p>
+                    </div>
+                    <div class="col-md-2 maxwidth">
+
+                        <p>$ {{order.Total}}</p>
+                    </div> -->
+
+    <!-- 
+                </div>
+
+            </mat-expansion-panel-header>
+
+        </mat-expansion-panel>
+
+    </mat-accordion> -->
+    <div class="card-title2" *ngFor="let order of common.printdata">
+        <div class="row">
+            <div class="col-md-2 maxwidthtotal">
+                <p>Order ID : {{order.OrderId}}
+                </p>
+            </div>
+            <div class="col-md-4 maxwidthtotal">
+
+                <p>Order By : {{findByCustomer(order.CustomerId, true)}}</p>
+            </div>
+        </div>
+        <div class="card-body" style="width: 80%;align-items: center;height: 25%;margin-bottom: 2px;">
+
+            <div class="mat-elevation-z8">
+                <!-- <perfect-scrollbar style="max-height: calc(55vh - 0px);" [config]="config"> -->
+                <img style="width: 75%;height: 25%;" src="{{order.Base64Path}}"
+                    onError="this.src='../../../../../../assets/img/imageloader.gif'">
+                <!-- </perfect-scrollbar> -->
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row no-gutters">
+        <div class="col">
+            <p class="disclaimer signature-field">
+            </p>
+        </div>
+    </div>
+</div>

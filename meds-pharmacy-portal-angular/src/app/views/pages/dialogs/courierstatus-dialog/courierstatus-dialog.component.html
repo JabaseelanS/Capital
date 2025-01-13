@@ -1,0 +1,65 @@
+<div class="top header">
+    <div class="dialog-header" fxLayout="row" fxLayoutAlign="space-between">
+        <div fxLayout="row" fxLayoutAlign="start">
+            <h3 class="headerborder">
+                <p class="header-text">Driver Details</p>
+            </h3>
+        </div>
+    </div>
+
+    <div class="phrm-body">
+        <form [formGroup]="driverlist" name="driverlist">
+            <div class="row rowmargin">
+                <div class="col-md-6">
+                    <p>Driver Name<small class="error_span1_cls">*</small></p>
+                    <mat-form-field class="pharmtxt-area m-r-b" appearance="outline">
+                        <input formControlName="DriverName" matInput>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <p>Driver Mobile Number<small class="error_span1_cls">*</small></p>
+                    <mat-form-field class="pharmtxt-area b-r" appearance="outline">
+                        <input type="tel" [maxlength]="MobLength" [textMask]="{mask: mobMask,guide:false}" matInput
+                            formControlName="DriverMobileNumber" myNumberOnly autocomplete="nope"
+                            (paste)="$event.preventDefault()" autocomplete="nope">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>Market Place<small class="error_span1_cls">*</small></p>
+                    <mat-form-field class="pharmtxt-area m-r-b" appearance="outline">
+                        <mat-select formControlName="MarketPlace" placeholder="Select Place" value="0">
+                            <mat-option value="0">
+                                Select Place
+                            </mat-option>
+                            <mat-option *ngFor="let item of commonServices.MarketPlace" [value]="item.id">
+                                {{item.text}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <p>Cost Of Delivery<small class="error_span1_cls">*</small></p>
+                    <mat-form-field class="pharmtxt-area b-r" appearance="outline">
+                        <input (keypress)="commonServices.validateDigit($event)" formControlName="CostOfDelivery"
+                            matInput>
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="m-r-l">
+                <button mat-raised-button [mat-dialog-close]>
+                    <img class="m-r-r" src="../../../../../assets/packapill-icons/multiply-16.png"><span>Close</span>
+                </button>
+                <button (click)="onSave()" class="mr-4 dark-petrol white rob-b _11px img-l " mat-raised-button>
+                    <img class="m-r-r"
+                        src="../../../../../assets/orderv2/packapill_portal_icons/Elements/White_2.svg"><span>{{this.modalData.model.DriverName?'Edit':'Save'}}
+                    </span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

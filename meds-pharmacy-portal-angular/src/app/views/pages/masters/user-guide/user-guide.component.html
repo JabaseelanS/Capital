@@ -1,0 +1,77 @@
+<div class="parent-body">
+    <div fxLayout='row' class="n-s-h">
+        <div class="b-line rob col-md-4 tbox ml-20">
+            <mat-form-field appearance="legacy" class="w-100">
+                <mat-label>Search the assets</mat-label>
+                <input #searchkey class="l-c rob-b _12px" matInput (keyup)="applyFilter($event.target.value)">
+            </mat-form-field>
+        </div>
+        <div class="col-md-6" style="text-align-last: end;">
+            <button (click)="AddUserGuide(null)" mat-raised-button matTooltip="Add User Guide"
+                class="rob-b _12px dark-petrol white" type="button">
+                <img style="margin-right:5px;" src="../../../../../assets/packapill-icons/add-16.png"><span>Add
+                    User Guide</span>
+            </button>
+        </div>
+    </div>
+</div>
+<div fxLayout='row'>
+
+    <div class="rob" style="background-color: #fff;padding: 0px 18px;width: 100%;">
+        <table class="table table-striped ">
+            <thead class="v2-h-lt rob-b _12px l-c">
+                <tr>
+                    <th>User Guide</th>
+                    <th>Processing Prescription Orders</th>
+                    <th>Processing OTC Orders</th>
+                    <th>Carer Mode</th>
+                    <th>Status</th>
+                    <th style="text-align: center;">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="l-c">
+                <tr class="r-bor" *ngFor="let ugModel of userguideassets | slice: lowValue : highValue;">
+
+                    <td class="b-no">
+                        {{ugModel.UserGuide}}
+                    </td>
+                    <td class="b-no">
+                        {{ugModel.ProcessingPrescriptionOrders}}
+                    </td>
+                    <td class="b-no">
+                        {{ugModel.ProcessingOtcOrders}}
+                    </td>
+                    <td class="b-no">
+                        {{ugModel.CarerMode}}
+                    </td>
+                    <td class="b-no">
+                        <div>
+                            <mat-slide-toggle [(ngModel)]="ugModel.IsActive"
+                                (ngModelChange)="changeStatus(ugModel )"></mat-slide-toggle>
+
+                        </div>
+                    </td>
+                    <td class="row" style="justify-content: center;min-width: 110px;">
+
+                        <button mat-icon-button color="primary" matTooltip="Edit user" (click)="AddUserGuide(ugModel)">
+                            <img style="height: 14px;" src="../../../../../assets/packapill-icons/EditRed.svg">
+                        </button>&nbsp;
+                        <!-- <button mat-icon-button color="warn" matTooltip="Delete user" type="button"
+                            (click)="deleteUser(ugModel)">
+                            <img style="height: 14px;" src="../../../../../assets/packapill_portal_icons/delete.svg">
+                        </button> -->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div *ngIf="userguideassets.length == 0" class="rob-b r-c">
+            No record found
+        </div>
+        <mat-paginator class="pag-mat" [length]="userguideassets.length" [pageSize]=10
+            [pageSizeOptions]="[5, 10, 25, 100]" (page)="getPaginatorData($event)">page
+        </mat-paginator>
+
+
+    </div>
+
+</div>

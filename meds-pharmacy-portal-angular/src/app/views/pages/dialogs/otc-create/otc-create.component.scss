@@ -1,0 +1,43 @@
+.form {
+    display: flex;
+    padding-top: 6px;
+}
+
+.image {
+    height: 50px;
+    width: 50px;
+}
+
+
+
+.bck-clr {
+    background-color: #005760;
+    width: 85px;
+}
+
+.mat-form-field {
+    width: 250px !important;
+}
+
+::ng-deep .pharmtxt-area {
+    .mat-form-field-flex {
+        height: 40px !important;
+    }
+
+    .mat-form-field-infix {
+        border-top: 1px !important;
+    }
+}
+
+.sec-div2 {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #d4d4d4;
+}
+
+::ng-deep .wid-20 .mat-form-field-flex {
+    width: 208% !important;
+}
+
+::ng-deep .wid-10 .mat-form-field-flex {
+    width: 100% !important;
+}

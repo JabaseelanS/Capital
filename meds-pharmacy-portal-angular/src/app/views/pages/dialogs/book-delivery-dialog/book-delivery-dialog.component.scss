@@ -1,0 +1,471 @@
+::ng-deep .mat-dialog-container {
+    box-shadow: none !important;
+    background: #f4f4f4 !important;
+    // overflow: inherit !important;
+    padding: 0px !important;
+}
+
+::ng-deep.pa-cls .mat-form-field-appearance-outline .mat-form-field-flex {
+    height: auto;
+
+
+}
+
+::ng-deep.wbrdr .delivery-cls input:focus {
+    border: 2px solid #005760;
+    caret-color: #005760;
+}
+
+::ng-deep.wbrdr .delivery-cls input:hover {
+    border: 2px solid #005760;
+    caret-color: #005760;
+}
+
+.w-45 {
+    width: 45% !important;
+}
+
+.w-50 {
+    width: 50% !important;
+}
+
+::ng-deep.pa-cls .mat-form-field .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix textarea {
+    height: 2.5vh;
+}
+
+// ::ng-deep.delivery-clsR {
+//     flex-direction: row !important;
+// }
+
+// ::ng-deep.delivery-clsC {
+//     flex-direction: column !important;
+// }
+
+// ::ng-deep.delivery-clsC .pickaddress-cls1 {
+//     // flex-direction: column !important;
+//     flex: 0 0 40% !important;
+//     max-width: 40% !important;
+// }
+
+// ::ng-deep.delivery-clsR .pickaddress-cls2 {
+//     // flex-direction: row !important;
+//     flex: 0 0 60% !important;
+//     max-width: 60% !important;
+// }
+
+
+// ::ng-deep.pickaddress .pickaddress-cls1 {
+//     flex: 0 0 100% !important;
+//     max-width: 100% !important;
+// }
+::ng-deep.pickaddress {
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+::ng-deep.pickaddress .pickaddress-cls2 {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+}
+
+::ng-deep.pickaddress .delivery-cls {
+    flex-direction: row !important;
+}
+
+.bdwid {
+    // width: 45%;
+    margin-bottom: 4px;
+}
+
+.pwid {
+    width: 140px;
+}
+
+.mtwid {
+    width: 70%;
+    margin-left: 10px;
+    margin-top: -8px;
+}
+
+.gprow {
+    margin-right: 4%;
+}
+
+.hed-t {
+    font-size: 14px;
+    color: #5a5a5a;
+    margin-top: 15px;
+    margin-left: 15px;
+    margin-bottom: 5px;
+}
+
+.bank-text {
+    font-size: 20px;
+    color: #5a5a5a;
+    font-family: "Roboto Medium";
+    margin-top: 5px;
+    background: #f4f4f4;
+    border-radius: 4px 4px 0px 0px;
+}
+
+.p86 {
+    padding: 8px 6px;
+}
+
+.wid100 {
+    width: 100%;
+}
+
+.mw-mh {
+    max-width: 100%;
+    max-height: 600px;
+}
+
+.pick-pharm {
+    margin-left: 40px;
+    // width: 40%;
+    width: auto;
+    margin-right: 30px;
+}
+
+.pick-ins {
+    width: 75%;
+    margin-left: 40px;
+    margin-bottom: 14px;
+}
+
+.drp-firs {
+    width: 56%;
+    margin-right: 74px;
+}
+
+.btnclasses {
+    margin-top: 30px;
+    text-align-last: end;
+    height: 65px;
+    padding-right: 50px;
+}
+
+.marleft-10 {
+    margin-left: 10px;
+}
+
+.marright-10 {
+    margin-right: 10px;
+}
+
+.mt-top-10 {
+    margin-top: 14px;
+}
+
+.delst {
+    height: 50px;
+    margin-left: 40px;
+    max-height: 100px;
+    margin-bottom: 14px;
+}
+
+.df-matfield {
+    width: auto;
+    max-width: 460px;
+    min-width: 450px;
+}
+
+.df-ins {
+    margin-left: 40px;
+    margin-top: 10px;
+    margin-bottom: 14px;
+}
+
+.mar-ri-8 {
+    margin-right: 8%;
+}
+
+.cancel-btn {
+    background-color: #fff !important;
+    color: black !important;
+    font-size: 12px !important;
+}
+
+.add-btn {
+    background-color: #005760 !important;
+    color: #fff !important;
+    font-size: 12px !important;
+}
+
+.frm-hd {
+    font-size: 14px;
+    font-weight: 400;
+    color: #5a5a5a;
+}
+
+.bnk-header {
+    border-bottom: 1px solid #c1c1c170;
+    padding: 10px 12px;
+    font-family: "Roboto Medium";
+    color: #5a5a5a;
+}
+
+::ng-deep .frm-head {
+    background-color: #fff;
+    padding: 10px 22px !important;
+
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+        background-color: white;
+        color: transparent !important;
+        top: 1.25em !important;
+        border: 1px solid #c1c1c170;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-outline-end,
+    .mat-form-field-appearance-outline .mat-form-field-outline-start {
+        border: none !important;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-infix {
+        padding: 2vh 0 1vh 0 !important;
+    }
+}
+
+.sec-class {
+    border: 1px solid #c1c1c170;
+    padding: 10px 0px 10px 10px;
+    border-radius: 4px;
+    margin-left: 16px;
+    margin-bottom: 22px;
+    background-color: #f4f4f4;
+}
+
+.sec-div1 {
+    border-radius: 12px 12px 0 0;
+    margin-bottom: 10px;
+    background-color: #f7f8fa;
+    border-bottom: 1px solid #c1c1c170;
+}
+
+::ng-deep .mat-form-pad {
+    .mat-form-field-wrapper {
+        padding-bottom: 1.34375em !important;
+    }
+}
+
+.mtop-3 {
+    margin-top: 3px;
+}
+
+::ng-deep.bclr-book {
+    .mat-form-field-outline {
+        border-radius: 5px !important;
+    }
+
+    .mat-form-field-wrapper .mat-form-field-outline.mat-form-field-outline-thick {
+        // color: red !important;
+        // border: 1px solid  #005760;
+        // border-radius: 5px !important;
+        outline: none !important;
+        border: none !important;
+        color: #005760;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-subscript-wrapper {
+        padding: 0px;
+    }
+}
+
+.phrmusr-body {
+    box-shadow: 0px 0px 15px 0px #cfcfcf;
+    border-radius: 12px;
+    background-color: #fff;
+    margin: 10px 20px;
+}
+
+::ng-deep .mat-radio-button .mat-radio-outer-circle {
+    width: 30px;
+    height: 32px;
+}
+
+::ng-deep .mat-radio-button .mat-radio-label-content {
+    font-size: 16px;
+    margin-left: 8px;
+}
+
+// .fnt {
+//     font-size: xx-small;
+// }
+@media screen and (min-width: 1024px) {
+    .fnt {
+        font-size: xx-small;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .fnt {
+        font-size: x-small;
+    }
+}
+
+.circle {
+    width: 50px;
+    height: 50px;
+    box-sizing: border-box;
+    position: absolute;
+    color: rgb(150, 150, 150);
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 50%;
+    left: 0;
+}
+
+.cls {
+    margin-left: 1.5vw;
+}
+
+.card-ue-dd {
+    border: 1px solid #5a5a5a !important;
+    margin-bottom: 10px;
+    // height: 6rem;
+    border-radius: 5px;
+    max-height: 100%;
+    min-height: 75px;
+    // max-width: 24vw;
+    // margin-right: 5px;
+    cursor: pointer;
+}
+
+.card-ue-dd:hover {
+    border: 2px solid #005760 !important;
+    // border: none !important;
+}
+
+
+.content {
+    margin-left: 25px;
+    max-width: fit-content;
+}
+
+.sel-icon {
+    display: flex;
+    // margin-left: 4vw;
+}
+
+.selected {
+    width: 16px;
+    height: 17px;
+}
+
+.delpat {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.pad-left {
+    padding-left: 0;
+}
+
+.highlighted {
+    border: 2px solid #005760 !important;
+}
+
+.udlogo {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    left: 10px;
+    padding: 2px;
+    margin-top: 10px;
+}
+
+.d-c {
+    display: contents;
+}
+
+.d-g-a-c {
+    display: grid;
+    align-items: center;
+}
+
+.t-s {
+    margin-left: 5px;
+}
+
+.sherpa_dropdown_fields {
+    width: 100%;
+}
+
+.sherpa_drop_options {
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.sherpa_drop_options_heading {
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 3px;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.sherpa_drop_options:hover {
+    background-color: #005760 !important;
+    color: white !important;
+}
+
+.sherpa_drop_options_selected {
+    background-color: #005760 !important;
+    color: white !important;
+}
+
+.sherpa_drop_options.selected {
+    background-color: #005760 !important;
+    color: white !important;
+}
+
+.sherpa_price {
+    float: right;
+}
+
+.sherpa_dropdown_box {
+    border: 1px solid #D7D7D7;
+    position: absolute;
+    top: 75px;
+    width: 120%;
+    z-index: 99;
+    background: #fff;
+    margin-right: 0px;
+    right: 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.sherpa_dropdown_inner_box {
+    max-height: 160px;
+}
+
+.sherpa_drop_icon {
+    color: #005760;
+    position: absolute;
+    top: 25px;
+    right: 5px;
+}
+
+.sherpa_dropdown-rotate {
+    rotate: 180deg;
+    margin-top: 10px;
+}
+
+.select-section {
+    position: absolute;
+    top: 5px;
+    right: 0;
+}
+
+.padding-top-container {
+    padding-top: 10px;
+}
+
+@media only screen and (max-width:768px) {
+    .sherpa_dropdown_box {
+        width: 133% !important;
+    }
+}

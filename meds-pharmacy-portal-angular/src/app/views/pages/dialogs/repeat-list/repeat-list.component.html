@@ -1,0 +1,41 @@
+<div style="background: #fff !important;">
+    <div class="modal-header">
+        <h4 style="font-size: large !important;" class="modal-title">Repeats</h4>
+        <button type="button" class="close" aria-label="Close" (click)="closeDialog('Hide')"><span
+                aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <table class="table table-striped ">
+            <thead class="v2-h-lt rob-b _12px l-c">
+                <tr>
+                    <th>Name</th>
+                    <th>Medicine Name</th>
+                    <th>Script Id</th>
+                    <th>Total Repeats</th>
+                    <th>Remaining Repeats</th>
+                    <th>Days Remaining</th>
+                </tr>
+            </thead>
+            <tbody class="l-c">
+                <div *ngIf="repeatList.length == 0" class="rob-b r-c">
+                    No record found
+                </div>
+                <tr *ngFor="let group of repeatList">
+                    <td>
+                        {{group.FamilyId<=0? Fullname : group.familyMember.Name | titlecase}} </td>
+                    <td>{{ group.MedicineName}} </td>
+                    <td>{{ group.OrderScriptId}} </td>
+                    <td>{{group.TotalRepeats}} </td>
+                    <td>{{group.RemainingRepeats}} </td>
+                    <td>{{ group.DaysRemaining}} </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="modal-footer">
+        <button style="width: 18%;height: 35px;" type="button" mat-raised-button class="light-button rob _12px fw-600"
+            (click)="closeDialog('Hide')">Close</button>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+.underline {
+    border-bottom: solid 2px #005760;
+    color: #005760 !important;
+}
+
+.pag-mat {
+    ::ng-deep .mat-paginator-page-size {
+        display: none;
+    }
+
+    ::ng-deep .mat-icon-button {
+        background-color: #005760;
+        color: #fff;
+        margin-left: 12px;
+    }
+}
+
+::ng-deep .my-snack-bar {
+    background: rgb(214, 213, 213);
+    color: rgb(249, 52, 52)
+}

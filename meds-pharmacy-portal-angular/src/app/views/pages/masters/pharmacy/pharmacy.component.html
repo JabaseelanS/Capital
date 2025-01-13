@@ -1,0 +1,215 @@
+<!-- <div class="top" style="background-color: #f4f4f4;"> -->
+<div class="parent-body">
+    <!-- Headers -->
+    <div fxLayout='row' class="n-s-h">
+        <div class="b-line rob col-md-4 tbox ml-20">
+            <mat-form-field appearance="legacy" class="w-100">
+                <mat-label>Search name, email</mat-label>
+                <input #searchkey class="l-c rob-b _12px" matInput (keyup)="applyFilter($event.target.value, true)">
+            </mat-form-field>
+        </div>
+        <div *ngIf="this.userdetails.RoleId !=null && this.userdetails.RoleId!=5" class="col-md-6"
+            style="text-align-last: end;">
+            <button (click)="AddPharmacy({}, null)" mat-raised-button matTooltip="Create new pharmacy"
+                class="rob-sm _12px dark-petrol white" type="button">
+                <img style="margin-right:5px;" src="../../../../../assets/packapill-icons/add-16.png"><span>Add
+                    Pharmacy</span>
+            </button>
+        </div>
+    </div>
+    <!-- <div class="row">
+        <div class="col-md-12">
+            <div class="card-body">
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div class="col-md-8">
+                        <mat-form-field class="Mat-Box" appearance="legacy">
+                            <mat-label>Search</mat-label>
+                            <input matInput (keyup)="applyFilter($event.target.value, true)">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <button (click)="editPharmacy({})" mat-raised-button matTooltip="Create new pharmacy"
+                            color="primary" class="bck-clr rob-sm _12px" type="button">
+                            <img style="margin-right:5px;"
+                                src="../../../../../assets/packapill-icons/add-16.png"><span>Add Pharmacy</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- Striped table-->
+    <div fxLayout='row'>
+        <perfect-scrollbar style="max-height: calc(70vh - 0px);background-color: #fff;">
+            <div class="rob" style="background-color: #fff;padding: 0px 18px;width: 100%;">
+                <table class="table table-striped ">
+                    <thead class="v2-h-lt rob-b _12px l-c">
+                        <tr>
+                            <th *ngIf="userdetails.RoleId==1">Pharmacy Id</th>
+                            <th>Name</th>
+                            <th>State</th>
+                            <th>Email</th>
+                            <th>DoorDash</th>
+                            <th>UberEats</th>
+                            <th>Own Delivery</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="l-c">
+                        <tr class="r-bor" *ngFor="let pModel of PharmacyList | slice: lowValue : highValue">
+                            <td *ngIf="userdetails.RoleId==1" class="b-no">
+                                {{pModel.PharmacyId}}
+                            </td>
+                            <td class="b-no">
+                                {{pModel.PharmacyName}}
+                            </td>
+                            <td class="b-no">
+                                {{findByState(pModel.StateId)}}
+                            </td>
+                            <td class="b-no">
+                                {{pModel.Email1}}
+                            </td>
+                            <td class="b-no">
+                                <div [ngClass]="CheckToggleDD(pModel)">
+                                    <mat-slide-toggle
+                                        [ngClass]="userdetails.RoleId==1?'class-enable1-repeat': 'class-disabled1-repeat'"
+                                        [ngModel]="pModel.IsDD == true? pModel.IsDDOnline == true? true : pModel.IsDDOnline == false? true : false : false"
+                                        (change)="changeDDUE(pModel, 1, $event)"
+                                        [disabled]="pModel.IsDD == false"></mat-slide-toggle>
+                                </div>
+                            </td>
+                            <td class="b-no">
+                                <div [ngClass]="CheckToggleUe(pModel)">
+                                    <mat-slide-toggle
+                                        [ngClass]="userdetails.RoleId==1?'class-enable1-repeat': 'class-disabled1-repeat'"
+                                        [ngModel]="pModel.IsUE == true? pModel.IsUEOnline == true? true : pModel.IsUEOnline == false? true : false : false"
+                                        (change)="changeDDUE(pModel, 2, $event)"
+                                        [disabled]="pModel.IsUE == false"></mat-slide-toggle>
+                                </div>
+                            </td>
+                            <td class="b-no">
+                                <p>
+                                    <img width="20px" height="20px"
+                                        [src]="pModel.IsPharmacyDelivery == true ? '../../../../../assets/images/check-mark.svg' : '../../../../../assets/images/wrong-removebg-preview.svg'"
+                                        alt="Active&Inactive">
+                                </p>
+                            </td>
+                            <td class="row">
+
+                                <!-- <button style="height: 32px;min-width: 75px;" (click)="editPharmacy(pModel)"
+                                    mat-raised-button class="mr-4 dark-petrol white rob-b _11px" matTooltip="Edit">
+                                    <img style="margin-top: -6px;height: 14px;width: 12px;margin-right: 5px;"
+                                        src="../../../../../assets/packapill-icons/Edit.svg">
+                                </button> -->
+
+                                <button mat-icon-button color="#005760" matTooltip="Edit Pharmacy" style="min-height: 34px;
+                                  height: 34px;" (click)="editPharmacy(pModel)">
+                                    <img style="height: 18px;margin-top: -8px;"
+                                        src="../../../../../assets/packapill-icons/EditRed.svg">
+                                </button>
+                                <button *ngIf="pModel.StripeDetailsubmitted && this.userdetails.RoleId==1"
+                                    class="success-button red-clr rob-b _12px" matTooltip="Transfer funds"
+                                    (click)="transferFund(pModel)"> Transfer funds
+                                </button>
+                                <!-- 
+                                <button mat-icon-button color=" #005760" matTooltip="Edit Pharmacy" style="    background:  #005760;
+                                    border-radius: 4px;
+                                    /* margin-top: 0px; */
+                                    margin-left: 6px;
+                                    height: 34px;
+                                    line-height: 34px;" (click)="editPharmacy(pModel)">
+                                    <img style="height: 14px;margin-top: -2px;" src="../../../../../assets/packapill-icons/Edit.svg">
+                                </button> -->
+
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="PharmacyList.length == 0" class="rob-b r-c">
+                    No record found
+                </div>
+                <mat-paginator class="pag-mat" [length]="PharmacyList.length" [pageSize]=10
+                    [pageSizeOptions]="[5, 10, 25, 100]" (page)="getPaginatorData($event)">page
+                </mat-paginator>
+            </div>
+        </perfect-scrollbar>
+    </div>
+    <!-- <div class="tp-body">
+        <div style="background-color: #f4f4f4;border-radius: 12px 12px;">
+
+            <perfect-scrollbar class="scrl-cls">
+                <mat-table style="max-height: 514px;" #table [dataSource]="dataSource" matSort>
+
+                    <div>
+                        <ng-container matColumnDef="PharmacyName">
+                            <mat-header-cell class="l-c rob-b _12px" *matHeaderCellDef mat-sort-header>Name
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let pharmacy" class="text">
+                                {{pharmacy.PharmacyName}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Email">
+                            <mat-header-cell class="l-c rob-b _12px" *matHeaderCellDef mat-sort-header fxHide.sm
+                                fxHide.xs>
+                                Email
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let pharmacy" fxHide.sm fxHide.xs matTooltip="{{pharmacy.Email1}}">
+                                <p class="text">{{pharmacy.Email1}}</p>
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="State">
+                            <mat-header-cell class="l-c rob-b _12px" *matHeaderCellDef mat-sort-header fxHide.sm
+                                fxHide.xs>
+                                State
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let pharmacy" fxHide.sm fxHide.xs>
+                                {{ findByState(pharmacy.StateId)}}
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Country">
+                            <mat-header-cell class="l-c rob-b _12px" *matHeaderCellDef mat-sort-header fxHide.sm
+                                fxHide.xs>
+                                Country
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let pharmacy" fxHide.sm fxHide.xs>
+                                {{ findByCountry(pharmacy.CountryId)}}
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="actions">
+                            <mat-header-cell class="l-c rob-b _12px" *matHeaderCellDef>Actions</mat-header-cell>
+
+                            <mat-cell *matCellDef="let pharmacy; let i=index;">
+                                <button mat-icon-button color="primary" (click)="editPharmacy(pharmacy)">
+                                    <img style="height: 14px;" src="../../../../../assets/packapill-icons/EditRed.svg">
+                                </button>
+
+                              //  <button *ngIf="isPharmacyAdmin" mat-icon-button color="warn"
+                                    (click)="deletePharmacy(pharmacy)">
+                                    <img style="height: 14px;" src="../../../../../assets/packapill-icons/delete.png">
+                                </button>
+                            </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row class="_e7" *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                    </div>
+                </mat-table>
+            </perfect-scrollbar>
+
+            <div class="no-results" [style.display]="dataSource == null || dataSource.data.length === 0 ? '' : 'none'">
+                <p style="color: #005760;text-align:center;width: 100%;">No record!</p>
+            </div>
+        </div>
+        <div class="mat-table__bottom">
+
+            //<mat-spinner [diameter]="20" *ngIf="isLoading"></mat-spinner>
+            <mat-paginator #paginator [length]="totalLength" [pageIndex]="0" [pageSize]="10"
+                [pageSizeOptions]="[10, 15, 25, 100, 105, 110, 125, 150, 175, 200, 300, 500, 1000, 1100, 1200, 1300, 1400, 1500]">
+            </mat-paginator>
+        </div>
+    </div> -->
+</div>

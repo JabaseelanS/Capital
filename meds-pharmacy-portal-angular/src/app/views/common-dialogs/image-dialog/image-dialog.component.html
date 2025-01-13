@@ -1,0 +1,40 @@
+<div class="head-div">
+    <div fxLayout="row" fxLayoutAlign="space-between">
+        <div class="col-md-7">
+            <h4 class="card-title2"> {{header}}</h4>
+        </div>
+        <div class="col-md-5">
+            <button style="float: right;" mat-raised-button (click)="closeDialog()"><img style="margin-right: 5px;"
+                    src="../../../../../assets/packapill-icons/multiply-16.png">Close</button>
+            <!-- <img *ngIf="isType!=3" style="height: 25px;float: right;margin: 8px 5px 0px 0px;" class="cur-p rw-i"
+                matTooltip="Rotate" (click)="rotatePic()"
+                src="../../../../../../assets/orderv2/packapill_portal_icons/Elements/rotate-01-01-01.svg"> -->
+            <button style="float: right;margin-right: 15px;" matTooltip="Copy the token"
+                class="bck-clr success-button red-clr rob _12px fw-600"
+                *ngIf="isType==3 || isType==2 ||isType==6 ||isType==10"
+                (click)="commonServices.copyInputMessage(eToken)" type="button">Copy the token
+            </button>
+            <!-- <img style="height: 25px;" class="cur-p rw-i" matTooltip="Rotate" (click)="rotatePic()"
+                src="../../../../../../assets/orderv2/packapill_portal_icons/Elements/Print Icon.svg"> -->
+        </div>
+
+    </div>
+</div>
+<div class="spinnerbefore1 mx-auto stest" [ngClass]="{'spinnerafter':imageload}"></div>
+<div class="scroll">
+    <div class="d-flex">
+        <div *ngIf="data.record.IsUploadType!=9">
+            <img *ngIf="imageload" [@rotatedState]='state' class="rot-box"
+                src="{{'../../../../assets/packapillassets/'+ data.phid +'/' + data.record.PrescriptionFilename+'.png'}}">
+            <img [@rotatedState]='state' class="rot-box " style="display: none;"
+                src="{{'../../../../assets/packapillassets/'+ data.phid +'/' + data.record.PrescriptionFilename+'.png'}}"
+                (load)='onImageLoad()'>
+        </div>
+
+        <div *ngIf="data.record.IsUploadType==9">
+            <img *ngIf="imageload" [@rotatedState]='state' class="rot-box" src="{{data.record.Base64}}">
+            <img style="display: none;" [@rotatedState]='state' class="rot-box" src="{{data.record.Base64}}"
+                (load)='onImageLoad()'>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,252 @@
+<div *ngIf="edited" class="top" style="background-color: #f4f4f4;">
+    <div class="dialog-header" fxLayout="row" fxLayoutAlign="space-between">
+        <div fxLayout="row" fxLayoutAlign="start">
+            <h3>
+                <p class="header-text">{{modalData ? 'Edit' : 'Create'}} Pharmacy Group</p>
+            </h3>
+        </div>
+        <div>
+            <button *ngIf="this.loginDetails.RoleId !=null && this.loginDetails.RoleId!=5" class="mr-4"
+                [disabled]="!pharmacyGrpForm.dirty || !pharmacyGrpForm.valid" (click)="onSave()" mat-raised-button><img
+                    style="margin-right: 5px;"
+                    src="../../../../../assets\orderv2\packapill_portal_icons\Elements\Petrol.svg">{{modalData
+                ? 'Update' :
+                'Save'}}</button>
+            <button mat-raised-button (click)="closeDialog()" [mat-dialog-close]><img style="margin-right: 5px;"
+                    src="../../../../../assets/packapill-icons/multiply-16.png">Close</button>
+        </div>
+    </div>
+    <perfect-scrollbar style="max-width: 100%; max-height: 620px">
+
+        <div class="phrm-body">
+            <form name="pharmacyGrpForm" [formGroup]="pharmacyGrpForm" novalidate fxLayout="column">
+                <!--Pharmacy Information -->
+                <div class="sec-div" fxLayout="row" fxLayoutAlign="start">
+                    <h3>
+                        <p class="htxt">Pharmacy Group Information</p>
+                    </h3>
+                </div>
+                <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" style="margin-left: 60px;"
+                    fxLayout.md="column">
+                    <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
+                        <div class="mr-4 cls-top">
+                            <p>Pharmacy Group Name<small style="color: red;">*</small></p>
+                            <mat-form-field class="pharmtxt-area" appearance="outline">
+                                <input matInput formControlName="PharmacyGrpName" name="PharmacyGrpName" required>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="mr-4 cls-top">
+                            <p>Contact Name<small style="color: red;">*</small></p>
+                            <mat-form-field class="pharmtxt-area" appearance="outline">
+                                <!-- <mat-label class="header-text">Last Name</mat-label> -->
+                                <input matInput formControlName="ContactName" name="ContactName" required>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
+
+                        <div class="mr-4 cls-top">
+                            <p>Email<small style="color: red;">*</small></p>
+                            <mat-form-field class="pharmtxt-area" appearance="outline">
+                                <!-- <mat-label class="header-text">Last Name</mat-label> -->
+                                <input matInput formControlName="Email" name="Email" required>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="this.loginDetails.RoleId==1" fxLayout="row" fxLayout.sm="column" fxLayout.md="column"
+                    style="margin-left: 60px;margin-bottom: 10px;">
+                    <div class="mr-4 cls-top">
+                        <p
+                            *ngIf="this.modalData !=null && this.modalData !=undefined && this.modalData.PharmacyGrpId !=null && this.modalData.PharmacyGrpId >0">
+                            QR Code</p>
+                        <img *ngIf="QrCode !=null && QrCode !=''"
+                            style="max-width: 60px;max-height: 50px;border-radius: 50px;" src="{{QrCode}}"
+                            (error)="commonServices.errorProfileImage($event)">
+                        <div *ngIf="this.modalData !=null && this.modalData !=undefined && this.modalData.PharmacyGrpId !=null && this.modalData.PharmacyGrpId >0"
+                            class="mr-4 cls-top">
+                            <button *ngIf="QrCode ==null || QrCode ==''" mat-raised-button (click)="GenerateQRImage()">
+                                Generate
+                            </button>
+                            <a *ngIf="QrCode !=null && QrCode !='' && QrCode!=undefined"
+                                style="text-decoration: underline;margin-left: 10px;" href="{{QrCode}}"
+                                download="qrgrpimage">Download</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- <div class="search-plc">
+            <input style="border: none;" placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+        </div> -->
+        <div class="phrm-body">
+            <!-- Pharmacy Contact Information -->
+            <form name="pharmacyGrpForm" [formGroup]="pharmacyGrpForm" novalidate fxLayout="column">
+                <div class="sec-div" fxLayout="row" fxLayoutAlign="start">
+                    <h3>
+                        <p class="htxt">Pharmacy Group Contact Information</p>
+                    </h3>
+                </div>
+                <!-- Section-1 -->
+                <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" style="margin-left: 60px;">
+                    <div class="mr-4 cls-top">
+                        <p>Phone No 1<small style="color: red;">*</small></p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <!-- <mat-label class="header-text">Phone</mat-label> -->
+                            <input (ngModelChange)="onChangeByMob($event,false)" type="tel" [maxlength]="phLength"
+                                [textMask]="{mask: phoneMask,guide:false}" matInput formControlName="PhoneNo1"
+                                name="PhoneNo1" required>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mr-4 cls-top">
+                        <p>Phone No 2</p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <!-- <mat-label class="header-text">Phone</mat-label> -->
+                            <input (ngModelChange)="onChangeByMob($event ,true)" type="tel" [maxlength]="phLength1"
+                                [textMask]="{mask: phoneMask1,guide:false}" matInput formControlName="PhoneNo2"
+                                name="PhoneNo2">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mr-4 cls-top">
+                        <p>Fax No</p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <!-- <mat-label class="header-text">Phone</mat-label> -->
+                            <!-- <input matInput formControlName="FaxId" name="FaxId"> -->
+                            <input matInput (ngModelChange)="onFaxchange($event)" type="tel" [maxlength]="faxLength"
+                                [textMask]="{mask: faxMask,guide:false}" formControlName="FaxId" name="FaxId">
+                        </mat-form-field>
+                    </div>
+
+                </div>
+                <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" style="margin-left: 60px;">
+
+                    <div class="mr-4 cls-top">
+                        <p>City<small style="color: red;">*</small></p>
+
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <!-- <mat-label class="header-text">City</mat-label> -->
+                            <input matInput formControlName="City" name="city" required />
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mr-4 cls-top">
+                        <p>Country<small style="color: red;">*</small></p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <mat-select value="0" formControlName="CountryId">
+                                <mat-option value="0">
+                                    choose the country
+                                </mat-option>
+                                <mat-option *ngFor="let item of countryList" [value]="item.id">
+                                    {{item.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mr-4 cls-top">
+                        <p>Postcode<small style="color: red;">*</small></p>
+
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <!-- <mat-label class="header-text">Pin Code</mat-label> -->
+                            <input matInput formControlName="Pincode" name="Pincode" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Section-3 -->
+                <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" style="margin-left: 60px;">
+                    <div class="mr-4 cls-top">
+                        <p>Address<small style="color: red;">*</small></p>
+
+                        <mat-form-field appearance="outline" style="width: 525px !important;">
+                            <!-- <mat-label class="header-text">Address</mat-label> -->
+                            <textarea matInput rows="5" formControlName="Address" name="Address" autocorrect="off"
+                                (focus)="commonServices.setAutoFillOff($event)" autocapitalize="off" spellcheck="off"
+                                #search required></textarea>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mr-4 cls-top">
+                        <p>State<small style="color: red;">*</small></p>
+                        <mat-form-field class="pharmtxt-area" appearance="outline">
+                            <mat-select value="0" formControlName="StateId">
+                                <input class="searchfilter" matInput placeholder="Search"
+                                    (keyup)="searchStatesFilter($event.target.value, true)">
+                                <mat-option value="0">
+                                    choose the state
+                                </mat-option>
+                                <mat-option *ngFor="let item of statesList" [value]="item.id">
+                                    {{item.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="phrm-body">
+            <div class="sec-div" fxLayout="row" fxLayoutAlign="start">
+                <h3>
+                    <p class="htxt">Pharmacy Schedule Information</p>
+                </h3>
+            </div>
+
+            <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" style="border-radius: 12px;">
+                <div fxLayout="row" fxLayout.sm="column" fxLayout.md="column" fxLayout.xs="column" fxLayout.lg="column"
+                    style="width: 100%;">
+                    <form name="pharmacyGrpForm" [formGroup]="pharmacyGrpForm" novalidate fxLayout="column"
+                        style="padding-left: 2px;width: 100%;">
+                        <mat-table #table [dataSource]="dataSource" style="border-radius: 12px;">
+                            <ng-container matColumnDef="WeekDays">
+                                <mat-header-cell *matHeaderCellDef>Working Days</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.Days}} </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="OpeningHours">
+                                <mat-header-cell *matHeaderCellDef>Pickup Hours</mat-header-cell>
+                                <mat-cell *matCellDef="let element;let i = index">
+                                    <input formControlName="OpeningHours" class="col-md-5 end"
+                                        (input)="dataSource.data[i].OpeningHours = $event.target.value" matInput
+                                        name="end" type="time" [value]="element.OpeningHours">
+                                    <!-- <mat-select style="height: 20px;width: 60px;" [value]=element.OpeningFormat>
+                                                            <mat-option [value]="Otrue" (click)="dataSource.data[i].OpeningFormat = true">AM
+                                                            </mat-option>
+                                                            <mat-option [value]="Ofalse" (click)="dataSource.data[i].OpeningFormat = false">
+                                                                PM</mat-option>
+                                                        </mat-select> -->
+                                </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="ClosingHours">
+                                <mat-header-cell *matHeaderCellDef>Delivery Hours</mat-header-cell>
+                                <mat-cell *matCellDef="let element;let i = index">
+                                    <input formControlName="ClosingHours" class="col-md-5 end"
+                                        (input)="dataSource.data[i].ClosingHours = $event.target.value" matInput
+                                        name="end" type="time" [value]="element.ClosingHours">
+                                    <!-- <mat-select style="height: 20px;width: 60px;" [value]=element.ClosingFormat>
+                                                            <mat-option [value]="Ctrue" (click)="dataSource.data[i].ClosingFormat = true">AM
+                                                            </mat-option>
+                                                            <mat-option [value]="Cfalse" (click)="dataSource.data[i].ClosingFormat = false">
+                                                                PM</mat-option>
+                                                        </mat-select> -->
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row style="border-radius: 0 0 12px 12px;"
+                                *matHeaderRowDef="displayedColumnsDay; sticky: true">
+                            </mat-header-row>
+                            <mat-row style="border-radius: 0 0 12px 12px;"
+                                *matRowDef="let row; columns: displayedColumnsDay;">
+                            </mat-row>
+                        </mat-table>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </perfect-scrollbar>
+</div>

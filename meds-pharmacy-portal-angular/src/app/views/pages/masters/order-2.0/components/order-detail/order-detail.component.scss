@@ -1,0 +1,362 @@
+// @media screen and (min-width: 1580px) {
+//     .cel {
+//         margin: 0px 6px 0 8px;
+//     }
+//     .w-7 {
+//         width: 70% !important;
+//     }
+//     .w-5 {
+//         width: 50% !important;
+//     }
+// }
+// @media screen and (max-width: 1980px) {
+//     .cel {
+//         margin: 0px 10px 0 14px;
+//         // padding-top: 5px;
+//         // padding-bottom: 8px;
+//     }
+//     .w-7 {
+//         width: 100% !important;
+//     }
+//     .w-5 {
+//         width: 100% !important;
+//     }
+// }
+
+.UE_order_id_box {
+    font-size: 12px;
+    margin-top: 0px;
+    // font-weight: 500;
+    background-color: #87aba1;
+    border-radius: 4px;
+    padding: 2px 5px;
+    color: #fff !important;
+    // color:  #005760 !important;
+}
+
+::ng-deep .parent-body {
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+        // margin-top: 4px;
+        color: #005760 !important;
+    }
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f7f7f7;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
+    display: none;
+}
+
+.arw {
+    ::ng-deep .mat-select-arrow {
+        border: none;
+    }
+}
+
+.pag-mat {
+    ::ng-deep .mat-paginator-page-size {
+        display: none;
+    }
+
+    ::ng-deep .mat-icon-button {
+        background-color: #005760;
+        color: #fff;
+        margin-left: 12px;
+    }
+}
+
+.ohead {
+    color: white;
+}
+
+.tbox {
+    background-color: #f7f7f7;
+    height: 35px;
+    color: #9e9e9e;
+}
+
+.cel {
+    margin: 0px 10px 0 10px;
+    // padding-top: 5px;
+    // padding-bottom: 8px;
+}
+
+.w-7 {
+    width: 100% !important;
+}
+
+.w-5 {
+    width: 100% !important;
+}
+
+.mat-column-Column1 {
+    flex: 0 1 8%;
+    min-width: 8%;
+    // justify-content: center;
+}
+
+.mat-column-Column2 {
+    flex: 0 1 38%;
+    min-width: 35%;
+}
+
+.mat-column-Column3 {
+    flex: 0 1 20%;
+    min-width: 20%;
+    // justify-content: center;
+}
+
+.mat-column-Column4 {
+    flex: 0 1 12%;
+    min-width: 12%;
+    // justify-content: center;
+}
+
+.mat-column-Column5 {
+    flex: 0 1 18%;
+    min-width: 18%;
+}
+
+.col-success {
+    background-color: #e0efdf;
+    color: #51af4d;
+    height: 104px;
+    border-radius: 6px;
+    font-weight: bold;
+    justify-content: center;
+    padding-left: 0;
+}
+
+.col-warn {
+    background-color: #ffdcda;
+    color: #fd322c;
+    height: 115px;
+    border-radius: 6px;
+    font-weight: bold;
+    justify-content: center;
+    padding-left: 0;
+}
+
+::ng-deep .mat-paginator-outer-container {
+    .mat-paginator-container {
+        justify-content: center;
+    }
+}
+
+.label-blu {
+    background-color: #d6eaff;
+    color: #d6eaff;
+}
+
+.headr {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    margin: 0px 10px;
+    font-size: medium;
+}
+
+.parent-body {
+    // box-shadow: 0px 0px 15px 0px #cfcfcf;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.headr-row {
+    border-bottom-width: 0px;
+}
+
+.row-style {
+    background-color: #fff;
+    border-bottom-width: 0px;
+    margin-bottom: 14px;
+    border-radius: 6px;
+}
+
+.time-lbl {
+    text-align: center;
+    padding-left: 6px;
+    padding-top: 2px;
+    padding-right: 6px;
+    background-color: #f0f0f1;
+    width: 60%;
+    // margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 4px;
+    font-size: small;
+    font-weight: 600;
+    max-width: 117px;
+}
+
+.itm-lbl {
+    // margin-left: 6px;
+    margin-right: 5px;
+    background-color: #f0f0f1;
+    width: 20%;
+    border-radius: 4px;
+    font-size: small;
+    font-weight: 600;
+    padding: 2px 0px 2px 8px;
+    max-width: 85px;
+}
+
+.arrw {
+    height: 10px;
+    width: 12px;
+    align-self: center;
+}
+
+.blu-lbl {
+    background-color: #d6eaff;
+    color: #5aa4f2;
+    margin-right: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 4px;
+    padding: 0 10px 0 10px;
+    height: 20px;
+    text-align-last: center;
+    max-width: 70px;
+    // min-width: 70px;
+}
+
+.ttl-lbl {
+    width: 100%;
+    text-align: right;
+    font-size: large;
+    font-weight: 800;
+    height: 20px;
+    margin-right: 8px;
+}
+
+.line {
+    background-color: #f0f0f1;
+    height: 90px;
+    width: 2px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+$border-color: #ccc;
+$tooltip-body-color: #fff;
+$tooltip-arrow-width: 10px;
+
+.dis-content {
+    display: contents;
+}
+
+.pad-0 {
+    padding: 0px;
+}
+
+.f-alig {
+    display: flex;
+    align-items: center;
+}
+
+.lbl-name:hover {
+    overflow: visible;
+    white-space: initial;
+}
+
+.txt-align-c {
+    text-align: center;
+}
+
+.del-note {
+    background-color: #f0f0f1;
+    border-radius: 4px;
+    height: 30px;
+    padding-top: 4px;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 65px;
+}
+
+.del-img {
+    margin: 5px 12px 5px 5px;
+    height: 22px;
+    width: 22px;
+}
+
+.lbl-name {
+    font-size: large;
+    font-weight: bolder;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100px;
+}
+
+.img-div {
+    background-color: #f0f0f1;
+    height: 30px;
+    border-radius: 5px;
+    width: 68%;
+    margin-top: 10px;
+}
+
+.btn-blu {
+    cursor: pointer;
+    color: #fff;
+    background-color: #005760;
+    border-radius: 12px;
+    margin-right: 10px;
+}
+
+.b-line {
+    ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
+        background-color: transparent !important;
+    }
+}
+
+.mt-sel {
+    ::ng-deep .mat-select-trigger .mat-select-value {
+        color: #5a5a5a !important;
+        font-size: 12px;
+    }
+}
+
+.pd-n {
+    ::ng-deep.mat-form-field-wrapper {
+        padding-bottom: 0px;
+    }
+}
+
+.admin-sts {
+    width: 100%;
+    margin-left: 5px;
+    margin-top: 1px;
+    margin-bottom: 0px;
+}
+
+.display-center {
+    display: flex;
+    align-items: center;
+}
+
+.margin-right {
+    margin-right: 5px;
+}
+
+.ml-35 {
+    margin-left: 10px !important;
+}
+
+.table th,
+.table td {
+    padding: 0.60rem !important;
+}
+
+.hola_sync_btn_live_order {
+    margin-left: 5px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.hola_sync_btn_live_order.loading {
+    animation: spin 1s linear infinite;
+}

@@ -1,0 +1,215 @@
+<div class="top" style="background-color: #f4f4f4;height: 580px;">
+    <div class="dialog-header" fxLayout="row" fxLayoutAlign="space-between">
+        <div fxLayout="row" fxLayoutAlign="start">
+            <h3>
+                <p class="ivdh-text">{{modalData.data ? 'Edit':'Create'}} Inventory</p>
+            </h3>
+        </div>
+
+        <div>
+            <button class="mr-4" [disabled]="getDisabled()" (click)="onSave()" mat-raised-button><img
+                    style="margin-right: 5px;"
+                    src="../../../../../assets\orderv2\packapill_portal_icons\Elements\Petrol.svg">{{modalData.data ?
+                'Update' : 'Save'}}</button>
+            <button mat-raised-button [mat-dialog-close]><img style="margin-right: 5px;"
+                    src="../../../../../assets/packapill-icons/multiply-16.png">Close</button>
+        </div>
+    </div>
+    <div fxLayout="row" style="padding: 18px;">
+        <form name="inventoryForm" [formGroup]="inventoryForm">
+            <div class="mr-8" style="margin-left: 12px;">
+
+                <mat-form-field class="Mat-Box" appearance="legacy">
+                    <!-- <mat-label>Filter by Order Number</mat-label> -->
+                    <mat-select value="0" formControlName="PharmacyId">
+                        <input class="searchfilter" matInput placeholder="Search"
+                            (keyup)="searchPharmacyFilter($event.target.value, true)">
+                        <mat-option value="0">
+                            Choose the Pharmacy
+                        </mat-option>
+                        <mat-option *ngFor="let item of pharmacyList" [value]="item.PharmacyId"
+                            (click)="pharmacy = item.PharmacyId; onChange()">
+                            {{item.PharmacyName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <!-- <mat-form-field class="ivd-area" appearance="outline">
+                    <mat-label class="ivdh-text">Pharmacy</mat-label>
+                    <mat-select matInput formControlName="PharmacyId">
+                        <mat-option *ngFor="let item of pharmacyList" [value]="item.PharmacyId" (click)="pharmacy = item.PharmacyId; onChange()">
+                            {{item.PharmacyName}}
+                        </mat-option>
+
+                    </mat-select>
+                    <mat-error>Pharmacy Is Required
+                    </mat-error>
+                </mat-form-field> -->
+            </div>
+        </form>
+    </div>
+    <perfect-scrollbar style="max-width: 100%;">
+        <div class="ivd-body">
+            <form name="inventoryForm" [formGroup]="inventoryForm">
+
+                <mat-table class="table" #table [dataSource]="dataSource">
+
+                    <ng-container matColumnDef="DrugName">
+                        <mat-header-cell *matHeaderCellDef> Drug Name </mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <mat-form-field floatLabel="{{ row.editing ? 'float' : 'never'}}" appearance="legacy">
+                                <input matInput required [formControl]="row.validator.controls['DrugName']"
+                                    [readonly]="!row.editing" placeholder="Drug Name"
+                                    [(ngModel)]="row.currentData.DrugName">
+                            </mat-form-field>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="BarCode">
+                        <mat-header-cell *matHeaderCellDef> Bar Code </mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <mat-form-field floatLabel="{{ row.editing ? 'float' : 'never'}}" appearance="legacy">
+                                <input matInput required [formControl]="row.validator.controls['BarCode']"
+                                    [readonly]="!row.editing" placeholder="Bar Code"
+                                    [(ngModel)]="row.currentData.BarCode">
+                            </mat-form-field>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="GeneralPrice">
+                        <mat-header-cell *matHeaderCellDef> Gen Price </mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <mat-form-field floatLabel="{{ row.editing ? 'float' : 'never'}}" appearance="legacy">
+                                <input matInput required [formControl]="row.validator.controls['GeneralPrice']"
+                                    [readonly]="!row.editing" placeholder="General"
+                                    [(ngModel)]="row.currentData.GeneralPrice">
+                            </mat-form-field>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ConcessionPrice">
+                        <mat-header-cell *matHeaderCellDef> Conce Price </mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <mat-form-field floatLabel="{{ row.editing ? 'float' : 'never'}}" appearance="legacy">
+                                <input matInput required [formControl]="row.validator.controls['ConcessionPrice']"
+                                    [readonly]="!row.editing" placeholder="Concession"
+                                    [(ngModel)]="row.currentData.ConcessionPrice">
+                            </mat-form-field>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="EntitlementPrice">
+                        <mat-header-cell *matHeaderCellDef> Entitle Price </mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <mat-form-field floatLabel="{{ row.editing ? 'float' : 'never'}}" appearance="legacy">
+                                <input matInput required [formControl]="row.validator.controls['EntitlementPrice']"
+                                    [readonly]="!row.editing" placeholder="Entitlement"
+                                    [(ngModel)]="row.currentData.EntitlementPrice">
+                            </mat-form-field>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="SpecialDispensePrice">
+                        <mat-header-cell *matHeaderCellDef> Spl Dis Price </mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <mat-form-field floatLabel="{{ row.editing ? 'float' : 'never'}}" appearance="legacy">
+                                <input matInput required [formControl]="row.validator.controls['SpecialDispensePrice']"
+                                    [readonly]="!row.editing" placeholder="Dispense"
+                                    [(ngModel)]="row.currentData.SpecialDispensePrice">
+                            </mat-form-field>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="PreferredGenericUPI">
+                        <mat-header-cell *matHeaderCellDef> Pref UPI </mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <mat-form-field floatLabel="{{ row.editing ? 'float' : 'never'}}" appearance="legacy">
+                                <input matInput required [formControl]="row.validator.controls['PreferredGenericUPI']"
+                                    [readonly]="!row.editing" placeholder="UPI"
+                                    [(ngModel)]="row.currentData.PreferredGenericUPI">
+                            </mat-form-field>
+                        </mat-cell>
+                    </ng-container>
+
+                    <!-- <ng-container matColumnDef="SubCategoryId">
+                        <mat-header-cell *matHeaderCellDef> Sub Category </mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <mat-form-field floatLabel="{{ row.editing ? 'float' : 'never'}}">
+                                <mat-select placeholder="Sub-Category" [formControl]="row.validator.controls['SubCategoryId']">
+                                    <mat-option *ngFor="let item of modalData.fullData._listsubcatg" [value]="item.SubcategoryId">
+                                        {{item.SubcategoryName}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-cell>
+                    </ng-container> -->
+
+                    <ng-container matColumnDef="InventoryTypeId">
+                        <mat-header-cell *matHeaderCellDef> Inventory Type </mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <mat-form-field floatLabel="{{ row.editing ? 'float' : 'never'}}">
+                                <mat-select placeholder="Inventory Type "
+                                    [formControl]="row.validator.controls['InventoryTypeId']">
+                                    <mat-option *ngFor="let item of inventoryTypes" [value]="item.InventoryTypeId">
+                                        {{item.InventoryTypeName}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Price">
+                        <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <mat-form-field floatLabel="{{ row.editing ? 'float' : 'never'}}" appearance="legacy">
+                                <input matInput required [formControl]="row.validator.controls['Price']"
+                                    [readonly]="!row.editing" placeholder="Price" [(ngModel)]="row.currentData.Price">
+                            </mat-form-field>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Quantity">
+                        <mat-header-cell *matHeaderCellDef> Stock Quantity</mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <mat-form-field floatLabel="{{ row.editing ? 'float' : 'never'}}" appearance="legacy">
+                                <input matInput required [(ngModel)]="row.currentData.Quantity"
+                                    [readonly]="!row.editing" [formControl]="row.validator.controls['Quantity']"
+                                    placeholder="Quantity">
+                            </mat-form-field>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actionsColumn">
+                        <mat-header-cell *matHeaderCellDef>
+                            <button [disabled]="buttonEnabled === false || modalData.data" mat-icon-button
+                                color="accent" (click)="dataSource.createNew()"><i
+                                    class="fa fa-plus mat-icon"></i></button>
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                            <button [disabled]="buttonEnabled === false" *ngIf="!row.editing" mat-icon-button
+                                color="success" focusable="false" (click)="row.startEdit()">
+                                <i class="fa fa-edit mat-icon"></i>
+                            </button>
+                            <button [disabled]="buttonEnabled === false" *ngIf="row.editing" mat-icon-button
+                                color="success" focusable="false"
+                                (click)="row.validator.get('PharmacyId').setValue(pharmacy);row.confirmEditCreate()">
+                                <i class="fa fa-check mat-icon"></i>
+                            </button>
+                            <button mat-icon-button color="success" focusable="false" (click)="row.cancelOrDelete()">
+                                <i class="fa fa-times mat-icon"></i>
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true;"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+
+            </form>
+            <div class="no-results" [style.display]="dataSource == null ? '' : 'none'">
+                No results
+            </div>
+        </div>
+    </perfect-scrollbar>
+
+</div>

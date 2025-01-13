@@ -1,0 +1,89 @@
+<div class="bnk-header" fxLayout="row" fxLayoutAlign="space-between">
+    <div fxLayout="row" fxLayoutAlign="start">
+        <h3>
+            <p class="bank-text">Add Bank Details</p>
+        </h3>
+    </div>
+</div>
+<div class="frm-head">
+    <form name="bankForm" [formGroup]="bankForm">
+        <div class="mr-4 cls-top">
+            <p class="rob-b l-c" style="font-size: 13px !important;margin-top: 10px;">Account Name<small
+                    style="color: red;">*</small></p>
+            <mat-form-field class="rob _12px l-c" style="width: 100%;" appearance="outline">
+                <input type="text" matInput formControlName="AccountName" autocomplete="nope" required>
+                <mat-error class="rob _11px"
+                    *ngIf="this.bankForm.controls['AccountName'].touched && this.bankForm.controls['AccountName'].hasError('required')">
+                    Please enter account name</mat-error>
+
+            </mat-form-field>
+        </div>
+        <div class="mr-4 cls-top">
+            <p class="rob-b l-c">Account Type<small style="color: red;">*</small></p>
+            <mat-form-field class="rob _12px l-c" style="width: 100%;" appearance="outline">
+                <mat-select required formControlName="TSelect">
+                    <mat-option value="">- None -</mat-option>
+                    <mat-option value="individual">Individual</mat-option>
+                    <mat-option value="company">Company</mat-option>
+                </mat-select>
+                <mat-error class="rob _11px"
+                    *ngIf="this.bankForm.controls['TSelect'].touched && this.bankForm.controls['TSelect'].hasError('required')">
+                    Please select account type</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="mr-4 cls-top">
+            <p class="rob-b l-c" style="font-size: 13px !important;">BSB<small style="color: red;">*</small></p>
+            <mat-form-field class="rob _12px l-c" style="width: 100%;" appearance="outline">
+                <input (keypress)="numberOnly($event)" type="tel" maxlength="6" minlength="6" matInput
+                    formControlName="BSB" autocomplete="nope" myNumberOnly required>
+                <mat-error class="rob _11px"
+                    *ngIf="this.bankForm.controls['BSB'].touched && this.bankForm.controls['BSB'].hasError('required')">
+                    Please enter BSB number</mat-error>
+                <mat-error class="rob _11px"
+                    *ngIf="this.bankForm.controls['BSB'].hasError('pattern')||this.bankForm.controls['BSB'].hasError('maxlength') ||this.bankForm.controls['BSB'].hasError('minlength')">
+                    Invalid BSB number
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="mr-4 cls-top">
+            <p class="rob-b l-c" style="font-size: 13px !important;    margin-top: 10px;">Account number<small
+                    style="color: red;">*</small>
+            </p>
+            <mat-form-field class="rob _12px l-c" style="width: 100%;" appearance="outline">
+                <input (keypress)="numberOnly($event)" type="tel" maxlength="9" minlength="5" matInput
+                    formControlName="AccountNumber" autocomplete="nope" myNumberOnly required>
+                <mat-error class="rob _11px"
+                    *ngIf="this.bankForm.controls['AccountNumber'].touched && this.bankForm.controls['AccountNumber'].hasError('required')">
+                    Please enter account number</mat-error>
+                <mat-error class="rob _11px"
+                    *ngIf="this.bankForm.controls['AccountNumber'].hasError('pattern')||this.bankForm.controls['AccountNumber'].hasError('maxlength') ||this.bankForm.controls['AccountNumber'].hasError('minlength')">
+                    Invalid account number
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="mr-4 cls-top">
+            <p class="rob-b l-c" style="font-size: 13px !important;    margin-top: 10px;">Confirm Account Number<small
+                    style="color: red;">*</small></p>
+            <mat-form-field class="rob _12px l-c" style="width: 100%;" appearance="outline">
+                <input (keypress)="numberOnly($event)" type="tel" maxlength="9" minlength="5" matInput
+                    formControlName="ConfirmNumber" autocomplete="nope" myNumberOnly required>
+                <mat-error class="rob _11px"
+                    *ngIf="this.bankForm.controls['ConfirmNumber'].touched && this.bankForm.controls['ConfirmNumber'].hasError('required')">
+                    Please enter account number</mat-error>
+                <mat-error class="rob _11px"
+                    *ngIf="this.bankForm.controls['ConfirmNumber'].hasError('pattern')||this.bankForm.controls['ConfirmNumber'].hasError('maxlength') ||this.bankForm.controls['ConfirmNumber'].hasError('minlength')">
+                    Invalid account number
+                </mat-error>
+                <mat-error class="rob _11px" *ngIf="f.ConfirmNumber.errors.mustMatch">
+                    Account number mismatched
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div style="margin-top: 30px;text-align-last: end;">
+            <button mat-raised-button style="margin-right: 10px;" class="cancel-btn rob-sm" type="button"
+                [mat-dialog-close]>Cancel</button>
+            <button mat-raised-button style="margin-right: 20px;" class="add-btn rob-sm" type="button"
+                (click)="addBnkAcc($event)">Add</button>
+        </div>
+    </form>
+</div>

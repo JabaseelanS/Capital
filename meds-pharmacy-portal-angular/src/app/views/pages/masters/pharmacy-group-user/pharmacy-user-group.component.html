@@ -1,0 +1,79 @@
+<div class="parent-body">
+    <!-- Headers -->
+    <div fxLayout='row' class="n-s-h">
+        <div class="b-line rob col-md-4 tbox ml-20">
+            <mat-form-field appearance="legacy" class="w-100">
+                <mat-label>Search name, username, mobile</mat-label>
+                <input #searchkey class="l-c rob-b _12px" matInput (keyup)="applyFilter($event.target.value, true)">
+            </mat-form-field>
+        </div>
+        <div *ngIf="this.userdetails.RoleId !=null && this.userdetails.RoleId!=5" class="col-md-6"
+            style="text-align-last: end;">
+            <button (click)="editUser(null)" mat-raised-button matTooltip="Create pharmacy admin"
+                class="rob-b _12px dark-petrol white" type="button">
+                <img style="margin-right:5px;" src="../../../../../assets/packapill-icons/add-16.png"><span>Add Pharmacy
+                    Admin</span>
+            </button>
+        </div>
+    </div>
+
+    <div fxLayout='row'>
+        <perfect-scrollbar style="max-height: calc(70vh - 0px);background-color: #fff;">
+            <div class="rob" style="background-color: #fff;padding: 0px 18px;width: 100%;">
+                <table class="table table-striped ">
+                    <thead class="v2-h-lt rob-b _12px l-c">
+                        <tr>
+                            <!-- <th>Pharmacy Name</th> -->
+                            <th>Name</th>
+                            <th>User Name</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
+                            <!-- <th>Pharmacy Name</th> -->
+                            <th style="text-align: center;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="l-c">
+                        <tr *ngFor="let puModel of PharmacyUserList | slice: lowValue : highValue">
+                            <!-- <td>
+                                {{puModel.PharmacyName}}
+                            </td> -->
+                            <td>
+                                {{puModel.FirstName}} {{puModel.LastName}}
+                            </td>
+                            <td>
+                                {{puModel.UserName}}
+                            </td>
+                            <td>
+                                {{puModel.UserEmail}}
+                            </td>
+                            <td>
+                                {{commonServices.convertNum(puModel.Mobileno)}}
+                            </td>
+                            <!-- <td>
+                                {{puModel.PharmacyName}}
+                            </td> -->
+                            <td class="row" style="justify-content: center;">
+                                <button (click)="editUser(puModel)" mat-icon-button color="primary"
+                                    matTooltip="Edit user">
+                                    <img style="height: 14px;" src="../../../../../assets/packapill-icons/EditRed.svg">
+                                </button>&nbsp;
+                                <button mat-icon-button color="warn" matTooltip="Delete user" type="button"
+                                    (click)="deleteUser(puModel)">
+                                    <img style="height: 14px;"
+                                        src="../../../../../assets/packapill_portal_icons/delete.svg">
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+                <div *ngIf="PharmacyUserList.length == 0" class="rob-b r-c">
+                    No record found
+                </div>
+                <mat-paginator class="pag-mat" [length]="PharmacyUserList.length" [pageSize]=10
+                    [pageSizeOptions]="[5, 10, 25, 100]" (page)="getPaginatorData($event)">page
+                </mat-paginator>
+            </div>
+        </perfect-scrollbar>
+    </div>
+</div>

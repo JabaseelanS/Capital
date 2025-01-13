@@ -1,0 +1,140 @@
+.mat-form-field-flex {
+    display: inline-flex;
+    align-items: baseline;
+    box-sizing: border-box;
+    width: 70%;
+}
+
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+    .mat-form-field-appearance-outline .mat-form-field-flex {
+
+        margin-top: -0.25em;
+        position: relative;
+        padding-left: 10px;
+        /* margin-top: 4px; */
+    }
+}
+
+::ng-deep .createorder {
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+        background: white;
+        color: transparent !important;
+        top: 1.25em !important;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-outline-end,
+    .mat-form-field-appearance-outline .mat-form-field-outline-start {
+        border: none !important;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-infix {
+        padding: 2vh 0 1vh 0 !important;
+    }
+
+    .add.mat-form-field-appearance-outline .mat-form-field-infix {
+        padding: 2vh 0 1vh 0 !important;
+        width: 610px;
+    }
+}
+
+.padd {
+    padding: 2vh;
+}
+
+.bck-clr {
+    background-color: #005760;
+}
+
+.ex-btn {
+    height: 27px;
+    border: none;
+    width: 10%;
+    border-radius: 4px;
+    color: white;
+    text-align-last: center;
+    min-width: 115px !important;
+
+    ::ng-deep .mat-select-arrow {
+        color: white;
+        margin: 4px 0px 0px 0px !important;
+    }
+}
+
+.lbl-cls {
+    margin-bottom: 0px;
+    margin-left: 4px;
+}
+
+.sec-div2 {
+    margin: 25px 0px;
+    border-bottom: 1px solid #d4d4d4;
+}
+
+.he2 {
+    text-align: center;
+    margin-top: 6px;
+    margin-bottom: 12px;
+    width: 90%;
+}
+
+.r-div {
+    margin-top: 8px;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.bc2 {
+    float: right;
+    margin-bottom: 12px;
+    margin-right: 20px;
+}
+
+.ps {
+    max-width: 100%;
+    max-height: 70vh;
+    min-height: 54vh;
+}
+
+.d-btn {
+    text-decoration: none;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-left: 4px;
+    margin-top: 10px;
+    // max-width: 115px;
+    // width: 86px;
+}
+
+.b-gd-c {
+    background: white;
+    width: 150px;
+    margin-top: 14px;
+}
+
+.bk-btn {
+    border-radius: 0px 5px 5px 0px;
+    min-width: 20px;
+    width: 55px;
+    line-height: 38px;
+}
+
+.disable-inp {
+    pointer-events: none;
+}
+
+.enable-inp {
+    pointer-events: visible;
+}
+
+.but {
+    margin-left: auto;
+}
+
+.l-t {
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+}

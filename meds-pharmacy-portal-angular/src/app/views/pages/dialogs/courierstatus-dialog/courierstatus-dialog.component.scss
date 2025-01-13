@@ -1,0 +1,46 @@
+.phrm-body {
+    box-shadow: 0px 0px 10px 0px #cfcfcf;
+    border-radius: 12px;
+    background-color: #fff;
+    margin: 20px 20px;
+}
+
+.mat-form-field {
+    margin-top: 5px;
+    width: 250px !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    top: 0.25em !important;
+    border-color: #ebedf2;
+}
+
+::ng-deep .pharmtxt-area {
+    .mat-form-field-flex {
+        height: 45px !important;
+        width: 240px !important;
+        border-radius: 40px !important;
+    }
+
+    .mat-form-field-infix {
+        border-top: 5px !important;
+    }
+}
+
+.btn {
+    margin-left: auto;
+    margin-bottom: 20px;
+}
+
+.m-r-l {
+    margin-left: auto;
+    margin-bottom: 20px;
+}
+
+.img-l {
+    margin-left: 5px;
+}
+
+.header {
+    background-color: #f4f4f4;
+}

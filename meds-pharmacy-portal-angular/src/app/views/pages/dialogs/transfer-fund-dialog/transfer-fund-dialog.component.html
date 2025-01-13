@@ -1,0 +1,50 @@
+<div *ngIf="edited">
+    <div style="width: 100%;background-color: #e7e7e7; border-top: 1px solid #ebedf2;font-size: 16px;
+    padding: 16px;"><label class="rob-b l-c">Send funds to {{fundDetails.PharmacyName}}</label></div>
+    <div style="background-color: #f7f7f7;padding: 16px;">
+
+
+        <!-- <div class="column" style="width: 100%;margin-bottom: 16px;">
+            <label class="rob-b _12px l-c row">From Packapill Pty Ltd's balance</label>
+            <label class="rob _14px l-c row">$ 4.091.11 Available</label>
+        </div> -->
+        <div style="margin-top: 8px;margin-bottom: 20px;">
+            <label class="rob-b _12px l-c row">Amount</label>
+            <div class="row">
+                <span style="background: #fff;padding-left: 6px;" matPrefix>&#x24;</span><input class="rob _12px l-c"
+                    [(ngModel)]="refAmount" (keypress)="commonServices.validateDigit($event)" matInput style="outline: none;background: #fff;padding-left: 4px;
+    border: none;width: 25%;" appTwoDigitDecimaNumber>
+            </div>
+
+        </div>
+        <div style="margin-top: 8px;margin-bottom: 20px;">
+            <label class="rob-b _12px l-c row">Send to</label>
+            <label class="rob _14px l-c row">{{fundDetails.Email1}}'s Stripe balance</label>
+        </div>
+        <div style="border-bottom:2px solid #ebedf2 ;"></div>
+        <div style="margin-top: 8px;margin-bottom: 20px;">
+            <label class="rob-b l-c row" style="font-size: 14px;">CONFIRM TRANSFER</label>
+            <div class="row">
+                <mat-checkbox style="margin: 2px 8px;" class="example-margin"
+                    (click)='IsUserType=!IsUserType;onChange($event);'>
+                </mat-checkbox>
+                <p class="rob _14px l-c ">Send <strong> $ {{refAmount}}</strong>
+                    <!-- from Packapill Pty Ltd's platform balance  -->
+                    to
+                    <strong>{{fundDetails.Email1}}</strong> 's Stripe balance.<br> The amount will be included in the
+                    next payout <br>to <strong>{{fundDetails.Email1}}</strong>.
+                </p>
+            </div>
+
+        </div>
+        <div style="border-bottom:2px solid #ebedf2;"></div>
+        <div style="margin-top: 25px;text-align: right;">
+            <button mat-raised-button class="rob-b _12px light-button btn-width" matTooltip="Cancel"
+                (click)="closeIt()"> Cancel
+            </button>
+            <button class="success-button red-clr rob-b _12px btn-width" matTooltip="Send"
+                (click)="sendRef(fundDetails)"> Send
+            </button>
+        </div>
+    </div>
+</div>

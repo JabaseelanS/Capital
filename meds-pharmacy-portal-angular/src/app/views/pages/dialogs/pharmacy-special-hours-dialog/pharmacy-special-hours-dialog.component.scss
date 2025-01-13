@@ -1,0 +1,155 @@
+.sec-div2 {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #d4d4d4;
+}
+
+::ng-deep .pharmtxt-area {
+    .mat-form-field-flex {
+        height: 40px !important;
+    }
+
+    .mat-form-field-infix {
+        border-top: 1px !important;
+    }
+}
+
+.searchfilter {
+    height: 40px !important;
+    padding-left: 5px !important;
+}
+
+.td-padding {
+    padding: 10px 0px;
+}
+
+.img-cloum-wid {
+    width: 16%;
+}
+
+.detail-cloum-wid {
+    width: 75%;
+    padding: 7px;
+}
+
+.select-all {
+    padding-top: 15px;
+    padding-bottom: 5px;
+    cursor: pointer;
+}
+
+.select-all:hover {
+    background-color: #f5f5f5;
+}
+
+.bg-clr-base {
+    background-color: #f4f4f4;
+}
+
+.mrg-r-5px {
+    margin-right: 5px;
+}
+
+.per-scroll {
+    max-width: 100%;
+    max-height: 620px
+}
+
+.form-mandatary {
+    color: red;
+}
+
+.marg-left-1_3rem {
+    margin-left: 1.3rem;
+}
+
+.ngb-drop-menu {
+    min-width: 350px;
+    pointer-events: auto;
+    font-size: 13px;
+    top: 507.5px;
+    left: 870.25px;
+    transform: translateX(-40px) translateY(-12px);
+    margin-top: -160px;
+    height: 20rem;
+    padding: 12px 0px 12px 12px;
+}
+
+.dropdown-scroll {
+    max-height: calc(70vh - 0px);
+    background-color: #fff;
+}
+
+.perfect-box {
+    transform-origin: 50% 19.5px 0px;
+    font-size: 13px;
+    opacity: 1;
+    min-width: calc(100% + 64px);
+    transform: scaleY(1);
+}
+
+.p-r-24px {
+    padding-right: 24px;
+}
+
+.hei-3rem {
+    height: 3rem;
+}
+
+.tbl-wid97per {
+    width: 97%;
+}
+
+.pharmacy-logo-dropdown {
+    height: 40px;
+    width: 40px
+}
+
+.m-top1_5rem {
+    margin-top: 1.5rem;
+}
+
+.ellip {
+    text-overflow: ellipsis;
+}
+
+.wid-100per {
+    width: 100% !important;
+}
+
+.wid-45per {
+    width: 45%;
+}
+
+.wid-10per {
+    width: 10%;
+}
+
+.wid-33per {
+    width: 29%;
+}
+
+.wid-6per {
+    width: 6%;
+}
+
+.wid-7per {
+    width: 6.5%;
+}
+
+.wid-9per {
+    width: 9%;
+}
+
+.hei58px {
+    height: 58px;
+}
+
+.formhi {
+    height: 294px;
+}
+
+.formwid {
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+}

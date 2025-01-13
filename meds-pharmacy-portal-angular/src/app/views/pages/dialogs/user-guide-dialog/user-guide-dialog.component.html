@@ -1,0 +1,81 @@
+<div *ngIf="edited" class="top" style="background-color: #f4f4f4;">
+
+    <div class="row dialog-header d-h">
+        <div class="col-md-8">
+            <h3 class="headerborder d-h-bc">
+                <p class="header-text">{{this.modalData.data ? 'Edit' : 'Create'}} User Guide</p>
+            </h3>
+        </div>
+        <div class="col-md-4">
+            <button class="mr-4" (click)="submit()" mat-raised-button>
+                <img
+                    src="../../../../../assets\orderv2\packapill_portal_icons\Elements\Petrol.svg">{{this.modalData.data
+                ? 'Update' :
+                'Save'}}</button>
+
+            <button mat-raised-button (click)="closeDialog()" [mat-dialog-close]>
+                <img src="../../../../../assets/packapill-icons/multiply-16.png">Close
+            </button>
+        </div>
+    </div>
+
+    <perfect-scrollbar style="max-width: 100%; max-height: 620px">
+        <div class="d-b-p">
+            <form name="pharmacyForm" [formGroup]="userForm" novalidate fxLayout="column">
+                <!--Pharmacy Information -->
+                <div class="row m-b">
+                    <div class="col-md-6">
+                        <p>User Guide<small style="color: red;">*</small></p>
+                        <div class="d-flex">
+                            <label class="l-t w-60-p d-btn">
+                                {{ userForm.controls['UserGuide'].value }}</label>
+                            <button class="w-40-p bck-clr rob-b cur-p bk-btn" mat-flat-button color="primary"
+                                (click)="ID1.click()">Please choose file</button>
+                            <input class="img-i-h" type="file" id="fileLoader1" accept="application/pdf" #ID1
+                                name="files" title="Load File" (click)="loadFile(ID1, 1)">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p>Processing Prescription Orders<small style="color: red;">*</small></p>
+                        <div class="d-flex">
+                            <label class="l-t w-60-p d-btn">
+                                {{ userForm.controls['ProcessingPrescriptionOrders'].value }}</label>
+                            <button class="w-40-p bck-clr rob-b cur-p bk-btn" mat-flat-button color="primary"
+                                (click)="ID2.click()">Please choose file</button>
+                            <input class="img-i-h" type="file" id="fileLoader2" accept="video/*" #ID2 name="files"
+                                title="Load File" (click)="loadFile(ID2, 2)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Processing OTC Orders<small style="color: red;">*</small></p>
+                        <div class="d-flex">
+                            <label class="l-t w-60-p d-btn"> {{ userForm.controls['ProcessingOtcOrders'].value
+                                }}</label>
+                            <button class="w-40-p bck-clr rob-b cur-p bk-btn" mat-flat-button color="primary"
+                                (click)="ID3.click()">Please choose file</button>
+                            <input class="img-i-h" type="file" id="fileLoader3" accept="video/*" #ID3 name="files"
+                                title="Load File" (click)="loadFile(ID3, 3)">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p>Carer Mode<small style="color: red;">*</small></p>
+                        <div class="d-flex">
+                            <label class="l-t w-60-p d-btn">{{ userForm.controls['CarerMode'].value }}</label>
+                            <button class="w-40-p bck-clr rob-b cur-p bk-btn" mat-flat-button color="primary"
+                                (click)="ID4.click()">Please choose file</button>
+                            <input class="img-i-h" type="file" id="fileLoader4" accept="video/*" #ID4 name="files"
+                                title="Load File" (click)="loadFile(ID4, 4)">
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+    </perfect-scrollbar>
+</div>

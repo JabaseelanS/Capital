@@ -1,0 +1,42 @@
+<div class="modal-header"><label class="rob-b l-c">Refund payment</label></div>
+<div class="modal-body">
+    <div class="row" style="width: 100%;margin-bottom: 16px;">
+        <img style="height: 16px;margin-right: 10px;"
+            src="../../../../../../assets/packapill-icons/information_red.png"><label
+            class="rob-b _12px l-c row">Refunds take 5-10 days to appear on a customer's <br> statement.</label>
+    </div>
+    <div style="border-bottom:2px solid #ebedf2;"></div>
+    <div class="row" style="margin-top: 12px;margin-bottom: 20px;">
+        <label class="rob-b _12px l-c row" style="margin-right: 10px;">Refund</label>
+        <input class="rob _12px l-c" [(ngModel)]="refundAmount" (keypress)="commonServices.validateDigit($event)"
+            matInput style="outline: none;background: #fff;padding: 4px 10px;border: none;width: 25%;"
+            appTwoDigitDecimaNumber><span style="background: #fff;padding: 4px;">AUD</span>
+    </div>
+
+    <div class="row" style="margin-top: 12px;margin-bottom: 20px;">
+        <label class="rob-b _12px l-c row" style="margin-right: 10px;">Reason</label>
+        <!-- <mat-form-field class="w-100" appearance="legacy"> -->
+        <mat-select style="width: 250px;padding: 2px 12px;background: #fff;"
+            (selectionChange)="changeData($event.value)">
+            <mat-option *ngFor="let item of stripList" [value]="item.value">
+                {{item.reason}}
+            </mat-option>
+        </mat-select>
+        <!-- </mat-form-field> -->
+    </div>
+
+    <div class="row" style="margin-top: 12px;margin-bottom: 20px;margin-left: 55px;">
+        <textarea [(ngModel)]="reason" class="rob _12px l-c" placeholder="Add more details about this refund."
+            style="outline: none;border: none;width: 70%;padding: 4px 10px;">
+           </textarea>
+    </div>
+    <div style="border-bottom:2px solid #ebedf2;"></div>
+    <div style="margin-top: 25px;text-align: right;">
+        <button mat-raised-button class="rob-b _12px light-button btn-width" matTooltip="Cancel" (click)="closeIt()">
+            Cancel
+        </button>
+        <button class="success-button red-clr rob-b _12px btn-width" matTooltip="Refund" (click)="refundCreate()">
+            Refund
+        </button>
+    </div>
+</div>

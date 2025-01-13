@@ -1,0 +1,50 @@
+::ng-deep .ivt-area {
+  .mat-form-field-flex {
+    height: 40px !important;
+  }
+
+  .mat-form-field-infix {
+    padding: 0.5em 0 !important;
+    border-top: 0.84375em solid transparent !important;
+  }
+}
+
+.ivt-body {
+  box-shadow: 0px 0px 15px 0px #cfcfcf;
+  border-radius: 12px;
+}
+
+.scrl-cls {
+  max-width: 100%;
+  border-radius: 12px 12px 0px 0px;
+}
+
+// ::ng-deep .matbottomborder {
+//   border-bottom: 1px solid #005760;
+// }
+.mat-row {
+  border: none !important;
+}
+
+.mat-header-row {
+  border: none !important;
+}
+
+.mat-table__bottom {
+  background-color: #fff;
+  border-radius: 0px 0 12px 12px;
+}
+
+.mat-paginator {
+  border-radius: 0px 0px 12px 0px;
+}
+
+.bck-clr {
+  background-color: #005760;
+}
+
+.searchfilter {
+  height: 50px;
+  padding: 0 16px;
+  border-bottom: 1px solid #cfcfcf;
+}

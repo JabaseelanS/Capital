@@ -1,0 +1,118 @@
+@media print {
+    @page {
+        margin: -2;
+    }
+
+    body {
+        margin: 1cm;
+    }
+
+    #kt_header_menu {
+        // visibility: hidden !important;
+        display: none !important;
+    }
+
+    #kt_header_mobile {
+        // visibility: hidden !important;
+        display: none !important;
+    }
+
+    #ttt {
+        display: none;
+    }
+
+    #ppp {
+        display: block !important;
+    }
+
+    #pp1 {
+        display: block !important;
+    }
+
+    #pp3 {
+        display: block !important;
+    }
+
+    #pp4 {
+        display: block !important;
+    }
+
+    ::ng-deep .kt-header-mobile.kt-header-mobile--fixed {
+        display: none;
+    }
+
+    ::ng-deep .kt-subheader.kt-grid__item {
+        display: none;
+    }
+
+    ::ng-deep .kt-header-mobile__logo {
+        display: none;
+    }
+
+    ::ng-deep .kt-header.kt-grid__item.kt-header--fixed {
+        display: none;
+    }
+
+    ::ng-deep .mat-elevation-z8 {
+        display: block;
+    }
+
+    .printc-title2 {
+        display: block;
+        text-align: center;
+        font-size: large;
+        margin-bottom: 4px;
+        padding-top: 6px;
+        font-weight: 500;
+        color: #5a5a5a;
+    }
+
+    .printc-body {
+        display: block;
+        width: 80%;
+        height: 58%;
+        padding: 0px;
+    }
+
+    .maxwidthtotal {
+        display: block;
+        max-width: 340px !important;
+    }
+
+    .disclaimer,
+    .address p {
+        font-size: 10pt;
+    }
+
+    .signature-field {
+        padding-bottom: 24pt;
+        border-bottom: solid black 1pt;
+    }
+
+}
+
+.repeat-pad {
+    padding-right: 0px;
+}
+
+.bnb {
+    border: none;
+    background-color: #f8f8f8;
+    outline: none;
+    cursor: initial;
+}
+
+.rot-box {
+    width: 80%;
+    height: 100%;
+}
+
+@media (max-width: 1200px) {
+    .rot-box {
+        width: 84%;
+        height: 86%;
+    }
+}
+.stest{
+    padding-top: 35%;
+}

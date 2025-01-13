@@ -1,0 +1,156 @@
+<div class="column top" id="ttt" style=" background-color: #eceff4;">
+    <div class="row">
+        <div [ngClass]="{'col-md-8': scripts.IsUploadType!=8 && scripts.IsUploadType!=7 && scripts.IsUploadType!=4, 'col-md-12 repeat-pad': scripts.IsUploadType==8 || scripts.IsUploadType==7 || scripts.IsUploadType==4}"
+            class="col-md-8" style="padding-left: 0px;">
+
+            <div class="row t-box">
+                <h5 class="h-5 rob-m _16px pink">Prescription Details</h5>
+                <div class="row" style="width: 100%;">
+                    <div class="col-md-2">
+                        <label class="row rob-b _11px ">Name</label>
+                        <label class="row rob _12px ">{{scripts.familyMembers.Name}}</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="row rob-b _11px ">Age</label>
+                        <label class="row rob _12px ">{{scripts.familyMembers.Age}}</label>
+                    </div>
+
+                </div>
+                <!-- <br><br><br> -->
+                <!-- <h5 class="h-5 rob _16px pink fw-600">Order details</h5> -->
+                <div class="row" style="width: 100%;">
+                    <div class="col-md-2">
+                        <label class="row rob-b _11px ">Medicare No</label>
+                        <input readonly class="row rob _12px bnb l-c" [textMask]="{mask: mediMask}"
+                            [ngModel]="scripts.familyMembers.MedicareNo">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="row rob-b _11px">Expiry</label>
+                        <label class="row rob _12px ">{{scripts.familyMembers.MedicareValidTo
+                            | date : 'MMM, y'}}</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="row rob-b _11px">Concession Card</label>
+                        <label class="row  rob _12px ">{{scripts.familyMembers.ConcessionNo}}</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="row rob-b _11px ">Expiry</label>
+                        <label class="row rob _12px ">{{scripts.familyMembers.ConcessionValidTo
+                            | date : 'MMM, y'}}</label>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div [ngClass]="{'h-px-250': scripts.familyMembers.IsOtherMedicine, 'h-px-25': !scripts.familyMembers.IsOtherMedicine}"
+                class=" row t-box h-px-25">
+                <div class="row w-100">
+                    <div class="col-md-4 cls-top">
+                        <p class="h-card-name rob-b _11px">Are you ok with Generic Medicines
+                            ?
+                        </p>
+                    </div>
+                    <div class="col-md-8 cls-top">
+                        <mat-checkbox class="pointerchkbox" readonly
+                            [(ngModel)]="scripts.familyMembers.IsGenericMedicine">
+                        </mat-checkbox>
+                    </div>
+                </div>
+                <div class="row w-100">
+                    <div class="col-md-4 cls-top">
+                        <p class="h-card-name rob-b _11px">Are you allergic to any Medicines
+                            ?
+                        </p>
+                    </div>
+                    <div class="col-md-8 cls-top">
+                        <mat-checkbox class="pointerchkbox" readonly
+                            [(ngModel)]="scripts.familyMembers.IsAllergicMedicine">
+                        </mat-checkbox>
+                    </div>
+                </div>
+                <div [hidden]="!scripts.familyMembers.IsAllergicMedicine" class="row w-100">
+                    <div class="chklist b-line col-md-4 cls-top">
+                        <mat-form-field class="Mat-Box l-c rob _12px" appearance="legacy">
+                            <input matInput readonly [(ngModel)]="scripts.familyMembers.AnyMedicine">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row w-100">
+                    <div class=" col-md-4 cls-top">
+                        <p class="h-card-name rob-b _11px">Are you on any other Medication
+                            ?
+                        </p>
+                    </div>
+                    <div class="col-md-8 cls-top">
+                        <mat-checkbox class="pointerchkbox" [(ngModel)]="scripts.familyMembers.IsOtherMedicine">
+                        </mat-checkbox>
+                    </div>
+                </div>
+                <div [hidden]="!scripts.familyMembers.IsOtherMedicine" class="row w-100">
+                    <div class="chklist b-line col-md-4 cls-top">
+                        <mat-form-field class="Mat-Box rob _12px l-c" appearance="legacy">
+                            <input matInput readonly [(ngModel)]="scripts.familyMembers.OtherMedicine">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row w-100">
+                    <div class=" col-md-4 cls-top">
+                        <p class="h-card-name rob-b _11px">Have you taken this medicine already
+                            ?
+                        </p>
+                    </div>
+                    <div class="col-md-8 cls-top">
+                        <mat-checkbox class="pointerchkbox" readonly
+                            [(ngModel)]="scripts.familyMembers.IsAlreadyMedicine">
+                        </mat-checkbox>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div *ngIf="scripts.IsUploadType!=7 && scripts.IsUploadType!=8 && scripts.IsUploadType!=4" class="col-md-4"
+            style="height:405px;background-color: #f8f8f8;margin-top: 5px;margin-bottom: 5px">
+
+            <div class="row" style="justify-content: center;margin-top: 10px;">
+                <label class="rob-m _16px pink">Prescription</label>
+            </div>
+            <pp-prescription-image [orderModel]="orderModel" [scripts]="scripts" [scriptData]="scriptData"
+                [tabIndex]="tabIndex"></pp-prescription-image>
+
+        </div>
+    </div>
+</div>
+<div class="container-fluid" id="ppp">
+    <div class="row no-gutters" id="pp1">
+        <div class="col">
+            <img style="height: 60px;" src="../../../../../assets/icons/hola-icon3.png" alt="logotipo">
+        </div>
+    </div>
+
+    <div class="printc-title2" id="pp3">
+        <div class="row">
+            <!-- <img matTooltip="{{order.IsUploadType ==7 || order.IsUploadType==8 || order.IsUploadType==9?'Create Order':order.IsUploadType ==10 || order.IsUploadType==11?'WOS':orderModel.IsUploadType==12 ? 'DoorDash':orderModel.IsUploadType==13 ? 'UberEats':'App Order'}}"
+                [src]="getUploadTypeIcon(orderModel.IsUploadType)" alt=""> -->
+            <div class="col-md-4 maxwidthtotal l-c">
+                <p>Order No : {{orderModel.OrderNo}}
+                </p>
+            </div>
+            <div class="col-md-4 maxwidthtotal l-c">
+                <p>Order By : {{scripts.familyMembers.Name}}</p>
+            </div>
+        </div>
+
+        <div class="printc-body">
+            <img [@rotatedState]='state' [class]="className" style="width: 65%;margin-top: 140px;padding-left: 8px;"
+                src="{{ scripts.IsUploadType == 9 ? scripts.Base64: '../../../../../../assets/packapillassets/'+ orderModel.PharmacyId +'/' + scripts.PrescriptionFilename+'.png'}}">
+        </div>
+    </div>
+
+    <div class="row no-gutters" style="margin-top: 110px;" id="pp4">
+        <div class="col">
+            <p class="disclaimer signature-field">
+            </p>
+        </div>
+    </div>
+</div>

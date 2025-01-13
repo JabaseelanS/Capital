@@ -1,0 +1,230 @@
+:host {
+  height: 100%;
+  margin: 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+
+  .logo-icon {
+    width: 50px;
+    height: 40px;
+  }
+
+  // .logo-text {
+  //   margin-left: 12px;
+  //   font-size: 16px;
+  //   font-weight: 300;
+  //   letter-spacing: 0.4px;
+  //   line-height: normal;
+  // }
+}
+
+.kt-aside__brand-logo {
+  .logo-icon {
+    width: 50px;
+    height: 40px;
+  }
+}
+
+.bck-clr {
+  background-color: #005760;
+}
+
+.tootlbar-icon {
+  padding: 0 14px;
+}
+
+.tootlbar-spacer {
+  flex: 1 1 auto;
+}
+
+.proc-con {
+  width: 352px;
+  height: 20px;
+  margin-left: -140px;
+  margin-top: 25px;
+  font-size: larger;
+}
+
+// @use postcss-preset-env;
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
+
+:root {
+  --EASE_INOUT_QUAD: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  --EASE_IN_QUAD: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  --EASE_OUT_QUAD: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  --COLOR_UI_PHARMACY: #005760;
+  --loaderPill_DURATION: 1800ms;
+}
+
+body {
+  font-family: 'roboto';
+}
+
+.fulldiv {
+  // width: 100%;
+  // height: 100vh;
+  // background-color: #f4f4f4;
+
+  .absCenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .loaderPill {
+      text-align: center;
+
+      .loaderPill-anim {
+        height: 160px;
+
+        .loaderPill-anim-bounce {
+          animation: loaderPillBounce 1800ms linear infinite;
+
+          .loaderPill-anim-flop {
+            transform-origin: 50% 50%;
+            animation: loaderPillFlop 1800ms linear infinite;
+
+            .loaderPill-pill {
+              display: inline-block;
+              box-sizing: border-box;
+              width: 80px;
+              height: 30px;
+              border-radius: 15px;
+              border: 1px solid #005760;
+              background-image: linear-gradient(to right, #005760 50%, #ffffff 50%);
+            }
+          }
+        }
+      }
+
+      .loaderPill-floor {
+        display: block;
+        text-align: center;
+
+        .loaderPill-floor-shadow {
+          display: inline-block;
+          width: 70px;
+          height: 8px;
+          border-radius: 50%;
+          background-color: rgba(35, 125, 181, 0.3);
+          /* -webkit-transform: translateY(-15px); */
+          transform: translateY(-15px);
+          -webkit-animation: loaderPillScale 1800ms linear infinite;
+          animation: loaderPillScale 1800ms linear infinite;
+        }
+      }
+
+      .loaderPill-text {
+        font-weight: bold;
+        color: #005760;
+        text-transform: uppercase;
+      }
+    }
+  }
+}
+
+@keyframes loaderPillBounce {
+  0% {
+    transform: translateY(123px);
+    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  25% {
+    transform: translateY(40px);
+    animation-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  }
+
+  50% {
+    transform: translateY(120px);
+    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  75% {
+    transform: translateY(20px);
+    animation-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  }
+
+  100% {
+    transform: translateY(120px);
+  }
+}
+
+@keyframes loaderPillFlop {
+  0% {
+    transform: rotate(0);
+  }
+
+  25% {
+    transform: rotate(90deg);
+  }
+
+  50% {
+    transform: rotate(180deg);
+  }
+
+  75% {
+    transform: rotate(450deg);
+  }
+
+  100% {
+    transform: rotate(720deg);
+  }
+}
+
+@keyframes loaderPillScale {
+  0% {
+    transform: translateY(-15px) scale(1, 1);
+    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  25% {
+    transform: translateY(-15px) scale(0.7, 1);
+    animation-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  }
+
+  50% {
+    transform: translateY(-15px) scale(1, 1);
+    animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  75% {
+    transform: translateY(-15px) scale(0.6, 1);
+    animation-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  }
+
+  100% {
+    transform: translateY(-15px) scale(1, 1);
+  }
+}
+
+.ui-growl {
+  top: 70px;
+}
+
+::ng-deep {
+  .dpic .mat-datepicker-toggle-active {
+    color: #005760 !important;
+  }
+
+  .mat-calendar-body-selected {
+    background-color: #005760 !important;
+  }
+
+  .mat-calendar-body-begin-range:not(.mat-calendar-body-end-range) {
+    border-radius: 100% 0 0 100%;
+    background-color: #ff4f4a38 !important;
+  }
+
+  .mat-calendar-cell-semi-selected {
+    background-color: #ff4f4a38 !important;
+  }
+
+  .mat-calendar-body-end-range:not(.mat-calendar-body-begin-range) {
+    border-radius: 0 100% 100% 0;
+    background-color: #ff4f4a38 !important;
+  }
+}

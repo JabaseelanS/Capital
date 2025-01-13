@@ -1,0 +1,154 @@
+<div class="top" style="background-color: #f4f4f4;">
+    <!-- <div *ngIf="loaderService.status" class="fulldiv"></div> -->
+    <!-- <perfect-scrollbar style="max-width: 100%; max-height: 900px"> -->
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card-body">
+                <div fxLayout="row" fxLayout.xs="column">
+                    <div class="col-md-4">
+                        <mat-form-field class="Mat-Box" appearance="legacy">
+                            <mat-label>Search</mat-label>
+                            <input matInput (keyup)="applyFilter($event.target.value, true)">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-3">
+                        <mat-form-field class="Mat-Box" appearance="legacy">
+                            <!-- <mat-label>Filter by Order Number</mat-label> -->
+                            <mat-select value="0" [(ngModel)]="PharmacyGrp"
+                                (selectionChange)="fetchByPharmacyGrp($event)">
+                                <input class="searchfilter" matInput placeholder="Search"
+                                    (keyup)="searchPharmacyGrpFilter($event.target.value, true)">
+                                <mat-option value="0">
+                                    Filter by Pharmacy Group
+                                </mat-option>
+                                <mat-option *ngFor="let item of phamracyGroupList" [value]="item.PharmacyGrpId">
+                                    {{item.PharmacyGrpName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-3">
+                        <mat-form-field class="Mat-Box" appearance="legacy">
+                            <!-- <mat-label>Filter by Order Number</mat-label> -->
+                            <mat-select value="0" [(ngModel)]="PharmacyName"
+                                (selectionChange)="fetchByPharmacy($event.value)">
+                                <input class="searchfilter" matInput placeholder="Search"
+                                    (keyup)="searchPharmacyFilter($event.target.value, true)">
+                                <mat-option value="0">
+                                    Filter by Pharmacy
+                                </mat-option>
+                                <mat-option *ngFor="let item of pharmacyList" [value]="item.PharmacyId">
+                                    {{item.PharmacyName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2" style="margin-left: 2%;margin-top: 4px;">
+                        <button (click)="openDialog(null)" mat-raised-button matTooltip="Create new Inventory"
+                            color="primary" class="bck-clr">Add new Inventory</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ivt-body">
+        <div style="background-color: #f4f4f4;border-radius: 12px 12px;">
+
+            <perfect-scrollbar class="scrl-cls">
+                <mat-table class=" table" [dataSource]="dataSource" matSort>
+                    <ng-container matColumnDef="DrugName">
+                        <mat-header-cell class="header-text" *matHeaderCellDef mat-sort-header> Drug Name
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row" [@animation]>
+                            {{row.DrugName}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <!-- Color Column -->
+                    <ng-container matColumnDef="GeneralPrice">
+                        <mat-header-cell class="header-text" *matHeaderCellDef mat-sort-header>Gen Price
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row" [@animation]> {{row.GeneralPrice}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="ConcessionPrice">
+                        <mat-header-cell class="header-text" *matHeaderCellDef mat-sort-header> Conc Price
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row" [@animation]> {{row.ConcessionPrice}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="EntitlementPrice">
+                        <mat-header-cell class="header-text" *matHeaderCellDef mat-sort-header> Entitle Price
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row" [@animation]> {{row.EntitlementPrice}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="SpecialDispensePrice">
+                        <mat-header-cell class="header-text" *matHeaderCellDef mat-sort-header> Spl Dis Price
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row" [@animation]> {{row.SpecialDispensePrice}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="PreferredGenericUPI">
+                        <mat-header-cell class="header-text" *matHeaderCellDef mat-sort-header> Pref UPI
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row" [@animation]> {{row.PreferredGenericUPI}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Price">
+                        <mat-header-cell class="header-text" *matHeaderCellDef mat-sort-header> Price
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row" [@animation]> {{row.Price}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Quantity">
+                        <mat-header-cell class="header-text" *matHeaderCellDef mat-sort-header> Quantity
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row" [@animation]> {{row.Quantity}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <!-- actions -->
+                    <ng-container matColumnDef="actions">
+                        <mat-header-cell class="header-text" *matHeaderCellDef>Actions
+                        </mat-header-cell>
+
+                        <mat-cell *matCellDef="let row; let i=index;">
+                            <button mat-icon-button color="success" (click)="openDialog(row)">
+                                <img style="height: 14px;" src="../../../../../assets/packapill-icons/EditRed.svg">
+                            </button>
+                            <!-- <button mat-icon-button color="warn" (click)="deleteInventory(row)">
+                                <img style="height: 14px;" src="../../../../../assets/packapill-icons/delete.png">
+                            </button> -->
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true">
+                    </mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;">
+                    </mat-row>
+                </mat-table>
+            </perfect-scrollbar>
+            <div class="no-results" [style.display]="dataSource == null || dataSource.data.length === 0 ? '' : 'none'">
+                No results
+            </div>
+        </div>
+        <div class="mat-table__bottom">
+            <!-- <mat-spinner [diameter]="20" *ngIf="isLoading"></mat-spinner> -->
+            <mat-paginator #paginator [length]="totalLength" [pageIndex]="0" [pageSize]="10"
+                [pageSizeOptions]="[10, 25, 100, 105, 110, 125, 150, 175, 200]">
+            </mat-paginator>
+        </div>
+
+    </div>
+</div>

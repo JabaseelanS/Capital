@@ -1,0 +1,71 @@
+<!-- begin:: Content Head -->
+<div class="kt-subheader kt-grid__item" [ngClass]="{'kt-container--clear': clear}"
+	[hidden]="subheaderService.disabled$ | async" id="kt_subheader">
+	<div class="kt-container" [ngClass]="{'kt-container--fluid': fluid}">
+		<div class="w-100 h-100 kt-subheader__main">
+			<div class="row" *ngIf="!subheaderService.isDetail">
+				<h3 class="kt-subheader__title l-c rob-m _18px ">{{title}}</h3>
+				<span class="kt-subheader__separator kt-subheader__separator--v"></span>
+			</div>
+			<!-- <div class="row space-between" style="width: 100%;" fxLayout="row" fxLayoutAlign="space-between"
+				*ngIf="subheaderService.isDashboard == true">
+				<div class="row">
+					<h3 class="kt-subheader__title">{{title}}</h3>
+					<span class="kt-subheader__separator kt-subheader__separator--v"></span>
+				</div>
+				<div>
+					<button (click)="openInvitePopup()" mat-raised-button matTooltip="Invite Customer"
+						class="bck-clr dark-petrol" type="button">
+						<img style="margin-right:5px;" src="../../../../../assets/packapill-icons/add-16.png"><span
+							class="white">Invite
+							Customer
+						</span>
+					</button>
+				</div>
+			</div> -->
+			<div class="row space-between center h-100 w-100" *ngIf="subheaderService.isDetail">
+				<div class="row" style="align-items: center;">
+					<mat-icon class="c-p" (click)="goBack()">arrow_back_ios</mat-icon>
+
+					<img class="marketplace"
+						*ngIf="commonService.PrescriptionTabData.orderModel.IsUploadType ==12 || commonService.PrescriptionTabData.orderModel.IsUploadType==13"
+						matTooltip="{{commonService.PrescriptionTabData.orderModel.IsUploadType==12 ? 'DoorDash':'UberEats'}}"
+						[src]="getUploadTypeIcon(commonService.PrescriptionTabData.orderModel.IsUploadType)" alt="">
+
+					<h3 *ngIf="commonService.PrescriptionTabData.orderModel.IsUploadType ==12 || commonService.PrescriptionTabData.orderModel.IsUploadType==13"
+						style="margin-left: 5px;padding: 0px;" class="l-c rob-m _18px kt-subheader__title">
+						{{ '#' + commonService.PrescriptionTabData.orderModel.MarketPlaceDisplayId}} |
+					</h3>
+
+					<h3 style="margin-left: 5px;" class="l-c rob-m _18px kt-subheader__title">
+						{{title}}
+					</h3>
+					<!-- <span class="kt-subheader__separator kt-subheader__separator--v"></span> -->
+					<h3 class="l-c rob-m _18px kt-subheader__title">
+						| {{commonService.PrescriptionTabData.orderModel.Name}}</h3>
+					<h3 class="l-c rob-m _18px kt-subheader__title" style="margin-left: 8px;">
+						{{commonService.convertNum(commonService.PrescriptionTabData.orderModel.MobileNo)}}</h3>
+
+					<h3 class="l-c rob-m _18px kt-subheader__title" style="margin-left: 8px;">
+						{{commonService.PrescriptionTabData.orderModel.RewardsName}}</h3>
+				</div>
+				<div fxLayout="row" class="flex h-100">
+					<div class="content-center row center mr-12">
+						<!-- <button mat-raised-button> -->
+						<!-- <mat-icon class="iconsize mr5 white">save</mat-icon><span class="bold">SAVE</span> -->
+						<!-- </button> -->
+						<p class="rob-b l-c"> <strong>Order Status:</strong></p>
+					</div>
+					<div class="content-center row center white">
+						<!-- <mat-icon class="iconsize">arrow_drop_down</mat-icon> -->
+						<button class="btn-st rob-b __11px red-clr">{{commonService.NotificationText}}</button>
+					</div>
+				</div>
+			</div>
+			<!--<h4 *ngIf="desc" class="kt-subheader__desc">{{desc}}</h4>-->
+
+
+		</div>
+	</div>
+</div>
+<!-- end:: Content Head -->

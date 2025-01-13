@@ -1,0 +1,41 @@
+<div class="pharmacy" style="background: #fff !important;">
+    <div class="modal-header">
+        <h4 style="font-size: large !important;" class="modal-title">Change Pharmacy</h4>
+        <button type="button" class="close" aria-label="Close" (click)="closeDialog('Hide')"><span
+                aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row" style="width: 100%;align-items: baseline;">
+
+            <div class="col-md-4">
+                <label class="row rob-b _11px l-c">Pharmacy</label>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-select class="rob _11px l-c" [(ngModel)]="filterPharmacyId" value="0">
+                        <input class="searchfilter l-c rob-b _12px" matInput
+                            (keyup)="searchFilterBypharmacy($event.target.value, true)">
+                        <mat-option value="0">
+                            Select a pharmacy
+                        </mat-option>
+                        <mat-option *ngFor="let item of pharmacyList" [value]="item.PharmacyId">
+                            {{item.PharmacyName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <!-- <div class="col-md-2">
+                <button (click)="changepharmacy(order)" style="margin-left: 1%;"
+                    class="success-button red-clr rob-b _12px">
+                    save pharmacy</button>
+            </div> -->
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button mat-raised-button style="width: 18%;height: 35px;" type="button" class="light-button rob _12px fw-600"
+            (click)="closeDialog('Hide')">Cancel</button>
+        <button style="width: 20%;height: 35px;padding: 0px;" type="button"
+            class="success-button green-clr rob _12px fw-600" (click)="changepharmacy(order)">Change</button>
+    </div>
+</div>

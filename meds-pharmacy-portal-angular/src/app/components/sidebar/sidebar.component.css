@@ -1,0 +1,17 @@
+.childHead {
+  background-color: transparent !important;
+  color: black !important;
+}
+.isHide {
+  display: none;
+}
+/* .childHead[data-color=danger] li.active{
+    background-color: darkgray !important;
+} */
+
+.view-transation {
+  -webkit-transition-duration: 5s; /* Safari */
+  -webkit-transition-delay: 2s; /* Safari */
+  transition-duration: 5s;
+  transition-delay: 2s;
+}

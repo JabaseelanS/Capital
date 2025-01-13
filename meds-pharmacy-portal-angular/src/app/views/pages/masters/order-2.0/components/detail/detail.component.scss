@@ -1,0 +1,62 @@
+.w-50 {
+    width: 50%;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.w-87 {
+    width: 87%;
+}
+
+.p2p {
+    padding: 2%;
+}
+
+.justify-content {
+    justify-content: center;
+}
+
+.bc-hash {
+    background-color: lightgray;
+}
+
+.mb-5px {
+    margin-bottom: 5px;
+}
+
+::ng-deep .det {
+    display: flex !important;
+    justify-content: space-between !important;
+}
+
+::ng-deep .ngxImageZoomContainer {
+    width: 520px !important;
+    height: 600px !important;
+}
+
+::ng-deep .ngxImageZoomThumbnail {
+    width: 600px !important;
+    height: 550px !important;
+}
+
+// ::ng-deep .ngxImageZoomFull {
+//     width: 600px !important;
+//     height: 550px !important;
+// }
+textarea:focus {
+    outline-color: #87aba1;
+}
+
+textarea {
+    border-color: #87aba1;
+}
+
+::ng-deep .ngxImageZoomFullContainer.ngxImageZoomLensEnabled {
+    border: 2px solid #87aba1;
+}
+
+::ng-deep .mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-background {
+    background-color: #005760;
+}

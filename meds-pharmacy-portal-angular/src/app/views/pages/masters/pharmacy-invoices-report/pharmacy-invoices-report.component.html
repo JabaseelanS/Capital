@@ -1,0 +1,43 @@
+<div fxLayout='row' class="n-s-h">
+    <div class="b-line rob col-3 tbox ml-20">
+        <mat-form-field class="pharmtxt-area" appearance="legacy" class="w-100">
+            <mat-select placeholder="Choose year" [(ngModel)]="search" class="arw"
+                (selectionChange)="applyFilter($event.value)">
+                <mat-option value="">Show All</mat-option>
+                <mat-option *ngFor="let list of year" [value]="list">
+                    {{list}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+<div fxLayout='row'>
+    <perfect-scrollbar style="max-height: calc(70vh - 0px);background-color: #fff;">
+        <div class="rob" style="background-color: #fff;padding: 0px 18px 18px 18px;width: 100%;">
+            <table class="table table-striped ">
+                <thead class="v2-h-lt rob-b _12px l-c">
+                    <tr>
+                        <th>Date</th>
+                        <th>File Name</th>
+                    </tr>
+                </thead>
+                <tbody class="l-c">
+                    <tr class="r-bor" style="height: 60px;"
+                        *ngFor="let data of report | slice: lowValue : highValue;let i=index">
+
+                        <td class="b-no">{{data.Date |date:'dd-MM-yyyy'}}</td>
+                        <td class="b-no"><a class="underline pointer" matTooltip="Report Download"
+                                (click)="downloadfile(data)">{{data.FileName}}</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div *ngIf="report.length == 0" class="rob-b r-c">
+                No record found
+            </div>
+            <mat-paginator class="pag-mat" [length]="report.length" [pageSize]=10 [pageSizeOptions]="pageSizeOptions"
+                (page)="getPaginatorData($event)">page
+            </mat-paginator>
+
+        </div>
+    </perfect-scrollbar>
+</div>

@@ -1,0 +1,54 @@
+<div *ngIf="scripts.IsUploadType!=9" class="pre-img">
+    <div class="rot-box" style="margin: 0% 0% 0% 28%;" id="presc-img">
+        <div [ngClass]="{'stest':!commonServices.isImgLoaded}">
+            <div id='loadSImg {{tabIndex}}' class="spinnerbefore1 mx-auto"
+                [ngClass]="{'spinnerafter':commonServices.isImgLoaded}"></div>
+        </div>
+        <img id='srcSImg {{tabIndex}}' [@rotatedState]='state' class="dis-non rot-box "
+            src="{{'../../../../../../assets/packapillassets/'+ orderModel.PharmacyId +'/' + scripts.PrescriptionFilename+'.png'}}"
+            (load)='commonServices.onImageLoad(tabIndex)' (click)="openImageModel(scripts)">
+    </div>
+</div>
+
+<div *ngIf="scripts.IsUploadType==9" class="pre-img">
+    <div *ngIf="scripts.Type!=1" class="rot-box" style="margin: 0% 0% 0% 28%;" id="presc-img">
+        <div [ngClass]="{'stest':!commonServices.isImgLoaded}">
+            <div id='loadSImg {{tabIndex}}' class="spinnerbefore1 mx-auto"
+                [ngClass]="{'spinnerafter':commonServices.isImgLoaded}"></div>
+        </div>
+
+        <img id='srcSImg {{tabIndex}}' [@rotatedState]='state' class="dis-non rot-box " src="{{scripts.Base64}}"
+            (load)='commonServices.onImageLoad(tabIndex)' (click)="openImageModel(scripts)">
+    </div>
+    <!-- <div *ngIf="scripts.Type==1" class="rot-box" style="margin: 0% 0% 0% 28%;" id="presc-img">
+
+        <a (click)="downloadFile(scripts)">
+            <img id='loadSImg {{tabIndex}}' class="dis-blk" style="width: 100%;margin: auto;"
+                src="../../../../../../assets/img/download.jpg" alt="image" />
+        </a>
+
+    </div> -->
+</div>
+
+<div class="row" style="margin-top: 10px;justify-content: center;">
+    <img *ngIf='commonServices.isImgLoaded && scripts.IsUploadType!=9' class="cur-p rw-i" matTooltip="View"
+        style="margin-top: -2px;padding-right: 10px;" (click)="openImageModel(scripts)"
+        src="../../../../../../assets/orderv2/packapill_portal_icons/Elements/Zoom Icon.svg">
+
+    <img *ngIf='commonServices.isImgLoaded && scripts.IsUploadType==9 && scripts.Type !=1' class="cur-p rw-i"
+        matTooltip="View" style="margin-top: -2px;padding-right: 10px;" (click)="openImageModel(scripts)"
+        src="../../../../../../assets/orderv2/packapill_portal_icons/Elements/Zoom Icon.svg">
+
+    <img class="cur-p rw-i" matTooltip="Copy the token"
+        style="height: 24px;width: 24px;margin-left: 10px;margin-top: 2px;padding-right: 10px;"
+        *ngIf="scripts.IsUploadType == 6 || scripts.IsUploadType==10"
+        src="../../../../../../assets/packapill-icons/SVG/token.svg"
+        (click)="commonServices.copyInputMessage(scripts.EToken)" />
+
+    <img style="height: 25px;padding-right: 10px;" class="cur-p rw-i" matTooltip="Print" (click)="printIt()"
+        src="../../../../../../assets/orderv2/packapill_portal_icons/Elements/Print Icon.svg">
+
+    <img *ngIf='commonServices.isImgLoaded && (scripts.IsUploadType==9 || scripts.IsUploadType==11 || scripts.IsUploadType==1 )&& scripts.Type !=1'
+        style="height: 25px;" class="cur-p rw-i" matTooltip="Rotate" (click)="rotatePic()"
+        src="../../../../../../assets/orderv2/packapill_portal_icons/Elements/rotate-01-01-01.svg">
+</div>

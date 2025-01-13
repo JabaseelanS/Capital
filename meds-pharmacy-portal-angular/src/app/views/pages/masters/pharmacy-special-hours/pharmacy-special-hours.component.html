@@ -1,0 +1,134 @@
+<div class="parent-body">
+    <div fxLayout='row' class="n-s-h">
+        <div class="b-line rob col-md-4 tbox ml-20">
+            <mat-form-field appearance="legacy" class="w-100">
+                <mat-label>Search label as, date, state</mat-label>
+                <input #searchkey class="l-c rob-b _12px" (keyup)="applyFilter($event.target.value)" matInput>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6 txt-align-end">
+            <button mat-raised-button matTooltip="Create new holiday & special hours" (click)="AddRecord(null, 1)"
+                class="rob-sm _12px dark-petrol white" type="button">
+                <img class="m-r-5px" src="../../../../../assets/packapill-icons/add-16.png"><span>Add
+                    Holiday & Special hours</span>
+            </button>
+            <!-- <button mat-raised-button matTooltip="Disable
+                Holiday calendar & Special hours" (click)="HolidayDisable()" class="marg-left-20px"
+                disabled="{{disableHoilday}}">
+                <img class="m-r-5px" src="../../../../assets/packapill-icons/multiply-16.png">Disable selected
+                Holiday & Special hours
+            </button>
+            <button mat-raised-button matTooltip="Remove" (click)="isActive()" disabled="{{disableHoilday}}"
+                [style.opacity]="disableHoilday ? 0.6 : 1" class="rob-sm _12px dark-petrol white marg-left-20px"
+                type="button">
+                <img class="m-r-5px" heigth="10px" width="10px"
+                    src="../../../../../assets/packapill-icons/multiply-wsign.png"><span>Remove</span>
+            </button> -->
+        </div>
+    </div>
+    <div fxLayout='row'>
+        <perfect-scrollbar class="scroll-bar">
+            <div class="rob tbl-main">
+                <table class="table table-striped text-center w-100p">
+                    <thead class="v2-h-lt rob-b _12px l-c">
+                        <tr>
+                            <!-- <th><mat-checkbox class="example-margin" [disabled]="tableAllCheck"
+                                    [(ngModel)]="TopTableDisable" [ngModelOptions]="{standalone: true}"
+                                    (change)="isClosedCheck(1, null)"></mat-checkbox>
+                            </th> -->
+                            <th class="state-column-width">Label As</th>
+                            <th>Date</th>
+                            <th class="state-column-width">State</th>
+                            <th>Included Pharmacy</th>
+                            <th>Excluded Pharmacy</th>
+                            <th>Opening Hours</th>
+                            <th>Closing Hours</th>
+                            <!-- <th>Is Close</th> -->
+                            <th>Repeat Every Year</th>
+                            <th>Active</th>
+                            <th class="txt-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="l-c">
+                        <tr class="r-bor" *ngFor="let item of SpecialHrs | slice: lowValue : highValue">
+                            <!-- <td class="align-middle"><mat-checkbox class="example-margin"
+                                    (change)="isClosedCheck(2, item)"
+                                    [(ngModel)]="item.IsHolidayDisable"></mat-checkbox>
+                            </td> -->
+                            <td class="align-middle">
+                                {{item.LabelAs}}
+                            </td>
+                            <td class="align-middle">
+                                {{item.FromandToDate}}
+                            </td>
+                            <td class="align-middle">
+                                {{item.StateNames}}
+                            </td>
+                            <td class="align-middle">
+                                <a class="a-tag" (click)="IncludeExcludedPharmacy(item, 2)">
+                                    {{ item.ExcludedPharmacyCount}}
+                                </a>
+                            </td>
+
+                            <td class="align-middle">
+                                <a class="a-tag" (click)="IncludeExcludedPharmacy(item, 1)">
+                                    {{item.IncludePharmacyCount}}
+                                </a>
+                            </td>
+                            <td class="align-middle">
+                                {{timeFormat24to12(item.OpeningHours)}}
+                            </td>
+                            <td class="align-middle">
+                                {{timeFormat24to12(item.ClosingHours)}}
+                            </td>
+                            <!-- <td class="align-middle">
+                                <mat-checkbox class="example-margin" class="a-disable"
+                                    [(ngModel)]=" item.IsClosed"></mat-checkbox>
+                            </td> -->
+                            <td class="align-middle">
+                                <!-- <mat-checkbox class="example-margin" class="a-disable"
+                                    [(ngModel)]=" item.RepeatEveryYear"></mat-checkbox> -->
+                                <p>
+                                    <img width="20px" height="20px"
+                                        [src]="item.RepeatEveryYear == true ? '../../../../../assets/images/check-mark.svg' : '../../../../../assets/images/wrong-removebg-preview.svg'"
+                                        alt="repeatyear">
+                                </p>
+                            </td>
+                            <td class="align-middle">
+                                <!-- <mat-checkbox class="example-margin a-disable" [(ngModel)]=" item.IsActive"
+                                    (change)="isActive(item, $event)"></mat-checkbox> -->
+
+                                <mat-slide-toggle [ngModel]="item.IsActive"
+                                    (change)="singleIsActive(item, $event)"></mat-slide-toggle>
+                                <!-- <p *ngIf="item.IsActive">
+                                    <img width="20px" height="20px" src="../../../../../assets/images/check-mark.png"
+                                        alt="Active&Inactive">
+                                </p>
+                                <p *ngIf="item.IsActive == false" style="color: red;">Inactive</p> -->
+                            </td>
+                            <td class="align-middle m-w110px">
+                                <div>
+                                    <button mat-icon-button (click)="AddRecord(item, 2)" color="primary"
+                                        matTooltip="Edit">
+                                        <img class="h-14px" src="../../../../../assets/packapill-icons/EditRed.svg">
+                                    </button>&nbsp;
+                                    <button mat-icon-button color="warn" matTooltip="Delete" type="button"
+                                        (click)="deleteSplhrs(item)">
+                                        <img class="h-14px"
+                                            src="../../../../../assets/packapill_portal_icons/delete-red-clr.svg">
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="SpecialHrs.length == 0" class="rob-b r-c">
+                    No record found
+                </div>
+                <mat-paginator class="pag-mat" [length]="SpecialHrs.length" [pageSize]=10
+                    [pageSizeOptions]="pageSizeOptions" (page)="getPaginatorData($event)">page
+                </mat-paginator>
+            </div>
+        </perfect-scrollbar>
+    </div>
+</div>

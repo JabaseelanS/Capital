@@ -1,0 +1,48 @@
+:host {
+  .kt-aside {
+    height: 100%;
+    // background-color: #005760;
+    background-color: white;
+    color: black;
+  }
+
+  // fixed text line break issue on minimized aside hover
+  .kt-menu__link-text {
+    white-space: nowrap;
+  }
+}
+
+.kt-menu__toggle {
+  // background-color: #005760;
+  background-color: white;
+  color: black;
+}
+
+.menu-title-text {
+  overflow: hidden;
+  text-align: start;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  display: inline-block !important;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+// .kt-menu__link.kt-menu__toggle {
+//   height: 40px;
+//   padding: 0 14px 0 24px;
+//   border-radius: 20px 0px 0px 20px;
+//   margin-right: 0px;
+
+//   background-color: #fff;
+
+//   .kt-menu__link-text {
+//     color: #005760;
+//   }
+// }
+
+.kt-menu__item:hover {
+  .menu_hover_icon {
+    filter: brightness(0) invert(1);
+  }
+}

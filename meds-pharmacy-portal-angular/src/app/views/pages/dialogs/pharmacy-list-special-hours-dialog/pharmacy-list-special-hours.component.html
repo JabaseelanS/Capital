@@ -1,0 +1,55 @@
+<div class="top">
+    <div class="dialog-header sec-div2" fxLayout="row" fxLayoutAlign="space-between">
+        <div fxLayout="row" fxLayoutAlign="start">
+            <h3 class="headerborder">
+                <p class="header-holiday">{{this.modalData.title}}</p>
+            </h3>
+        </div>
+        <div>
+            <button mat-raised-button (click)="save()" class="mr-4"><img class="mr-5px"
+                    src="../../../../../assets\orderv2\packapill_portal_icons\Elements\Petrol.svg">{{btnName}}</button>
+            <button mat-raised-button (click)="closeDialog()" [mat-dialog-close]>
+                <img class="mr-5px" src="../../../../../assets/packapill-icons/multiply-16.png">Close
+            </button>
+        </div>
+    </div>
+    <perfect-scrollbar class="holiday-scrl">
+        <div class="row pl-20px-pr-24px">
+            <input class="searchfilter l-c rob-b _12px" matInput placeholder="Search"
+                (keyup)="searchFilteronPharmacy($event.target.value)" (keydown)="$event.stopPropagation()"
+                [ngModelOptions]="{standalone: true}" [(ngModel)]="searchIncluded">
+        </div>
+        <table class="tbl-w-97p">
+            <thead>
+                <tr class="h-3rem" *ngIf="pharmacy.length != 0">
+                    <th colspan="2" class="pl-20px">
+                        <p>All Pharmacies</p>
+                    </th>
+                    <th>
+                        <mat-checkbox [ngModelOptions]="{standalone: true}" [(ngModel)]="allSelectedIncluded"
+                            (change)="toggleAllSelectIncluded()"></mat-checkbox>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of pharmacy; let i = index">
+                    <td class="td-padding img-cloum-wid pl-20px">
+                        <img *ngIf="item.PharmacyLogo != null && item.PharmacyLogo!= ''" src={{item.PharmacyLogo}}
+                            class="h-40-w-40">
+                    </td>
+                    <td class="td-padding detail-cloum-wid">
+                        <h6 class="m-0">{{item.PharmacyName}}</h6>
+                        <p>{{item.Address}}</p>
+                    </td>
+                    <td class="td-padding">
+                        <mat-checkbox [(ngModel)]="item.IsIncluded" [ngModelOptions]="{standalone: true}"
+                            (change)="singleChangeIncluded()"></mat-checkbox>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div *ngIf="pharmacy.length == 0" class="rob-b r-c">
+            No record found
+        </div>
+    </perfect-scrollbar>
+</div>

@@ -1,0 +1,79 @@
+::ng-deep .createorder {
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+        background: white;
+        color: transparent !important;
+        top: 1.25em !important;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-outline-end,
+    .mat-form-field-appearance-outline .mat-form-field-outline-start {
+        border: none !important;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-infix {
+        padding: 2vh 0 1vh 0 !important;
+    }
+
+    .add.mat-form-field-appearance-outline .mat-form-field-infix {
+        padding: 2vh 0 1vh 0 !important;
+        width: 610px;
+    }
+}
+
+.padd {
+    padding: 2vh;
+}
+
+.bck-clr {
+    background-color: #005760;
+}
+
+.ex-btn {
+    height: 27px;
+    border: none;
+    width: 10%;
+    border-radius: 4px;
+    color: white;
+    text-align-last: center;
+    min-width: 115px !important;
+
+    ::ng-deep .mat-select-arrow {
+        color: white;
+        margin: 4px 0px 0px 0px !important;
+    }
+}
+
+.lbl-cls {
+    margin-bottom: 0px;
+    margin-left: 4px;
+}
+
+.sec-div2 {
+    margin: 25px 0px;
+    border-bottom: 1px solid #d4d4d4;
+}
+
+.he2 {
+    text-align: center;
+    margin-top: 6px;
+    margin-bottom: 12px;
+    width: 90%;
+}
+
+.r-div {
+    margin-top: 8px;
+    margin-left: 45px;
+    margin-right: 45px;
+}
+
+.bc2 {
+    float: right;
+    margin-bottom: 12px;
+    margin-right: 20px;
+}
+
+.ps {
+    max-width: 100%;
+    max-height: 70vh;
+    min-height: 54vh;
+}

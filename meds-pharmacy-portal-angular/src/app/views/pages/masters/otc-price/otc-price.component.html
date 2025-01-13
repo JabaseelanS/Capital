@@ -1,0 +1,89 @@
+<div fxLayout='row' fxLayout.xs="row" fxLayout.sm="row" fxLayout.md="row" class="n-s-h">
+    <div class="col-3 b-line rob tbox  ml-20" *ngIf="user.RoleId == 1 || user.RoleId == 5 || user.RoleId == 2">
+        <mat-form-field class="pharmtxt-area" appearance="legacy" class="w-100">
+            <mat-select placeholder="Please choose pharmacy" [(ngModel)]="phid" class="arw"
+                (ngModelChange)="choosepharmacy()">
+                <input class="searchfilter l-c rob-b _12px" [(ngModel)]="psearch" matInput placeholder="Search"
+                    (keyup)="searchFilterBypharmacy($event.target.value, true)" (keydown)="$event.stopPropagation()">
+                <mat-option *ngFor="let pharm of pharmacylist" [value]="pharm.PharmacyId">
+                    {{pharm.PharmacyName}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="col-3 b-line rob tbox  ml-20">
+        <mat-form-field appearance="legacy" class="w-100">
+            <input #searchkey class="l-c rob-b _12px" matInput (keyup)="applyFilter($event.target.value)"
+                placeholder="Search by barcode and product name" [(ngModel)]="searchval">
+        </mat-form-field>
+    </div>
+    <div class="col-3 b-line rob tbox  ml-20">
+        <mat-form-field class="pharmtxt-area" appearance="legacy" class="w-100">
+            <mat-select placeholder="Please choose active and inactive" [(ngModel)]="search" class="arw"
+                (selectionChange)="searchselection($event.value)">
+                <mat-option *ngFor="let list of searchlist" [value]="list.id">
+                    {{list.value}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <!-- <div class="col-md-6" style="text-align-last: end;"> -->
+    <!-- <button (click)="AddDialog()" mat-raised-button class="rob-sm _12px dark-petrol white mr-3" type="button">
+            <img style="margin-right:5px;" src="../../../../../assets/packapill-icons/add-16.png"><span>Add
+                OTC</span>
+        </button> -->
+    <!-- <button (click)="opendialog1(null)" mat-raised-button class="rob-sm _12px dark-petrol white" type="button">
+            <img style="margin-right:5px;" src="../../../../../assets/packapill-icons/add-16.png"><span>Change
+                Detail</span>
+        </button> -->
+    <!-- </div> -->
+</div>
+<div fxLayout='row'>
+    <perfect-scrollbar style="max-height: calc(70vh - 0px);background-color: #fff;">
+        <div class="rob w-100" style="background-color: #fff;padding: 0px 18px 18px 18px;width: 100%;">
+            <table class="table table-striped ">
+                <thead class="v2-h-lt rob-b _12px l-c">
+                    <tr>
+                        <th class="w-25">Product Name</th>
+                        <th style="width: 15%;">Barcode</th>
+                        <th style="width: 12%;">Price</th>
+                        <th style="width: 12%;">Discounted Price</th>
+                        <th>Stock</th>
+                        <th>Active</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="l-c">
+                    <tr class="r-bor" *ngFor=" let otc of data | slice: lowValue : highValue;">
+                        <td class="b-no">{{otc.MedicineName}}</td>
+                        <td class="b-no">{{otc.Ean}}</td>
+                        <td class="b-no">{{otc.Price}}</td>
+                        <td class="b-no">{{otc.DiscountedPrice}}</td>
+                        <td class="b-no">{{otc.Stock}}</td>
+                        <td class="b-no">
+                            <mat-slide-toggle [ngModel]="otc.IsActive" (change)="changed(otc)">
+                            </mat-slide-toggle>
+                        </td>
+                        <td class="row">
+                            <button mat-icon-button matTooltip="Edit user" style="min-height: 34px;
+                                                          height: 34px;" (click)="opendialog(otc)">
+                                <img style="height: 18px;margin-top: -8px;"
+                                    src="../../../../../assets/packapill-icons/EditRed.svg">
+                            </button>
+                            <!-- <button matTooltip="Delete user" type="button" mat-icon-button color="warn"
+                                (click)="delete(otc)"><img style="height: 18px;margin-top: -8px;"
+                                    src="../../../../../assets/packapill_portal_icons/delete.svg"></button> -->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div *ngIf="data.length == 0" class="rob-b r-c">
+                No record found
+            </div>
+            <mat-paginator class="pag-mat" [length]="data.length" [pageSize]=10 [pageSizeOptions]="[5, 10, 25, 100]"
+                (page)="getPaginatorData($event)">page
+            </mat-paginator>
+        </div>
+    </perfect-scrollbar>
+</div>

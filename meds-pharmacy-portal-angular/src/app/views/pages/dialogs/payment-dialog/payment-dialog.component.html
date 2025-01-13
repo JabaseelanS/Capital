@@ -1,0 +1,56 @@
+<div>
+    <div style="width: 100%;background-color: #e7e7e7; border-top: 1px solid #ebedf2;font-size: 16px;
+    padding: 16px;" fxLayout="row" fxLayoutAlign="space-between"><label class="rob-b l-c ">Payment</label> <label
+            class="rob-b l-c cursor-pointer" (click)="this.dialogRef.close({flag:false})">X</label></div>
+    <div style="background-color: #f7f7f7;padding: 16px;">
+        <form name="paymentForm w-100">
+            <span align="center" *ngIf="isValid" style="display: block;" class="error_span1_cls">{{errormessage}}</span>
+            <div style="display: grid;">
+
+                <div class="card_fields">
+                    <input #card id="cardNo" (keyup)="setValue()" (paste)="$event.preventDefault()"
+                        (input)="getCreditCardType(card, cardDetails.number)" [textMask]="{mask: cardMask}"
+                        (keypress)="checkCardValidation($event.currentTarget.value)" placeholder="Card number"
+                        class="iinput1" type="tel" [(ngModel)]="cardDetails.number" name="number" card-number
+                        required />
+
+                </div>
+                <div class="card_fields">
+                    <input id="Name" (keyup)="setValue()" (input)="checkNameValidation($event)"
+                        placeholder="Name as shown in card" class="iinput1" type="text" name="full-name" card-name
+                        [(ngModel)]="cardDetails.name" autocapitalize="words" required />
+                </div>
+                <div style="display: inline-flex;" class="card_fields">
+                    <input id="Expiry" (keyup)="setValue()" (paste)="$event.preventDefault()"
+                        [textMask]="{mask: dateMask}" placeholder="MM/YY" style="margin-right: 5px;" class="iinput1"
+                        type="tel" name="expiry" card-expiry [(ngModel)]="Expiry" required />
+
+                    <input id="CVC" (keyup)="setValue()" (paste)="$event.preventDefault()" myNumberOnly
+                        [maxLength]="maxLength" placeholder="CVC/CVV" class="iinput1" type="tel" name="cvc" card-cvc
+                        [(ngModel)]="cardDetails.cvc" required />
+                </div>
+                <div class="card_fields1">
+                    <label class="disclaim">*We don't store your card details.</label>
+                </div>
+
+                <div class="card_fields">
+                    <img class="card_fields2" src="../../../../../assets/packapill-icons/stripe-badge-transparent.png"
+                        alt="creditcard">
+                </div>
+
+                <div class="row" style="justify-content: center;margin: auto;margin-top: 10px;width: 100%;">
+
+                    <button mat-raised-button style="margin: 4px;" class="white rob-b _11px dark-petrol"
+                        (click)="payNow()">
+                        <img style="margin-right:5px;" src="../../../../../assets/packapill-icons/add-16.png">
+                        Pay Now {{data !=null && data.roundTotal !=null && data.roundTotal > 0 ? " $" +
+                        data.roundTotal:
+                        ""}}
+                    </button>
+
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>

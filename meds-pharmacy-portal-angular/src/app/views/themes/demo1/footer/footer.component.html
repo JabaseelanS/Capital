@@ -1,0 +1,24 @@
+<!-- begin:: Footer -->
+<div class="kt-footer kt-grid__item kt-grid kt-grid--desktop kt-grid--ver-desktop" id="kt_footer">
+    <div class="kt-container" [ngClass]="{'kt-container--fluid': fluid}">
+        <div class="kt-footer__copyright">
+            <span class="hover-shade" *ngIf="userdetails != null && userdetails.RoleId == 3">
+                <div class="rounded-icon" (click)="DownloadNotifier()">
+                    <img matTooltip="Download Notifier" class="w-43p" src="../../../../../assets/icons/hola-icon6.png"
+                        alt="Download Notifier">
+                </div>
+            </span>
+
+            <span style="padding-top: 11px;">
+                {{today | date:'yyyy'}}&nbsp;&copy;&nbsp;<a href="https://packapill.com/" target="_blank"
+                    class="kt-link">Hola Health a brand of Packapill Pty Ltd. v 3.0.6</a>
+            </span>
+        </div>
+        <!-- <div class="kt-footer__menu">
+			<a href="http://kredosystems.com/" target="_blank" class="kt-footer__menu-link kt-link">About</a>
+			<a href="http://kredosystems.com/" target="_blank" class="kt-footer__menu-link kt-link">Team</a>
+			<a href="http://kredosystems.com/" target="_blank" class="kt-footer__menu-link kt-link">Contact</a>
+		</div> -->
+    </div>
+</div>
+<!-- end:: Footer -->

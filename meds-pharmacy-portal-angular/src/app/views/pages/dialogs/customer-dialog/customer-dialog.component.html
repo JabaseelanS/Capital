@@ -1,0 +1,143 @@
+<div class="createorder top" style="background: #efeff0;">
+    <div class="modal-header modal-header">
+        <h4 style="font-size: large !important;" class="modal-title">Customer Information</h4>
+        <button type="button" class="close" aria-label="Close" (click)="closeDialog('Hide')"><span
+                aria-hidden="true">&times;</span>
+            <!-- <button type="button" *ngIf="!WEmail" class="close" aria-label="Close" (click)="closeDialog('Hide')">
+            <span aria-hidden="true">&times;</span> -->
+        </button>
+    </div>
+    <!-- <perfect-scrollbar class="ps"> -->
+    <div class="modal-body modal-body">
+        <form autocomplete="nope" name="createCusForm" [formGroup]="createCusForm" fxLayout="column"
+            fxLayout.xs="column" fxLayout.sm="column" fxLayout.md="column">
+
+            <div class="r-div" fxLayout="row" fxLayout.sm="column" fxLayout.md="column">
+
+                <div fxLayout="row" fxLayout.sm="row" fxLayout.md="row" fxLayout.xs="row" fxLayout.lg="row">
+
+                    <div *ngIf="isRole" class="mr-4 cls-top">
+                        <p class="rob-b _11px l-c">Pharmacy List<small style="color: red;">*</small></p>
+                        <mat-form-field class="rob _11px l-c " appearance="outline">
+                            <mat-select class="mt-sel" formControlName="PharmacyId">
+                                <mat-option value="0"> Choose the pharmacy </mat-option>
+                                <mat-option *ngFor="let item of pharmacyList" [value]="item.PharmacyId">
+                                    {{item.PharmacyName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mr-4 cls-top">
+                        <p class="rob-b _11px l-c">First Name<small style="color: red;">*</small></p>
+                        <mat-form-field class="rob _11px l-c" appearance="outline">
+                            <input type="text" matInput formControlName="FirstName" autocomplete="nope">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mr-4 cls-top">
+                        <p class="rob-b _11px l-c">Last Name<small style="color: red;">*</small></p>
+                        <mat-form-field class="rob _11px l-c" appearance="outline">
+                            <input type="text" matInput formControlName="LastName" autocomplete="nope">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mr-4 cls-top">
+                        <p class="rob-b _11px l-c">Mobile<small style="color: red;">*</small></p>
+                        <mat-form-field class="rob _11px l-c" appearance="outline">
+                            <input type="tel" [maxlength]="MobLength" [textMask]="{mask: mobMask,guide:false}" matInput
+                                formControlName="MobileNo" myNumberOnly autocomplete="nope">
+                        </mat-form-field>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="r-div" fxLayout="row" fxLayout.sm="column" fxLayout.md="column">
+
+                <div fxLayout="row" fxLayout.sm="row" fxLayout.md="row" fxLayout.xs="row" fxLayout.lg="row">
+                    <div class="mr-4 cls-top">
+                        <p class="rob-b _11px l-c">Email<small style="color: red;">*</small></p>
+                        <mat-form-field class="rob _11px l-c" appearance="outline">
+                            <input type="text" matInput formControlName="EmailId" autocomplete="nope">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mr-4 cls-top">
+                        <p class="rob-b _11px l-c">DOB</p>
+                        <mat-form-field class="rob _11px l-c" appearance="outline">
+                            <input type="text" matInput formControlName="Dob" placeholder="dd/mm/yyyy" mask="00/00/0000"
+                                autocomplete="nope">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mr-4 cls-top">
+                        <p class="rob-b _11px l-c">Medicare No</p>
+                        <mat-form-field class="rob _11px l-c" appearance="outline">
+                            <input type="text" (change)="changeValue($event)" Medicare Number matInput
+                                formControlName="MedicareNo" myNumberOnly autocomplete="nope"
+                                [textMask]="{mask: mediMask}">
+                        </mat-form-field>
+                    </div>
+                    <div class="mr-4 cls-top">
+                        <p class="rob-b _11px l-c">Medicare Valid To</p>
+                        <mat-form-field class="rob _11px l-c" appearance="outline">
+                            <input type="text" (change)="changeValue($event)" placeholder="mm/yy" matInput
+                                formControlName="MedicareValidTo" myNumberOnly [textMask]="{mask: expMask}"
+                                autocomplete="nope">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+            <div class="r-div" fxLayout="row" fxLayout.sm="column" fxLayout.md="column">
+
+                <div fxLayout="row" fxLayout.sm="row" fxLayout.md="row" fxLayout.xs="row" fxLayout.lg="row">
+
+                    <div class="mr-4 cls-top">
+                        <p class="rob-b _11px l-c">Concession No</p>
+                        <mat-form-field class="rob _11px l-c" appearance="outline">
+                            <input maxlength="15" type="text" matInput formControlName="ConcessionNo"
+                                [textMask]="{mask: consMask,guide: false}" autocomplete="nope">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mr-4 cls-top">
+                        <p class="rob-b _11px l-c">Concession Valid To</p>
+                        <mat-form-field class="rob _11px l-c" appearance="outline">
+                            <input type="text" myNumberOnly [textMask]="{mask: expMask}" matInput
+                                formControlName="ConcessionValidTo" placeholder="mm/yy" autocomplete="nope">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mr-4 cls-top" style="padding-top: 2.5vh;width: 25vh;">
+                        <div class="cls-top customalign">
+                            <span class="fw-500 rob l-c _12px" style="margin-right: 16px;">Set default
+                                pharmacy</span>
+                            <mat-checkbox formControlName="IsPreferredPharmacy">
+
+                            </mat-checkbox>
+                        </div>
+                        <!-- <div class="cls-top customalign">
+                            <span class="fw-500 rob l-c _12px" style="margin-right: 30px;">Set default
+                                address</span>
+                            <mat-checkbox formControlName="IsDefault">
+
+                            </mat-checkbox>
+                        </div> -->
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer modal-body">
+        <button style="width: 18%;height: 35px;" type="button" mat-raised-button class="light-button rob _12px fw-600"
+            (click)="closeDialog('Hide')">Cancel</button>
+        <button style="width: 20%;height: 35px;padding: 0px;" type="button"
+            class="success-button bck-clr rob _12px fw-600" (click)="save()">Save</button>
+        <button style="width: 20%;height: 35px;padding: 0px;" type="button"
+            class="success-button bck-clr rob _12px fw-600" (click)="deactivateCust()">Deactivate</button>
+    </div>
+
+</div>

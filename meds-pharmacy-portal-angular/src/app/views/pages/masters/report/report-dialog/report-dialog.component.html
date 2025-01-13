@@ -1,0 +1,90 @@
+<div *ngIf="edited" class="createorder top" style="background: #efeff0;">
+
+    <!-- <perfect-scrollbar class="ps"> -->
+    <div>
+        <form autocomplete="nope" name="createCusForm" [formGroup]="reportForm" fxLayout="column" fxLayout.xs="column"
+            fxLayout.sm="column" fxLayout.md="column">
+            <div class="sec-div2" fxLayout="row" fxLayoutAlign="start">
+                <h3 class="he2">
+                    <p class="rob-m _16px pink">{{this.dialogData.model != null && this.dialogData.model != 0 ? 'Edit' :
+                        'Create'}} Invoice Report</p>
+                </h3>
+                <button class="bc2" mat-raised-button (click)="goBack()"><img
+                        src="../../../../../assets/packapill-icons/multiply-16.png">Close</button>
+            </div>
+
+            <div class="r-div" fxLayout="row" fxLayout.sm="column" fxLayout.md="column">
+
+                <div fxLayout="row" fxLayout.sm="row" fxLayout.md="row" fxLayout.xs="row" fxLayout.lg="row">
+
+                    <div class="mr-4 cls-top">
+                        <p class="rob-b _11px l-c">Week<small style="color: red;">*</small></p>
+                        <mat-form-field [ngClass]="{'disable-inp': isCreate, 'enable-inp':!isCreate }"
+                            class="rob _11px l-c" appearance="outline">
+                            <input [ngClass]="{'disable-inp': isCreate, 'enable-inp':!isCreate }" [readonly]="isCreate"
+                                matInput formControlName="Week" autocomplete="nope" [matDatepicker]="picker">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="mr-4 cls-top" *ngIf="isRole">
+                        <p class="rob-b _11px l-c">Pharmacy<small style="color: red;">*</small></p>
+                        <mat-form-field [ngClass]="{'disable-inp': isCreate, 'enable-inp':!isCreate }"
+                            class="rob _11px l-c " appearance="outline">
+                            <mat-select [ngClass]="{'disable-inp': isCreate, 'enable-inp':!isCreate }" class="mt-sel"
+                                formControlName="PharmacyId">
+                                <input class="searchfilter l-c rob-b _12px" matInput placeholder="Search"
+                                    (keyup)="pharmacyFilter($event.target.value)">
+                                <mat-option value="0"> Choose your pharmacy </mat-option>
+                                <mat-option *ngFor="let item of pharmacyList" [value]="item.PharmacyId">
+                                    {{item.PharmacyName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="mr-4 cls-top">
+                        <p class="rob-b _11px l-c">Tax Invoice<small style="color: red;">*</small></p>
+                        <div class="rob _11px l-c b-gd-c row">
+                            <label style="width: 90px;" class="d-btn">
+                                {{ repModel.TaxInvoice }}</label>
+                            <button class="bck-clr rob-b cur-p bk-btn" mat-flat-button color="primary"
+                                (click)="fileLoader.click()"><img style="height:18px"
+                                    src="../../../../../../assets/packapill-icons/white-upload.png"></button>
+                            <input style="outline: none;visibility: hidden;width: 0px;" type="file" id="fileLoader"
+                                accept="application/pdf" #fileLoader name="files" (change)="preUpload($event)"
+                                title="Load File" (click)="loadFile(fileLoader)">
+                        </div>
+                    </div>
+                    <div class="mr-4 cls-top">
+                        <p class="rob-b _11px l-c">Payment Summary<small style="color: red;">*</small></p>
+                        <div class="rob _11px l-c b-gd-c row">
+                            <label style="width: 90px;" class="d-btn">
+                                {{ repModel.PaymentSummary }}</label>
+                            <button class="bck-clr rob-b cur-p bk-btn" mat-flat-button color="primary"
+                                (click)="fileLoader2.click()"><img style="height:18px"
+                                    src="../../../../../../assets/packapill-icons/white-upload.png"></button><input
+                                style="outline: none;visibility: hidden;width: 0px;" type="file" id="fileLoader2"
+                                accept="application/pdf" #fileLoader2 name="files2" (change)="preUpload1($event)"
+                                title="Load File" (click)="loadFile1(fileLoader2)">
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div style="align-self: center;margin-bottom: 15px;" fxLayout="row" fxLayout.sm="column"
+                fxLayout.md="column">
+                <div fxLayout="row" fxLayout.sm="row" fxLayout.md="row" fxLayout.xs="row" fxLayout.lg="row">
+                    <button class="bck-clr ex-btn rob-b" matTooltip="{{repModel.PharmacyId ? 'Update' :
+                            'Save'}} Report" (click)="onSave()">
+                        <label class="lbl-cls">{{repModel.PharmacyId ? 'Update' :
+                            'Save'}} Report</label>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- </perfect-scrollbar> -->
+
+</div>
